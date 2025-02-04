@@ -17,10 +17,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
-import { authService } from "../services"
 import { useNavigate } from "react-router-dom"
 import { CalendarCheck2 } from "lucide-react"
-import GoogleIcon from "@/icons/Google"
+import GoogleIcon from "@/icons/google"
+import { authService } from "@/services"
 // import GoogleIcon from "@/icons/Google"
 const formSchema = z.object({
   email: z.string().email(),
