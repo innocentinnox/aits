@@ -2,22 +2,18 @@ import { useState } from 'react'
 import './App.css'
 import { Button } from './components/ui/button'
 import { toast } from './hooks/use-toast'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import LoginPage from './auth/login';
+
+const router = createBrowserRouter([
+  {
+    path: '/auth/login',
+    element: <LoginPage />
+  }
+])
 
 function App() {
-  return (
-    <>
-          <Button
-      onClick={() => {
-        toast({
-          title: "Scheduled: Catch up",
-          description: "Friday, February 10, 2023 at 5:57 PM",
-        })
-      }}
-    >
-      Show Toast
-    </Button>
-    </>
-  )
+  return (<RouterProvider router={router}/>)
 }
 
 export default App
