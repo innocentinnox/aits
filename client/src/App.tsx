@@ -1,11 +1,15 @@
-import { useState } from "react";
 import "@/App.css";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LoginPage from "@/pages/auth/login";
+import LoginPage from "@/page/auth/login";
+import Home from "@/page/home";
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+    index: true,
+
+  },
   {
     path: "/auth/login",
     element: <LoginPage />,

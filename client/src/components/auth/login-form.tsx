@@ -18,10 +18,7 @@ import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
 import { useNavigate } from "react-router-dom"
-import { CalendarCheck2 } from "lucide-react"
-import GoogleIcon from "@/icons/google"
 import { authService } from "@/services"
-// import GoogleIcon from "@/icons/Google"
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6).max(20)
@@ -79,7 +76,7 @@ const LoginForm = ({ className }:{ className?: string }) => {
                 </FormItem>
               )}
             />
-            <GoogleIcon />
+
             <FormField
               control={form.control}
               name="password"
