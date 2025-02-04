@@ -1,19 +1,23 @@
-import { useState } from 'react'
-import './App.css'
-import { Button } from './components/ui/button'
-import { toast } from './hooks/use-toast'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import LoginPage from './auth/login';
+import "@/App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import LoginPage from "@/page/auth/login";
+import Home from "@/page/home";
 
 const router = createBrowserRouter([
   {
-    path: '/auth/login',
-    element: <LoginPage />
-  }
-])
+    path: "/",
+    element: <Home />,
+    index: true,
+
+  },
+  {
+    path: "/auth/login",
+    element: <LoginPage />,
+  },
+]);
 
 function App() {
-  return (<RouterProvider router={router}/>)
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
