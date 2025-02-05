@@ -7,8 +7,6 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    index: true,
-
   },
   {
     path: "/auth/login",
