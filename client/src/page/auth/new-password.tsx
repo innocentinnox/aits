@@ -1,5 +1,4 @@
 import { NewPasswordForm } from "@/components/auth/new-password-form";
-import VerificationFrom from "@/components/auth/verification-from";
 import useUrlParams from "@/hooks/use-url-params";
 import { Link } from "react-router-dom";
 
