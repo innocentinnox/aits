@@ -22,8 +22,8 @@ import { useMutation } from "@tanstack/react-query";
 import { PasswordInput } from "@/components/ui/password-input";
 import { authService } from "@/services";
 import useUrlParams from "@/hooks/use-url-params";
-import { toast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 
 export const ResetPasswordSchema = z.object({
@@ -59,7 +59,7 @@ export const RequestResetPasswordForm = ({ setOpen }: Props) => {
         }
     },
     onError: ({ response: { data }} :any) => { 
-      toast(data?.message || "Something went wrong")
+      toast.error(data?.message || "Something went wrong")
     },
   });
 
