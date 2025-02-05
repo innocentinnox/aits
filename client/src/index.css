@@ -28,6 +28,10 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --primary: #175af4;
+    --primary-color: #5064f5;
+    --secondary-color: #7693ee;
+    --white-color: #f6f5f5;
   }
   .dark {
     --background: 222.2 84% 4.9%;

@@ -1,7 +1,7 @@
 function Logo() {
-  const logoIcon = " w-[3.5rem] h-[3.5rem]";
+  const logoIcon = " w-[3.5rem] h-[3.5rem] ";
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 p-8">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
