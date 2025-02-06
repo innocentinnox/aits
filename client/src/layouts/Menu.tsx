@@ -129,7 +129,7 @@ const PATHS = [
 ];
 export default function Menu() {
   return (
-    <ul className="mt-5 overflow-scroll  noScroll  h-dvh">
+    <ul className="mt-5 overflow-scroll noScroll  ">
       {iconSvg.map((item, i) => (
         <MenuItem name={`${PATHS[i]}`} icon={item} accord={i} />
       ))}
