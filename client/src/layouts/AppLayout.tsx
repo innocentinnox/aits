@@ -4,11 +4,12 @@ import Header from "./Header";
 import { Outlet } from "react-router-dom";
 const AppLayout = () => {
   return (
-    <div className="grid grid-cols-[0.6fr_auto] overflow-hidden divide-x-2 divide-mainwhite">
-      <NavBar />
+    // <div className="lg:grid lg:grid-cols-[0.4fr_auto] overflow-hidden divide-x-2 divide-mainwhite">
+    <div className="flex flex-col">
+      <Header />
       <MainContent>
         <>
-          <Header />
+          <NavBar />
           <Outlet />
         </>
       </MainContent>

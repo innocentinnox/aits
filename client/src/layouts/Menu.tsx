@@ -2,7 +2,6 @@ import MenuItem from "./MenuItem";
 import MenuIcons from "@/icons/Svg";
 const PATHS = [
   "issues",
-  "track",
   "attachments",
   "history",
   "statistics",

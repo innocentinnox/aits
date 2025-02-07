@@ -72,3 +72,8 @@
     background: transparent;
   }
 }
+@layer bg {
+  .active {
+    background-color: #f9fcff;
+  }
+}

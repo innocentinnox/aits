@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   Accordion,
   AccordionContent,
@@ -28,19 +28,23 @@ export default function MenuItem({
                 {name}
               </span>
             </AccordionTrigger>
-            <AccordionContent>Create An Issue</AccordionContent>
-            <AccordionContent>Track status</AccordionContent>
+            <NavLink to="create">
+              <AccordionContent>Create An Issue</AccordionContent>
+            </NavLink>
+            <NavLink to="track">
+              <AccordionContent>Track status</AccordionContent>
+            </NavLink>
           </AccordionItem>
         </Accordion>
       </li>
     );
   }
   return (
-    <Link to={path}>
+    <NavLink to={path}>
       <li className="flex items-center gap-2 py-3 pl-6 pr-4 text-slate-200 hover:bg-mainwhite hover:text-primary">
         <span>{icon}</span>
         <span className="text-[1rem] capitalize text-semibold"> {name}</span>
       </li>
-    </Link>
+    </NavLink>
   );
 }
