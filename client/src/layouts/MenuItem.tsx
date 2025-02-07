@@ -29,10 +29,14 @@ export default function MenuItem({
               </span>
             </AccordionTrigger>
             <NavLink to="create">
-              <AccordionContent>Create An Issue</AccordionContent>
+              <AccordionContent className=" hover:bg-mainwhite hover:text-primary">
+                Create An Issue
+              </AccordionContent>
             </NavLink>
             <NavLink to="track">
-              <AccordionContent>Track status</AccordionContent>
+              <AccordionContent className=" hover:bg-mainwhite hover:text-primary">
+                Track status
+              </AccordionContent>
             </NavLink>
           </AccordionItem>
         </Accordion>

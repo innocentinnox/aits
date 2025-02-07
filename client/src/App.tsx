@@ -12,12 +12,8 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        path: "/app/history",
-        element: (
-          <>
-            <PopMenu />,
-          </>
-        ),
+        path: "/app/",
+        element: <div> Dashboard</div>,
       },
     ],
   },
