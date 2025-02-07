@@ -3,7 +3,7 @@ import MenuSmall from "./MenuSmall";
 
 function Header() {
   return (
-    <header className="flex items-center justify-between px-3 sm:px-8 h-[5rem] relative bg-primary">
+    <header className="flex items-center justify-between px-4 sm:px-8 h-[5rem] relative bg-primary">
       <Logo />
       <form>
         <div className=" sm:relative hidden md:block ">

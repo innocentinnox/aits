@@ -10,7 +10,7 @@ const PATHS = [
 ];
 export default function Menu() {
   return (
-    <ul className="mt-5 overflow-scroll noScroll  ">
+    <ul className="mt-5 flex-col flex ">
       {MenuIcons.map((item, i) => (
         <MenuItem name={`${PATHS[i]}`} icon={item} path={PATHS[i]} />
       ))}

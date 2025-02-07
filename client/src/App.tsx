@@ -4,6 +4,7 @@ import LoginPage from "@/page/auth/login";
 import Home from "@/page/home";
 import AppLayout from "./layouts/AppLayout";
 import Menu from "./layouts/Menu";
+import PopMenu from "./layouts/PopMenu";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +13,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/app/history",
-        element: <Menu />,
+        element: (
+          <>
+            <PopMenu />,
+          </>
+        ),
       },
     ],
   },

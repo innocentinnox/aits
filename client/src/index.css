@@ -76,4 +76,7 @@
   .active {
     background-color: #f9fcff;
   }
+  .active span {
+    color: #334eac;
+  }
 }
