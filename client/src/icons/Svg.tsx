@@ -1,6 +1,8 @@
 import {
   ChartNoAxesCombined,
   CircleHelp,
+  Disc,
+  FilePlus2,
   FileText,
   History,
   LogOut,
@@ -9,7 +11,9 @@ import {
 } from "lucide-react";
 
 const MenuIcons = [
-  <FileText />,
+  <FilePlus2 />,
+  <Disc />,
+
   <Paperclip />,
   <History />,
   <ChartNoAxesCombined />,
@@ -18,7 +22,8 @@ const MenuIcons = [
   <LogOut />,
 ];
 export const PATHS = [
-  "issues",
+  "Create",
+  "Track ",
   "attachments",
   "history",
   "statistics",

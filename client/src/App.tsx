@@ -1,10 +1,9 @@
 import "@/App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "@/page/auth/login";
-import Home from "@/page/home";
 import AppLayout from "./layouts/AppLayout";
-import Menu from "./layouts/Menu";
-import PopMenu from "./layouts/PopMenu";
+
+import DashBoard from "./page/dashboard/DashBoard";
 
 const router = createBrowserRouter([
   {
@@ -12,8 +11,8 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        path: "/app/",
-        element: <div> Dashboard</div>,
+        path: "/app",
+        element: <DashBoard />,
       },
     ],
   },
