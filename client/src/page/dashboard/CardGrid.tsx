@@ -5,10 +5,10 @@ const CARDS = ["submitted", "in progress", "resolved"];
 const SVGS = [<Send />, <Loader />, <SquareCheckBig />];
 export default function CardGrid() {
   return (
-    <div className="flex justify-around mt-5 p-4">
+    <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-around  p-4 pl-0 ">
       {CARDS.map((card, index) => (
         <CardItem
-          title={CARDS[index]}
+          title={card}
           icon={SVGS[index]}
           value={formatCurrency(2536673)}
         />

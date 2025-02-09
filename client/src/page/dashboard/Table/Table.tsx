@@ -1,3 +1,4 @@
+import FilterGrid from "./Filter/FilterGrid";
 import styles from "./Table.module.css";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
@@ -84,17 +85,20 @@ const fakeData = [
 
 export default function Table() {
   return (
-    <div className="">
-      <table className="min-w-full bg-white border border-tertiary rounded-lg mt-8 ">
-        <thead className=" border rounded-lg">
-          <TableHeader />
-        </thead>
-        <tbody>
-          {fakeData.map((issue) => (
-            <TableRow issue={issue} />
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <FilterGrid />
+      <div className="">
+        <table className="min-w-full bg-white border border-tertiary rounded-lg mt-8 ">
+          <thead className=" border rounded-lg">
+            <TableHeader />
+          </thead>
+          <tbody>
+            {fakeData.map((issue) => (
+              <TableRow issue={issue} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
