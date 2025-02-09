@@ -11,3 +11,7 @@ pytz==2022.6
 sqlparse==0.4.3
 tzdata==2022.6
 pillow
+django-cors-headers
+djangorestframework-simplejwt
+PyJWT
+psycopg2-binary
