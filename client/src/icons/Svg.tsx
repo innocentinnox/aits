@@ -22,8 +22,8 @@ const MenuIcons = [
   <LogOut />,
 ];
 export const PATHS = [
-  "Create",
-  "Track ",
+  "create",
+  "track ",
   "attachments",
   "history",
   "statistics",

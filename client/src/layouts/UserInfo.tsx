@@ -1,6 +1,6 @@
 export default function UserInfo() {
   return (
-    <div className="flex items-center justify-center gap-4">
+    <div className="flex items-center justify-between gap-4">
       <div className="user-info bg-gradient-to-l from-mainwhite to-white bg-clip-text">
         <h2 className="font-semibold uppercase text-transparent text-[0.8rem] sm:text-[1rem] ">
           john smith whales
@@ -9,6 +9,7 @@ export default function UserInfo() {
           student
         </p>
       </div>
+      <div className="w-[2.8rem] h-[2.8rem] bg-mainwhite rounded-full"></div>
     </div>
   );
 }

@@ -7,7 +7,7 @@ import FilterGrid from "./Table/Filter/FilterGrid";
 
 export default function DashBoard() {
   return (
-    <div className="flex flex-col overflow-scroll p-2 h-[80%] overflow-x-hidden">
+    <div className="flex flex-col overflow-scroll p-2 h-[95%] overflow-x-hidden">
       <CardGrid />
 
       <Table />

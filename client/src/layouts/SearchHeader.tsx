@@ -5,10 +5,10 @@ export default function SearchHeader() {
         <input
           type="text"
           name="token"
-          className="py-2.5 px-5 text-[1.2rem] rounded-full w-[15rem] border-0 placeholder:text-gray-400 focus:outline-none"
+          className="py-2 px-3 text-[1rem] rounded-full w-[15rem] border-0 placeholder:text-gray-400 focus:outline-none"
           placeholder="Track My Issue #"
         />
-        <button className="icon search-icon absolute top-[50%] right-[1%] bg-mainwhite rounded-full translate-y-[-50%] py-2.5 px-5">
+        <button className="icon search-icon absolute top-[50%] right-[1%] bg-mainwhite rounded-full translate-y-[-50%] py-[0.5rem] px-[0.5rem]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="white"
