@@ -1,0 +1,36 @@
+:root {
+  --primary: " #334eac";
+  --secondary: "#d0e3ff";
+  --tertiary: "#e7f1ff";
+  --mainwhite: " #f9fcff";
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  font-family: inherit;
+  line-height: 1;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.6rem;
+}
+td,
+th {
+  padding: 1rem 2rem;
+  text-align: left;
+  border: 2px solid #334eac;
+  border-left: none;
+}
+thead th {
+  color: #334eac;
+  width: 25%;
+}
+tbody tr:nth-child(odd) {
+  background-color: #f9fdff;
+}
+tbody tr:nth-child(even) {
+  background-color: #e7f1ff;
+}
