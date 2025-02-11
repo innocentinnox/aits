@@ -1,7 +1,6 @@
 import "@/App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LoginPage } from "@/page/auth/login";
-import Dashboard from "@/page/dashboard";
 import { SignupPage } from "@/page/auth/sign-up";
 import { AuthLayout } from "@/layouts/auth-layout";
 import Verify from "@/page/auth/verify";
@@ -23,12 +22,12 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/auth',
+    path: "/auth",
     element: <AuthLayout />, // Common layout for /auth/*
     children: [
       {
         path: "signup",
-        element: <SignupPage />
+        element: <SignupPage />,
       },
       {
         path: "login",
@@ -50,7 +49,7 @@ const router = createBrowserRouter([
         path: "reset-password/new-password",
         element: <NewPasswordPage />,
       },
-    ]
+    ],
   },
 ]);
 
