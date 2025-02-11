@@ -8,11 +8,11 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     
-    // const accessToken = JSON.parse(sessionStorage.getItem("accessToken")) || "";
+    const accessToken = JSON.parse(sessionStorage.getItem("accessToken") || "").accessToken;
 
-    // if (accessToken) {
-    //   config.headers.Authorization = `Bearer ${accessToken}`;
-    // }
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
     return config;
   },
   (err) => Promise.reject(err)
