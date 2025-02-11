@@ -28,11 +28,16 @@ import {
   } from "@/components/ui/select"
 import { PasswordInput } from "../ui/password-input"
 import { toast } from "sonner"
+import { useMutation } from "@tanstack/react-query"
   
 const formSchema = z.object({
     email: z.string().email(),
+    username: z.string()
+      .min(2)
+      .max(20)
+      .regex(/^[a-zA-Z0-9]+$/, "Username must only contain letters and numbers"),
+
     password: z.string().min(6).max(20),
-    role: z.enum(["student", "lecturer", "registrar"]),
   });
 
 
@@ -44,27 +49,25 @@ export const SignupForm = ({ className }:{ className?: string }) => {
         resolver: zodResolver(formSchema),
         defaultValues: {
           email: "",
+          username: "",
           password: "",
-          role: "student"
         },
       })
 
-      async function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-         await authService.login(values)
-         .then((res) => {
+      const { isPending: loading, mutate: onSubmit } = useMutation({
+        mutationFn: (values:  z.infer<typeof formSchema>) => authService.signUp(values),
+        onSuccess: (res: any) => {
           toast.success(res?.message);
-            navigate("/")
-          })
-          .catch((res) => {
-              toast.error(res?.message)
-          })
-      }
+          navigate("/auth/login")
+        },
+        onError: (res: any) => {
+          toast.error(res?.message)
+        }
+      })
 
     return (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className={cn("space-y-8", className)}>
+          <form onSubmit={form.handleSubmit((values) => onSubmit(values))} className={cn("space-y-8", className)}>
             <FormField
               control={form.control}
               name="email"
@@ -83,22 +86,16 @@ export const SignupForm = ({ className }:{ className?: string }) => {
             />
             <FormField
               control={form.control}
-              name="role"
+              name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Signup as</FormLabel>
+                  <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Select  {...field}>
-                        <SelectTrigger >
-                            <SelectValue placeholder="Select role" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="student">Student</SelectItem>
-                            <SelectItem value="lecturer">Lecturer</SelectItem>
-                            <SelectItem value="registrar">Registrar</SelectItem>
-                        </SelectContent>
-                    </Select>
+                    <Input placeholder="jane256" {...field} />
                   </FormControl>
+                  {/* <FormDescription>
+                    This is student or lecturer email.
+                  </FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -116,7 +113,7 @@ export const SignupForm = ({ className }:{ className?: string }) => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">Signup</Button>
+            <Button type="submit" className="w-full" disabled={loading}>Signup</Button>
           </form>
         </Form>
       )

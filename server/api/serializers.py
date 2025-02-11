@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
+from .models import Issue
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
             username=validated_data['username'],
             email=validated_data.get('email', '')
         )
-        user.set_password(validated_data['password'])  # ✅ Hash the password
+        user.set_password(validated_data['password']) 
         
         # Assign role based on email structure
         email = user.email.lower()
@@ -32,3 +33,15 @@ class UserSerializer(serializers.ModelSerializer):
         user.groups.add(group)
 
         return user
+    
+class IssueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Issue
+        fields = [
+            'student',
+            'category', 
+            'description', 
+            'status', 
+            'assigned_to', 
+            'created_at',
+        ]
