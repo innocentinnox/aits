@@ -8,11 +8,19 @@ import Verify from "@/page/auth/verify";
 import { RequestPasswordPage } from "./page/auth/request-password-page";
 import RootProvider from "./providers/root-provider";
 import NewPasswordPage from "./page/auth/new-password";
+import AppLayout from "./layouts/AppLayout";
+import DashBoard from "./page/dashboard/DashBoard";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Dashboard />,
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <DashBoard />,
+      },
+    ],
   },
   {
     path: '/auth',

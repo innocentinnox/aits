@@ -23,13 +23,15 @@ const config = {
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
+  				DEFAULT: '#334eac',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
   			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
+  				DEFAULT: '#7096d1',
   				foreground: 'hsl(var(--secondary-foreground))'
   			},
+			tertiary: "#e7f1ff",
+			mainwhite: " #f9fcff",
   			muted: {
   				DEFAULT: 'hsl(var(--muted))',
   				foreground: 'hsl(var(--muted-foreground))'
@@ -53,15 +55,37 @@ const config = {
   				'5': 'hsl(var(--chart-5))'
   			}
   		},
-		keyframes: {
-		"caret-blink": {
-			"0%,70%,100%": { opacity: "1" },
-			"20%,50%": { opacity: "0" },
-		},
-		},
-		animation: {
-		"caret-blink": "caret-blink 1.25s ease-out infinite",
-		},
+  		keyframes: {
+  			'caret-blink': {
+  				'0%,70%,100%': {
+  					opacity: '1'
+  				},
+  				'20%,50%': {
+  					opacity: '0'
+  				}
+  			},
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
+  				}
+  			}
+  		},
+  		animation: {
+  			'caret-blink': 'caret-blink 1.25s ease-out infinite',
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out'
+  		}
   	}
   },
   plugins: [require("tailwindcss-animate")],

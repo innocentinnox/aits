@@ -71,3 +71,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer base {
+  .noScroll::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+}
+
+@layer bg {
+  .active {
+    background-color: #f9fcff;
+  }
+  .active span {
+    color: #334eac;
+  }
+}
