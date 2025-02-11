@@ -24,7 +24,8 @@ class AuthService {
       }
 
     async newPassword(formData: any) {
-        return await axiosInstance.post("/auth/reset", { ...formData }, { withCredentials: true }   );
+      return {data: { tokenId: Math.random().toString(36).slice(2, 12), email: formData?.email }}
+        // return await axiosInstance.post("/auth/reset", { ...formData }, { withCredentials: true }   );
       }
 
     async newPassVerify(formData: any) {

@@ -1,0 +1,50 @@
+name: Client Deployment
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+          - "client/**" # Only trigger for changes in that directory
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: ./client
+    runs-on: self-hosted
+    
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with: # Ensure the repository is not deleted and only updated (similar to git pull)
+          fetch-depth: 0
+          persist-credentials: false
+          clean: false
+
+      # Cache node_modules
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('client/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Create the .env file from SERVER_SECRETS
+      # - name: Create .env file
+      #   run: echo "${{ secrets.PAY_SECRETS }}" > .env
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Build the application
+      - name: Build the application
+        run: npm run build
+
+      - name: Deploy to /home/aits/htdocs/aits.ocunex.com
+        run: |
+          set -e # Explicitly stop on errors
+          find /home/aits/htdocs/aits.ocunex.com -mindepth 1 -not -name ".well-known" -exec rm -rf {} +
+          cp -r ./dist/* /home/aits/htdocs/aits.ocunex.com/
