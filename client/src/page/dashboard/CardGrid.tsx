@@ -11,6 +11,7 @@ export default function CardGrid() {
           title={card}
           icon={SVGS[index]}
           value={formatCurrency(2536673)}
+          key={card}
         />
       ))}
     </div>
