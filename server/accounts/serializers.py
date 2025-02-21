@@ -28,7 +28,6 @@ class LoginSerializer(serializers.Serializer):
     def validate(self, data):
         user = User.objects.filter(email=data['email']).first()
         if user and user.check_password(data['password']):
-            from rest_framework_simplejwt.tokens import RefreshToken
             refresh = RefreshToken.for_user(user)
             return {
                 'user': {
