@@ -35,13 +35,13 @@ class CustomUser(AbstractUser):
         if not self.role:
             email_lower = self.email.lower()
             if email.endswith("@students.mak"):
-            group_name = "Student"
+                self.role = "Student"
             elif email.endswith("@cit.mak"):
-            group_name = "Lecturer"
+                self.role = "Lecturer"
             elif email.endswith("@cit.mak"):
-            group_name = "Registrar"
+                self.role = "Registrar"
             else:
-            group_name = "Student"  # Assign a default group if no match
+                self.role = "Student"  # Assign a default group if no match
 
         super().save(*args, **kwargs)
         
