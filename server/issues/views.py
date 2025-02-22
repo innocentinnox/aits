@@ -11,7 +11,7 @@ User = get_user_model()
 # Issue view: --> Only foe students
 class IssueCreateView(generics.CreateAPIView):
     serializer_class = IssueSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     
     def perform_create(self, serializer):
         user = self.request.user
