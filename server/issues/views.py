@@ -21,3 +21,10 @@ class IssueCreateView(generics.CreateAPIView):
         # Find Registrar: --> of students college
         registrar = User.objects.filter(role='registrar', college=user.college).first()
         serializer.save(created_by=user, assigned_to=registrar)
+
+# Retrieve issue by token (for tracking)
+class IssueDetailView(generics.RetrieveAPIView):
+    serializer_class = IssueSerializer
+    lookup_field = 'token'
+    queryset = Issue.objects.all()
+    permission_classes = [IsAuthenticated]
