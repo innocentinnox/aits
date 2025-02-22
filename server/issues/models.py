@@ -8,11 +8,6 @@ import string
 def generate_issue_token():
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
 
-ISSUE_DEFAULT_CHOICES = [
-    ('missing_marks', 'Missing Marks'),
-    ('exam_remark', 'Examination Remark'),
-    ('missed_test', 'Missed Test'),
-]
 
 STATUS_CHOICES = [
     ('submitted', 'Submitted'),
@@ -34,11 +29,14 @@ YEAR_OF_STUDY = [
 ]
 
 class IssueCategory(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
+    
+    def __str__(self):
+        return self.name
 
 class Issue(models.Model):
     token = models.CharField(max_length=5, unique=True, blank=True)
-    category = models.ForeignKey(IssueCategory,choices=ISSUE_DEFAULT_CHOICES ,on_delete=models.CASCADE)
+    category = models.ForeignKey(IssueCategory, on_delete=models.CASCADE)
     description = models.TextField()
     
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='issues')
