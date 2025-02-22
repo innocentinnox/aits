@@ -10,14 +10,14 @@ User = get_user_model()
 
 # Categories of issues
 class IssueCategoryView(generics.ListCreateAPIView):
-    query_set = IssueCategory.objects.all()
+    queryset = IssueCategory.objects.all()
     serializer_class = IssueCategorySerializer
     permission_classes = [AllowAny]
 
-# Issue view: --> Only foe students
+# Issue view: --> Only for students
 class IssueCreateView(generics.CreateAPIView):
     serializer_class = IssueSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     
     def perform_create(self, serializer):
         user = self.request.user
