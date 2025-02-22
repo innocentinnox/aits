@@ -3,10 +3,16 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
-from .models import Issue
-from .serializers import IssueSerializer
+from .models import Issue, IssueCategory
+from .serializers import IssueSerializer, IssueCategorySerializer
 
 User = get_user_model()
+
+# Categories of issues
+class IssueCategoryView(generics.ListCreateAPIView):
+    query_set = IssueCategory.objects.all()
+    serializer_class = IssueCategorySerializer
+    permission_classes = [AllowAny]
 
 # Issue view: --> Only foe students
 class IssueCreateView(generics.CreateAPIView):
