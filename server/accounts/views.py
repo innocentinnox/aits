@@ -11,7 +11,7 @@ from .models import College
 
 User = get_user_model()
 
-class CollegeView(generics.CreateAPIView):
+class CollegeView(generics.ListCreateAPIView):
     queryset = College.objects.all()
     serializer_class = CollegeSerializer
     permission_classes = [AllowAny]
