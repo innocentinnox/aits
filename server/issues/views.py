@@ -28,3 +28,39 @@ class IssueDetailView(generics.RetrieveAPIView):
     lookup_field = 'token'
     queryset = Issue.objects.all()
     permission_classes = [IsAuthenticated]
+
+
+# Update Issue view: --> for registrar or lecturer to update issue status
+class IssueUpdateView(generics.UpdateAPIView):
+    serializer_class = IssueSerializer
+    queryset = Issue.objects.all()
+    lookup_field = 'token'
+    permission_classes = [IsAuthenticated]
+    
+    def patch(self, request, *args, **kwargs):
+        issue = self.get_object()
+        user = request.user
+        
+        # Registrar actions: can resolve or forward an issue
+        if user.role == 'registrar' and issue.assigned_to == user:
+            action = request.data.get('action')
+            if action == 'resolve':
+                # Registrar resolves the issue
+                request.data['status'] = 'resolved'
+            elif action == 'forward':
+                # Registrar forwards the issue to a lecturer; expect 'forwarded_to' field in request data
+                lecturer_id = request.data.get('forwarded_to')
+                if not lecturer_id:
+                    return Response({"error": "Lecturer id is required for forwarding."}, status=status.HTTP_400_BAD_REQUEST)
+                request.data['status'] = 'forwarded'
+            else:
+                return Response({"error": "Invalid action."}, status=status.HTTP_400_BAD_REQUEST)
+            return super().patch(request, *args, **kwargs)
+        
+        # Lecturer actions: if issue is forwarded to them, they can mark it resolved by adding resolution details.
+        elif user.role == 'lecturer' and issue.forwarded_to == user:
+            request.data['status'] = 'resolved'
+            return super().patch(request, *args, **kwargs)
+        
+        else:
+            return Response({"error": "Not authorized to update this issue."}, status=status.HTTP_403_FORBIDDEN)
