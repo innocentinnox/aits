@@ -1,5 +1,10 @@
 from rest_framework import serializers
-from .models import Issue
+from .models import Issue, IssueCategory
+
+class IssueCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IssueCategory
+        fields = '__all__'
 
 class IssueSerializer(serializers.ModelSerializer):
     class Meta:
