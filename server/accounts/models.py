@@ -57,3 +57,13 @@ class Notification(models.Model):
     
     def __str__(self):
         return f"Notification for {self.recipient.email}: {self.message[:20]}"
+
+# Audit log model to track activities
+class AuditLog(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
+    action = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.timestamp} - {self.user}: {self.action}"
