@@ -6,7 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 
 from .serializers import RegisterSerializer, ProfileUpdateSerializer, LoginSerializer, CollegeSerializer
-
+from .utils import log_audit
 from .models import College
 
 User = get_user_model()
@@ -20,6 +20,10 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
+    
+    def perform_create(self, serializer):
+        user = serializer.save()
+        log_audit(user, "User signed up", f"User {user.email} signed up")
 
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
@@ -54,9 +58,17 @@ class ProfileUpdateView(generics.UpdateAPIView):
 
     def get_object(self):
         return self.request.user
+    
+    def perform_update(self, serializer):
+        user = serializer.save()
+        log_audit(user, "Profile Updated", f"User {user.email} updated their profile.")
 
 @api_view(['POST'])
 def logout_view(request):
+    user = request.user if request.user.is_authenticated else None
+    if user:
+        log_audit(user, "User Logged Out", f"User {user.email} logged out.")
+    
     response = Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
     response.delete_cookie("access_token")
     response.delete_cookie("refresh_token")
