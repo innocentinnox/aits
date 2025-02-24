@@ -31,6 +31,21 @@ class IssueCreateView(generics.CreateAPIView):
         
         # Audit log for issue creation
         log_audit(user, "Issue Created", f"Issue '{issue.title}' with token {issue.token} created.")
+        
+        # Email notifications:
+        # Email the student with full details.
+        send_notification(
+            recipient=user,
+            subject="Issue Submitted Successfully",
+            message=f"Your issue '{issue.title}' has been submitted with token {issue.token}. Details: {issue.description}"
+        )
+        # Email the registrar with brief details.
+        if registrar:
+            send_notification(
+                recipient=registrar,
+                subject="New Issue Assigned",
+                message=f"New issue submitted by {user.username}.\nToken: {issue.token}\nTitle: {issue.title}"
+            )
 
 # Retrieve issue by token (for tracking)
 class IssueDetailView(generics.RetrieveAPIView):
