@@ -5,6 +5,7 @@ from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
 from .models import Issue, IssueCategory
 from .serializers import IssueSerializer, IssueCategorySerializer
+from accounts.utils import send_notification, log_audit
 
 User = get_user_model()
 
@@ -26,7 +27,10 @@ class IssueCreateView(generics.CreateAPIView):
         
         # Find Registrar: --> of students college
         registrar = User.objects.filter(role='registrar', college=user.college).first()
-        serializer.save(created_by=user, assigned_to=registrar)
+        issue = serializer.save(created_by=user, assigned_to=registrar)
+        
+        # Audit log for issue creation
+        log_audit(user, "Issue Created", f"Issue '{issue.title}' with token {issue.token} created.")
 
 # Retrieve issue by token (for tracking)
 class IssueDetailView(generics.RetrieveAPIView):
