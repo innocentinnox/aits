@@ -5,9 +5,9 @@ from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 
-from .serializers import RegisterSerializer, ProfileUpdateSerializer, LoginSerializer, CollegeSerializer
+from .serializers import RegisterSerializer, ProfileUpdateSerializer, LoginSerializer, CollegeSerializer, NotificationSerializer
 from .utils import log_audit
-from .models import College
+from .models import College, Notification
 
 User = get_user_model()
 
@@ -73,3 +73,10 @@ def logout_view(request):
     response.delete_cookie("access_token")
     response.delete_cookie("refresh_token")
     return response
+
+class NotificationListView(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Notification.objects.filter(recipient=self.request.user)
