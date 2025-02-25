@@ -34,11 +34,11 @@ class CustomUser(AbstractUser):
         # Auto-assign role based on email structure if role is not explicitly set.
         if not self.role:
             email_lower = self.email.lower()
-            if email.endswith("@students.mak"):
+            if email.endswith("@students.ac.ug"):
                 self.role = "Student"
-            elif email.endswith("@cit.mak"):
+            elif email.endswith("@cit.ac.ug"):
                 self.role = "Lecturer"
-            elif email.endswith("@cit.mak"):
+            elif email.endswith("@mak.ac.ug"):
                 self.role = "Registrar"
             else:
                 self.role = "Student"  # Assign a default group if no match
