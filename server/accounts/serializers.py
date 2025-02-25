@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import College
+from .models import College, Notification
 
 User = get_user_model()
 
@@ -61,3 +61,9 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         # All users can update first/last name, profile image, and college.
         # Student-specific fields (student_number, registration_number) are optional.
         fields = ['first_name', 'last_name','date_of_birth', 'profile_image', 'college', 'student_number', 'registration_number']
+        
+# These are optional
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ['id', 'message', 'created_at', 'read']

@@ -5,6 +5,7 @@ from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
 from .models import Issue, IssueCategory
 from .serializers import IssueSerializer, IssueCategorySerializer
+from accounts.utils import send_notification, log_audit
 
 User = get_user_model()
 
@@ -26,7 +27,25 @@ class IssueCreateView(generics.CreateAPIView):
         
         # Find Registrar: --> of students college
         registrar = User.objects.filter(role='registrar', college=user.college).first()
-        serializer.save(created_by=user, assigned_to=registrar)
+        issue = serializer.save(created_by=user, assigned_to=registrar)
+        
+        # Audit log for issue creation
+        log_audit(user, "Issue Created", f"Issue '{issue.title}' with token {issue.token} created.")
+        
+        # Email notifications:
+        # Email the student with full details.
+        send_notification(
+            recipient=user,
+            subject="Issue Submitted Successfully",
+            message=f"Your issue '{issue.title}' has been submitted with token {issue.token}. Details: {issue.description}"
+        )
+        # Email the registrar with brief details.
+        if registrar:
+            send_notification(
+                recipient=registrar,
+                subject="New Issue Assigned",
+                message=f"New issue submitted by {user.username}.\nToken: {issue.token}\nTitle: {issue.title}"
+            )
 
 # Retrieve issue by token (for tracking)
 class IssueDetailView(generics.RetrieveAPIView):
@@ -53,19 +72,46 @@ class IssueUpdateView(generics.UpdateAPIView):
             if action == 'resolve':
                 # Registrar resolves the issue
                 request.data['status'] = 'resolved'
+                msg = f"Issue '{issue.title}' has been resolved by the registrar."
+                # Notify student
+                send_notification(
+                    recipient=issue.created_by,
+                    subject="Issue Resolved",
+                    message=msg
+                )
             elif action == 'forward':
                 # Registrar forwards the issue to a lecturer; expect 'forwarded_to' field in request data
                 lecturer_id = request.data.get('forwarded_to')
                 if not lecturer_id:
                     return Response({"error": "Lecturer id is required for forwarding."}, status=status.HTTP_400_BAD_REQUEST)
                 request.data['status'] = 'forwarded'
+                # Notify lecturer
+                lecturer = User.objects.filter(id=lecturer_id, role='lecturer').first()
+                if lecturer:
+                    send_notification(
+                        recipient=lecturer,
+                        subject="Issue Forwarded to You",
+                        message=f"Issue '{issue.title}' (Token: {issue.token}) has been forwarded to you by the registrar."
+                    )
+                    # Audit log for forwarding
+                    log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.")
+                else:
+                    return Response({"error": "Lecturer not found."}, status=status.HTTP_400_BAD_REQUEST)
             else:
                 return Response({"error": "Invalid action."}, status=status.HTTP_400_BAD_REQUEST)
+            log_audit(user, "Issue Updated", f"Registrar {user.username} updated issue '{issue.title}' with action {action}.")
             return super().patch(request, *args, **kwargs)
         
         # Lecturer actions: if issue is forwarded to them, they can mark it resolved by adding resolution details.
         elif user.role == 'lecturer' and issue.forwarded_to == user:
             request.data['status'] = 'resolved'
+            log_audit(user, "Issue Resolved", f"Lecturer {user.username} resolved issue '{issue.title}'.")
+            # Notify student upon resolution.
+            send_notification(
+                recipient=issue.created_by,
+                subject="Issue Resolved by Lecturer",
+                message=f"Your issue '{issue.title}' (Token: {issue.token}) has been resolved."
+            )
             return super().patch(request, *args, **kwargs)
         
         else:

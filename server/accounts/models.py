@@ -34,11 +34,11 @@ class CustomUser(AbstractUser):
         # Auto-assign role based on email structure if role is not explicitly set.
         if not self.role:
             email_lower = self.email.lower()
-            if email.endswith("@students.mak"):
+            if email.endswith("@students.ac.ug"):
                 self.role = "Student"
-            elif email.endswith("@cit.mak"):
+            elif email.endswith("@cit.ac.ug"):
                 self.role = "Lecturer"
-            elif email.endswith("@cit.mak"):
+            elif email.endswith("@mak.ac.ug"):
                 self.role = "Registrar"
             else:
                 self.role = "Student"  # Assign a default group if no match
@@ -47,3 +47,23 @@ class CustomUser(AbstractUser):
         
     def __str__(self):
         return f"{self.email} {self.role}"
+
+# Notification model for browser popup alerts
+class Notification(models.Model):
+    recipient = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='notifications') 
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    read = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f"Notification for {self.recipient.email}: {self.message[:20]}"
+
+# Audit log model to track activities
+class AuditLog(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
+    action = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.timestamp} - {self.user}: {self.action}"
