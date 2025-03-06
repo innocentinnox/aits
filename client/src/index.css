@@ -84,7 +84,7 @@
     background-color: #f9fcff;
   }
   .active span {
-    color: #334eac;
+    color: hsl(142.1 76.2% 36.3%);
   }
 }
 

@@ -13,6 +13,8 @@ import RootProvider from "./providers/root-provider";
 import NewPasswordPage from "./page/auth/new-password";
 import AppLayout from "./layouts/AppLayout";
 import DashBoard from "./page/dashboard/DashBoard";
+import { UserDetailsForm } from "./components/ui/form-user-details";
+import { CreateIssueForm } from "./components/ui/CreateIssueForm";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +25,15 @@ const router = createBrowserRouter([
         path: "/",
         element: <DashBoard />,
       },
+      {
+        path: "create",
+        element: <CreateIssueForm />,
+      },
     ],
+  },
+  {
+    path: "/details",
+    element: <UserDetailsForm />,
   },
   {
     path: "/auth",

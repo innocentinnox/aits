@@ -1,10 +1,9 @@
-"use client"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+"use client";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
-
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,88 +12,100 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { cn } from "@/lib/utils"
-import { Link, useNavigate } from "react-router-dom"
-import { authService } from "@/services"
-import useUrlParams from "@/hooks/use-url-params"
-import { PasswordInput } from "../ui/password-input"
-import { toast } from "sonner"
-import { useMutation } from "@tanstack/react-query"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+import { Link, useNavigate } from "react-router-dom";
+import { authService } from "@/services";
+import useUrlParams from "@/hooks/use-url-params";
+import { PasswordInput } from "../ui/password-input";
+import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
 const formSchema = z.object({
-  username: z.string().min(2).max(20)
-  .regex(/^[a-zA-Z0-9]+$/, "Username must only contain letters and numbers"),
-  password: z.string().min(4).max(20)
+  username: z
+    .string()
+    .min(2)
+    .max(20)
+    .regex(/^[a-zA-Z0-9]+$/, "Username must only contain letters and numbers"),
+  password: z.string().min(4).max(20),
 });
 
+export const LoginForm = ({ className }: { className?: string }) => {
+  const navigate = useNavigate();
+  const { next, constructPath } = useUrlParams();
 
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
 
-export const LoginForm = ({ className }:{ className?: string }) => {
+  const { isPending: loading, mutate: onSubmit } = useMutation({
+    mutationFn: (values: z.infer<typeof formSchema>) =>
+      authService.login(values),
+    onSuccess: (res: any) => {
+      toast.success(res?.message);
+      navigate("/");
+    },
+    onError: (res: any) => {
+      toast.error(res?.message);
+    },
+  });
 
-    const navigate = useNavigate()
-    const { next, constructPath } = useUrlParams();
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit((values) => onSubmit(values))}
+        className={cn("space-y-8")}
+      >
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="jane" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is the username used to signup.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-          username: "",
-          password: ""
-        },
-      })
-
-      const { isPending: loading, mutate: onSubmit } = useMutation({
-        mutationFn: (values:  z.infer<typeof formSchema>) => authService.login(values),
-        onSuccess: (res: any) => {
-          toast.success(res?.message);
-          navigate("/")
-        },
-        onError: (res: any) => {
-          toast.error(res?.message)
-        }
-      })
-
-    return (
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit((values) => onSubmit(values))} className={cn("space-y-8")}>
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="jane" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This is the username used to signup.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem className="grid gap-2">
-                  <div className="flex items-center">
-                    <FormLabel>Password</FormLabel>
-                    <Link to={constructPath("/auth/reset-password", {})} className="ml-auto text-sm underline-offset-2 hover:underline">
-                      Forgot your password?
-                    </Link>
-                  </div>
-                  <FormControl>
-                    <PasswordInput placeholder="*******" {...field} type="password"/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className="w-full" disabled={loading}>Login</Button>
-          </form>
-        </Form>
-      )
-}
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem className="grid gap-2">
+              <div className="flex items-center">
+                <FormLabel>Password</FormLabel>
+                <Link
+                  to={constructPath("/auth/reset-password", {})}
+                  className="ml-auto text-sm underline-offset-2 hover:underline"
+                >
+                  Forgot your password?
+                </Link>
+              </div>
+              <FormControl>
+                <PasswordInput
+                  placeholder="*******"
+                  {...field}
+                  type="password"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="w-full" disabled={loading}>
+          Login
+        </Button>
+      </form>
+    </Form>
+  );
+};

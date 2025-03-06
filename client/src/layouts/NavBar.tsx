@@ -3,7 +3,7 @@ import Menu from "./Menu";
 
 function NavBar() {
   return (
-    <nav className=" bg-primary overflow-scroll noScroll border-t-mainwhite border-t-2 hidden lg:block  ">
+    <nav className=" bg-zinc-50  overflow-scroll noScroll  hidden lg:block border-r-2 border-zinc-200 ">
       <Menu />
     </nav>
   );

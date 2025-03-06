@@ -45,7 +45,7 @@ export default function MenuItem({
   }
   return (
     <NavLink to={path}>
-      <li className="flex items-center gap-2 py-3 pl-6 pr-4 text-slate-200 hover:bg-mainwhite hover:text-primary">
+      <li className="flex items-center gap-2 py-3 pl-6 pr-4 text-zinc-900 hover:bg-zinc-200 hover:text-zinc-700 ">
         <span>{icon}</span>
         <span className="text-[1rem] capitalize text-semibold"> {name}</span>
       </li>

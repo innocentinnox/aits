@@ -9,7 +9,7 @@ export default function Card({
   icon: JSX.Element;
 }) {
   return (
-    <div className={`${styles.card} bg-primary w-[100%] sm:w-[32%]`}>
+    <div className={`${styles.card} bg-white w-[100%] sm:w-[32%] shadow-lg`}>
       <div className={`${styles.card_header}`}>
         <div className={`${styles.card_title} text-mainwhite`}>{title}</div>
         <div className={`${styles.card_icon}`}>{icon}</div>
