@@ -1,5 +1,9 @@
 import "@/App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import { LoginPage } from "@/page/auth/login";
 import { SignupPage } from "@/page/auth/sign-up";
 import { AuthLayout } from "@/layouts/auth-layout";
@@ -25,6 +29,10 @@ const router = createBrowserRouter([
     path: "/auth",
     element: <AuthLayout />, // Common layout for /auth/*
     children: [
+      {
+        index: true, // Redirect "/auth" to "/auth/login"
+        element: <Navigate to="login" replace />,
+      },
       {
         path: "signup",
         element: <SignupPage />,
