@@ -13,8 +13,9 @@ import RootProvider from "./providers/root-provider";
 import NewPasswordPage from "./page/auth/new-password";
 import AppLayout from "./layouts/AppLayout";
 import DashBoard from "./page/dashboard/DashBoard";
-import { UserDetailsForm } from "./components/ui/form-user-details";
+import DetailsForm from "./page/Details/Details";
 import { CreateIssueForm } from "./components/ui/CreateIssueForm";
+import Notifications from "./page/Notifications/Notifications";
 
 const router = createBrowserRouter([
   {
@@ -22,18 +23,26 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        path: "/",
+        index: true,
+        element: <Navigate to="dashboard" replace />,
+      },
+      {
+        path: "dashboard",
         element: <DashBoard />,
       },
       {
         path: "create",
         element: <CreateIssueForm />,
       },
+      {
+        path: "notifications",
+        element: <Notifications />,
+      },
     ],
   },
   {
     path: "/details",
-    element: <UserDetailsForm />,
+    element: <DetailsForm />,
   },
   {
     path: "/auth",

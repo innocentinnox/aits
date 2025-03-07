@@ -1,34 +1,17 @@
 import {
+  Bell,
   ChartNoAxesCombined,
   CircleHelp,
   Disc,
   FilePlus2,
   FileText,
   History,
+  House,
   LogOut,
   MessageCircleQuestion,
   Paperclip,
 } from "lucide-react";
 
-const MenuIcons = [
-  <FilePlus2 />,
-  <Disc />,
-
-  <Paperclip />,
-  <History />,
-  <ChartNoAxesCombined />,
-  <MessageCircleQuestion />,
-  <CircleHelp />,
-  <LogOut />,
-];
-export const PATHS = [
-  "create",
-  "track ",
-  "attachments",
-  "history",
-  "statistics",
-  "faqs",
-  "about us",
-  "logout",
-];
+const MenuIcons = [<House />, <FilePlus2 />, <Bell />, <LogOut />];
+export const PATHS = ["dashboard", "create", "notifications", "logout"];
 export default MenuIcons;

@@ -2,6 +2,7 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Textarea } from "@/components/ui/textarea";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -27,6 +28,7 @@ import {
 import { PasswordInput } from "../ui/password-input";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
+import LogoIcon from "@/layouts/LogoIcon";
 
 const formSchema = z.object({
   issueTitle: z.string().min(30),
@@ -59,8 +61,11 @@ export const CreateIssueForm = ({ className }: { className?: string }) => {
   }
 
   return (
-    <div className="h-dvh flex flex-col items-center justify-center">
-      <div className="  lg:items-center p-4 px-10 shadow-lg rounded-sm min-w-[18rem] md:w-[50rem]">
+    <div className=" flex flex-col  md:items-center justify-center">
+      <div className="self-center mt-2">
+        <LogoIcon />
+      </div>
+      <div className="  lg:items-center p-4 px-10 shadow-xl rounded-sm min-w-[18rem] md:w-[50rem]">
         <div className="flex flex-col items-center">
           <h1 className="text-2xl font-bold uppercase"> Log An Issue</h1>
           <p className="text-balance text-muted-foreground"></p>
@@ -81,7 +86,11 @@ export const CreateIssueForm = ({ className }: { className?: string }) => {
                 <FormItem>
                   <FormLabel>Issue Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="john smith" {...field} />
+                    <Input
+                      placeholder="john smith"
+                      className="placeholder:text-sm"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -94,7 +103,11 @@ export const CreateIssueForm = ({ className }: { className?: string }) => {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Input placeholder="" {...field} type="number" />
+                    <Textarea
+                      className="placeholder:text-sm"
+                      placeholder="Please provide more information to the Lecturer"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -105,12 +118,12 @@ export const CreateIssueForm = ({ className }: { className?: string }) => {
               name="attachments"
               render={({ field }) => (
                 <FormItem className="grid gap-2">
-                  <FormLabel>Attach documents</FormLabel>
+                  <FormLabel>Attach Documents</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="22/U/23908/PSA"
                       {...field}
-                      type="text"
+                      type="file"
                     />
                   </FormControl>
                   <FormMessage />
@@ -129,9 +142,9 @@ export const CreateIssueForm = ({ className }: { className?: string }) => {
                         <SelectValue placeholder="Choose Course Unit" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="COCIS">COCIS</SelectItem>
-                        <SelectItem value="CEDAT">CEDAT</SelectItem>
-                        <SelectItem value="CHS">CHS</SelectItem>
+                        <SelectItem value="COCIS">BSCS</SelectItem>
+                        <SelectItem value="CEDAT">BSSE</SelectItem>
+                        <SelectItem value="CHS">BIST</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -150,9 +163,9 @@ export const CreateIssueForm = ({ className }: { className?: string }) => {
                         <SelectValue placeholder="Select year" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="COCIS">COCIS</SelectItem>
-                        <SelectItem value="CEDAT">CEDAT</SelectItem>
-                        <SelectItem value="CHS">CHS</SelectItem>
+                        <SelectItem value="COCIS">2021</SelectItem>
+                        <SelectItem value="CEDAT">2020</SelectItem>
+                        <SelectItem value="CHS">2019</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -182,10 +195,10 @@ export const CreateIssueForm = ({ className }: { className?: string }) => {
               />
             </div>
             <div className="flex justify-between md:justify-end md:gap-6">
-              <Button type="submit" className="" disabled={loading}>
+              <Button type="submit" variant="outline" disabled={loading}>
                 Cancel
               </Button>
-              <Button type="reset" className="" disabled={loading}>
+              <Button type="reset" disabled={loading}>
                 Submit
               </Button>
             </div>

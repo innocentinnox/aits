@@ -27,6 +27,7 @@ import {
 import { PasswordInput } from "../ui/password-input";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
+import LogoIcon from "@/layouts/LogoIcon";
 
 const formSchema = z.object({
   name: z.string().min(5),
@@ -57,12 +58,15 @@ export const UserDetailsForm = ({ className }: { className?: string }) => {
   }
 
   return (
-    <div className="h-dvh flex flex-col items-center justify-center">
+    <div className=" flex flex-col md:items-center overflow-scroll  bg-zinc-100  ">
+      <div className="self-center mt-2">
+        <LogoIcon />
+      </div>
       <div className="  lg:items-center p-4 px-10 shadow-lg rounded-sm min-w-[18rem] md:w-[50rem]">
         <div className="flex flex-col items-center">
           <h1 className="text-2xl font-bold uppercase">Fill in your details</h1>
-          <p className="text-balance text-muted-foreground">
-            Login to your AITS account
+          <p className="text-balance text-muted-foreground italic">
+            This will only be done once...
           </p>
         </div>
 
