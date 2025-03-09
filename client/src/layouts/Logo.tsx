@@ -7,7 +7,7 @@ function Logo() {
     <div className="flex items-center gap-1 sm:p-4 sm:pl-0  ">
       <LogoIcon />
 
-      <span className=" text-[1.2rem]   md:text-[1.2rem] text-primary">
+      <span className=" text-[1.2rem] font-semibold  md:text-[1.2rem] text-primary">
         AITS
       </span>
     </div>
