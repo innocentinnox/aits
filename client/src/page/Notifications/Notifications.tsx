@@ -1,5 +1,11 @@
+import EmptyNotifications from "./EmptyNotifications";
+
 function Notifications() {
-  return <div>Notications</div>;
+  return (
+    <div>
+      <EmptyNotifications />
+    </div>
+  );
 }
 
 export default Notifications;
