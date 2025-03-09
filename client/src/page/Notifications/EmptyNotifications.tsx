@@ -11,7 +11,7 @@ function EmptyNotifications() {
           <span>!</span>
         </div>
       </div>
-      <div className=" text-xl  md:text-[30px] text-muted-foreground text-center">
+      <div className=" text-xl  md:text-[30px] text-muted-foreground text-center mt-[-30px] md:m-0">
         <p>No recent notifications found!</p>
       </div>
     </div>

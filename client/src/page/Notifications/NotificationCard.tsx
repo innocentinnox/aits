@@ -18,7 +18,8 @@ function NotificationCard({ state }: { state: boolean }) {
           <div className="w-[15px] h-[15px] bg-green-600 rounded-full "></div>
         </div>
         <p className="text-sm">
-          Missing Marks in Computer Architecture paper 1
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae
+          sequi fuga illum porro, officia nulla, non ullam voluptatibus at!
         </p>
         <div className="flex gap-2 text-muted-foreground text-sm">
           <div>Issued: Jan 02 2025</div>|<div>Resolved: Jan 02 2025</div>
