@@ -62,6 +62,9 @@
     --chart-5: 340 75% 55%;
   }
 }
+body {
+  overflow: hidden;
+}
 
 @layer base {
   * {
@@ -84,7 +87,7 @@
     background-color: #f9fcff;
   }
   .active span {
-    color: #334eac;
+    color: hsl(142.1 76.2% 36.3%);
   }
 }
 

@@ -1,5 +1,9 @@
 import "@/App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import { LoginPage } from "@/page/auth/login";
 import { SignupPage } from "@/page/auth/sign-up";
 import { AuthLayout } from "@/layouts/auth-layout";
@@ -9,6 +13,9 @@ import RootProvider from "./providers/root-provider";
 import NewPasswordPage from "./page/auth/new-password";
 import AppLayout from "./layouts/AppLayout";
 import DashBoard from "./page/dashboard/DashBoard";
+import DetailsForm from "./page/Details/Details";
+import { CreateIssueForm } from "./components/ui/CreateIssueForm";
+import Notifications from "./page/Notifications/Notifications";
 
 const router = createBrowserRouter([
   {
@@ -16,15 +23,35 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        path: "/",
+        index: true,
+        element: <Navigate to="dashboard" replace />,
+      },
+      {
+        path: "dashboard",
         element: <DashBoard />,
       },
+      {
+        path: "create",
+        element: <CreateIssueForm />,
+      },
+      {
+        path: "notifications",
+        element: <Notifications />,
+      },
     ],
+  },
+  {
+    path: "/details",
+    element: <DetailsForm />,
   },
   {
     path: "/auth",
     element: <AuthLayout />, // Common layout for /auth/*
     children: [
+      {
+        index: true, // Redirect "/auth" to "/auth/login"
+        element: <Navigate to="login" replace />,
+      },
       {
         path: "signup",
         element: <SignupPage />,

@@ -16,9 +16,9 @@ export default function MenuSmall({
       }}
     >
       {popMenuClicked ? (
-        <X color="#f9fcff" size={30} />
+        <X className="stroke-current text-zinc-600" size={30} />
       ) : (
-        <AlignJustify color="#f9fcff" size={30} />
+        <AlignJustify className="stroke-current text-zinc-600" size={30} />
       )}
     </div>
   );

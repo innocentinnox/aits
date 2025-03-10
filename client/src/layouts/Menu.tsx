@@ -3,7 +3,7 @@ import MenuIcons from "@/icons/Svg";
 import { PATHS } from "../icons/Svg";
 export default function Menu() {
   return (
-    <ul className="mt-5 flex-col flex  border-primary border-2 ">
+    <ul className="mt-5 flex-col flex  ">
       {MenuIcons.map((item, i) => (
         <MenuItem
           name={`${PATHS[i]}`}
