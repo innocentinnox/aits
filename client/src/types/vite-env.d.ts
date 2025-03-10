@@ -9,3 +9,7 @@ interface ImportMetaEnv {
     readonly env: ImportMetaEnv;
   }
   
+
+  interface User{
+    
+  }

@@ -2,18 +2,20 @@ import axiosInstance from "@/lib/axios-instance";
 
 class AuthService {
     async signUp(formData: any) {
-        try{
-          const response = await axiosInstance.post("/api/user/register/", { ...formData }, { withCredentials: false });
+      console.log(formData);
+        try {
+          const response = await axiosInstance.post("/accounts/signup/", { ...formData }, { withCredentials: false });
           console.log(response)
           return { message: "Account created successfully" }
         } catch(error: any){
-          console.log(error.response.data)
+          console.log(error.response)
           throw new Error("Something went wrong :(")
         }
       
       }
 
     async login(formData: any) {
+      console.log("LOGIN_", formData)
         /** Login simulation*/
         // const delayPromise = new Promise<void>((resolve) => setTimeout(() => resolve() , 1500));
         // await delayPromise;
@@ -21,15 +23,13 @@ class AuthService {
         /** End Login simulation*/
 
         try {
-          const response = await axiosInstance.post("/api/token/", { ...formData }, { withCredentials: false });
-          const tokens = response.data;
-          localStorage.setItem("accessToken", tokens?.access);
-          localStorage.setItem("refreshToken", tokens?.refresh);
+          const response = await axiosInstance.post("/accounts/login/", { ...formData }, { withCredentials: false });
+          // const tokens = response.data;
           console.log(response)
-          return { message: response?.data?.detail || "Logged in successfully" }
+          return { message: response?.data?.message || "Logged in successfully" }
         } catch(error: any) {
           console.log(error.response.data)
-          throw new Error(error.response.data.detail || "Something went wrong :(")
+          throw new Error(error.response?.data?.error || "Something went wrong :(")
         }
 
       }

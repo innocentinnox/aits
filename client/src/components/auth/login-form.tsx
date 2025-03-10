@@ -22,60 +22,54 @@ import { PasswordInput } from "../ui/password-input";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 const formSchema = z.object({
-  username: z
-    .string()
-    .min(2)
-    .max(20)
-    .regex(/^[a-zA-Z0-9]+$/, "Username must only contain letters and numbers"),
-  password: z.string().min(4).max(20),
+  username: z.string().min(2).max(20)
+  .regex(/^[a-zA-Z0-9]+$/, "Username must only contain letters and numbers"),
+  password: z.string().min(4).max(20)
 });
 
 export const LoginForm = ({ className }: { className?: string }) => {
   const navigate = useNavigate();
   const { next, constructPath } = useUrlParams();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-  });
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+          username: "",
+          password: ""
+        },
+      })
 
-  const { isPending: loading, mutate: onSubmit } = useMutation({
-    mutationFn: (values: z.infer<typeof formSchema>) =>
-      authService.login(values),
-    onSuccess: (res: any) => {
-      toast.success(res?.message);
-      navigate("/");
-    },
-    onError: (res: any) => {
-      toast.error(res?.message);
-    },
-  });
+      const { isPending: loading, mutate: onSubmit } = useMutation({
+        mutationFn: (values:  z.infer<typeof formSchema>) => authService.login(values),
+        onSuccess: (res: any) => {
+          toast.success(res?.message);
+          navigate("/")
+        },
+        onError: (res: any) => {
+          toast.error(res?.message)
+        }
+      })
 
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit((values) => onSubmit(values))}
-        className={cn("space-y-8")}
-      >
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="jane" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is the username used to signup.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    return (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit((values) => onSubmit(values))} className={cn("space-y-8")}>
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="jane" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    This is the username used to signup.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
 
         <FormField
           control={form.control}

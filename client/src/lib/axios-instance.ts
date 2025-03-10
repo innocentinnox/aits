@@ -1,4 +1,6 @@
+import { ACCESS_TOKEN } from "@/constants";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_ENDPOINT,
@@ -7,12 +9,15 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    
-    const accessToken = JSON.parse(sessionStorage.getItem("accessToken") || "").accessToken;
+    console.log("Doc cookies", document.cookie)    
+    const accessToken = Cookies.get(ACCESS_TOKEN);
+    console.log("accessToken: ", accessToken);
 
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
+    // const accessToken = JSON.parse(document.cookie || "").accessToken;
+
+    // if (accessToken) {
+    //   config.headers.Authorization = `Bearer ${accessToken}`;
+    // }
     return config;
   },
   (err) => Promise.reject(err)

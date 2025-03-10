@@ -1,0 +1,29 @@
+[Unit]
+Description=gunicorn socket
+
+[Socket]
+ListenStream=/run/gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
+Then create and open a systemd service file for Gunicorn
+nano /etc/systemd/system/gunicorn.service
+Copy/paste this code there. Change the bold parts to match your application i.e user to your site user, directory to your root directory and wsgi application to directory where the wsgi file is found (exclude the root directory). Save the file.
+
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=projectkeepwalking
+Group=www-data
+WorkingDirectory=/home/aits-server/htdocs/server.aits.ocunex.com/aits/server
+ExecStart=/home/aits-server/htdocs/server.aits.ocunex.com/aits/server/.venv/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          main.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
