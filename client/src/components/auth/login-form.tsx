@@ -23,8 +23,9 @@ import { PasswordInput } from "../ui/password-input"
 import { toast } from "sonner"
 import { useMutation } from "@tanstack/react-query"
 const formSchema = z.object({
-  username: z.string().min(2).max(20)
-  .regex(/^[a-zA-Z0-9]+$/, "Username must only contain letters and numbers"),
+  // username: z.string().min(2).max(20)
+  // .regex(/^[a-zA-Z0-9]+$/, "Username must only contain letters and numbers"),
+  email: z.string().email(),
   password: z.string().min(4).max(20)
 });
 
@@ -38,7 +39,7 @@ export const LoginForm = ({ className }:{ className?: string }) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-          username: "",
+          email: "",
           password: ""
         },
       })
@@ -47,7 +48,7 @@ export const LoginForm = ({ className }:{ className?: string }) => {
         mutationFn: (values:  z.infer<typeof formSchema>) => authService.login(values),
         onSuccess: (res: any) => {
           toast.success(res?.message);
-          navigate("/")
+          navigate(next || "/")
         },
         onError: (res: any) => {
           toast.error(res?.message)
@@ -59,7 +60,7 @@ export const LoginForm = ({ className }:{ className?: string }) => {
           <form onSubmit={form.handleSubmit((values) => onSubmit(values))} className={cn("space-y-8")}>
             <FormField
               control={form.control}
-              name="username"
+              name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Username</FormLabel>

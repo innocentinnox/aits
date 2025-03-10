@@ -61,6 +61,7 @@ export const SignupForm = ({ className }:{ className?: string }) => {
           navigate("/auth/login")
         },
         onError: (res: any) => {
+          console.log("ERROR: ", res)
           toast.error(res?.message)
         }
       })
