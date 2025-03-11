@@ -5,7 +5,7 @@ django-filter
 djangorestframework
 djangorestframework-jsonapi
 inflection
-psycopg2-binary
+psycopg
 python-dotenv
 pytz
 sqlparse

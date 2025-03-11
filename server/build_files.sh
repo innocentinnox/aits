@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "Installing requirements.txt"
-python3 -m pip install -r requirements.txt
+# Install dependencies
+pip install -r requirements.txt
 
-echo "Collecting static files"
-python3 manage.py collectstatic --noinput
+# Run Django collectstatic
+python manage.py collectstatic --noinput
