@@ -1,8 +1,8 @@
 # Stage 1: Base build stage
 FROM python:3.13-slim AS builder
  
-# Install build dependencies
-RUN apt-get update && apt-get install -y gcc build-essential
+# Install only necessary build dependencies
+RUN apt-get update && apt-get install -y gcc build-essential && rm -rf /var/lib/apt/lists/*
 
 # Create the app directory
 RUN mkdir /app
@@ -17,8 +17,8 @@ ENV PYTHONUNBUFFERED=1
 # Install dependencies first for caching benefit
 RUN pip install --upgrade pip 
 COPY requirements.txt /app/ 
-RUN pip install --no-cache-dir -r requirements.txt
- 
+RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
+
 # Stage 2: Production stage
 FROM python:3.13-slim
  
@@ -27,15 +27,13 @@ RUN useradd -m -r appuser && \
    chown -R appuser /app
  
 # Copy the Python dependencies from the builder stage
-COPY --from=builder /usr/local/lib/python3.13/site-packages/ /usr/local/lib/python3.13/site-packages/
-COPY --from=builder /usr/local/bin/ /usr/local/bin/
+COPY --from=builder /install /usr/local
+
  
-# Set the working directory
+# Set working directory and copy application code
 WORKDIR /app
- 
-# Copy application code
 COPY --chown=appuser:appuser . .
- 
+
 # Set environment variables to optimize Python
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1 
