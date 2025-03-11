@@ -4,6 +4,7 @@ from .views import RegisterView, LoginView, logout_view, CollegeView, ProfileUpd
 urlpatterns = [
     path('signup/', RegisterView.as_view(), name='signup'),
     path('login/', LoginView.as_view(), name='login'),
+    path('login-test/', LoginView.as_view(), name='login'),
     path('logout/', logout_view, name='logout'),
     path('colleges/', CollegeView.as_view(), name='colleges'),
     path('profile/', ProfileUpdateView.as_view(), name='profile-update'),
