@@ -4,38 +4,34 @@ on:
   push:
     branches: ["main"]
     paths:
-          - "server/**" # Only trigger for changes in that directory
+      - "server/**"  # Trigger only when files in the 'server' directory change
+
 jobs:
   build:
     defaults:
       run:
         working-directory: ./server
     runs-on: self-hosted
-    
 
     steps:
       # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
-        with: # Ensure the repository is not deleted and only updated (similar to git pull)
+        with:
           fetch-depth: 0
           persist-credentials: false
-          clean: false
+          clean: false  # Avoid deleting .env or untracked files
 
-      # Create the .env file from SERVER_SECRETS
+      # Create the .env file from SERVER_SECRETS (handles multi-line secrets correctly)
       - name: Create .env file
-        run: echo "${{ secrets.SERVER_SECRETS }}" > .env
+        run: |
+          echo "${{ secrets.SERVER_SECRETS }}" | tr -d '\r' > .env
 
-      # Docker Compose
-      # - name: Install dependencies
-      #   run: npm ci
-
-      # # Build the application
-      # - name: Build the application
-      #   run: npm run build
-
-      # - name: Deploy to /home/aits/htdocs/aits.ocunex.com
-      #   run: |
-      #     set -e # Explicitly stop on errors
-      #     find /home/aits/htdocs/aits.ocunex.com -mindepth 1 -not -name ".well-known" -exec rm -rf {} +
-      #     cp -r ./dist/* /home/aits/htdocs/aits.ocunex.com/
+      # Build and restart containers safely (without downtime)
+      - name: Deploy with Docker Compose
+        run: |
+          docker compose build --no-cache  # Build latest image
+          docker compose up -d --remove-orphans  # Restart services with zero downtime
+          
+          # Cleanup old, unused images to free up disk space
+          docker image prune -af
