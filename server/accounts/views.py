@@ -65,7 +65,7 @@ class LoginView(generics.GenericAPIView):
                 status=status.HTTP_404_NOT_FOUND
             )
         
-        response = Response({"user": user_data["user"], "message": "Logged in successfully"}, status=status.HTTP_200_OK)
+        response = Response({"user": user_data["user"], "message": "Logged in successfully", "access": user_data["access"], "refresh": user_data["refresh"]}, status=status.HTTP_200_OK)
         # Set JWT tokens in HTTP-only cookies
         response.set_cookie(
             key="access_token",
