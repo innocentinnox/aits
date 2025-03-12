@@ -174,6 +174,7 @@ SIMPLE_JWT = {
     # We will set cookies manually in our views 
 }
 
-
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWS_CREDENTIALS = True 
+CORS_ALLOW_ALL_ORIGINS = False  # Disable wildcard
+# Load CORS allowed origins from environment
+CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS", "").split()
+CORS_ALLOW_CREDENTIALS = True  # Keep credentials support enabled
