@@ -1,11 +1,9 @@
 "use client"
-import Loader from '@/components/loaders/loader';
 import { authService } from '@/services';
 import { ReactNode } from 'react';
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { DEFAULT_LOGOUT_REDIRECT } from '@/routes';
 import FullWindowLoader from '@/components/loaders/full-window-loader';
-import { useNavigate } from 'react-router-dom';
 
 export interface User {
   id: number;
@@ -39,15 +37,15 @@ export const AuthProvider = ({ children } :{ children: ReactNode }) => {
     setLoading(true);
     try {
       const { data } = await authService.checkAuthStatus();
-      if(data?.isAuthenticated && data?.user){
-        setLoading(false);
-        setUser(data?.user);
-      } else {     
-        setUser(null)
+      if (data?.isAuthenticated && data?.user) {
+        setUser(data.user);
+      } else {
+        setUser(null);
       }
-    } catch (error){
+    } catch (error) {
+      setUser(null);
+    } finally {
       setLoading(false);
-      setUser(null)
     }
   };
 

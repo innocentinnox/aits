@@ -29,6 +29,7 @@ import { PasswordInput } from "../ui/password-input";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import LogoIcon from "@/layouts/LogoIcon";
+import { useCurrentUser } from "@/auth";
 
 const formSchema = z.object({
   issueTitle: z.string().min(30),
@@ -41,7 +42,8 @@ const formSchema = z.object({
 
 export const CreateIssueForm = ({ className }: { className?: string }) => {
   const navigate = useNavigate();
-
+  const user = useCurrentUser();
+  console.log(user)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
