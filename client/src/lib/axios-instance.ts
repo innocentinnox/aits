@@ -8,34 +8,27 @@ const axiosInstance = axios.create({
   withCredentials: true, // ensures cookies are sent with requests
 });
 
+// Function to check if a route is public
+const isPublicAPIRoute = (url?: string): boolean => {
+  if (!url) return false;
+  let pathname = url;
+  try {
+    const parsedUrl = new URL(url, window.location.origin);
+    pathname = parsedUrl.pathname;
+  } catch (e) {
+    // If not absolute, assume it's a relative path.
+  }
+  return PUBLIC_API_ROUTES.some((pattern) => matchPath(pattern, pathname));
+};
+
+
+// Request interceptor to attach token (unless the route is public)
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Extract pathname from URL—this handles both relative and absolute URLs.
-    let pathname = config.url || "";
-    try {
-      // If config.url is an absolute URL, extract the pathname
-      const parsedUrl = new URL(config.url!, window.location.origin);
-      pathname = parsedUrl.pathname;
-    } catch (e) {
-      // Otherwise, we assume config.url is already a relative path
-    }
+    if (isPublicAPIRoute(config.url)) return config;
 
-    console.log("Pathname", pathname)
-    
-    // Check if the current request is a public route using matchPath.
-    const isPublic = PUBLIC_API_ROUTES.some((pattern) => {
-      // matchPath returns non-null if the pathname matches the given pattern.
-      return matchPath(pattern, pathname);
-    });
-
-    if (isPublic) {
-      // Skip attaching the token if the route is public.
-      return config;
-    }
-
-    // Otherwise, attach the token if available.
-    const accessToken = authService.getAccessAndRefresh().access_token;
-    if (accessToken) {
+    const accessToken = authService.getAccessAndRefresh()?.access_token;
+    if (accessToken && config.headers) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
@@ -43,28 +36,29 @@ axiosInstance.interceptors.request.use(
   (err) => Promise.reject(err)
 );
 
+// Response interceptor to handle token refresh.
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    
+    if (isPublicAPIRoute(originalRequest?.url)) {
+      return Promise.reject(error);
+    }
     if (
       error.response &&
       error.response.status === 401 &&
       !originalRequest._retry
     ) {
-      if (originalRequest.url.includes("/accounts/token/refresh/")) {
-        return Promise.reject(error);
-      }
+      if (originalRequest.url.includes("/accounts/token/refresh/"))  return Promise.reject(error);
       
       originalRequest._retry = true;
       try {
         const refreshResponse = await axiosInstance.post("/accounts/token/refresh/");
-        
         const newAccessToken = refreshResponse.data.access;
         authService.storeAccess(newAccessToken);
-        
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        if (originalRequest.headers) {
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        }
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         return Promise.reject(refreshError);
