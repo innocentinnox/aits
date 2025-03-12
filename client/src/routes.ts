@@ -1,80 +1,55 @@
 /**
- * ### Configuration for controlling route access.
+ * Public API routes that should not have the access token attached.
  *
- * This configuration defines various route patterns to control access based on authentication and roles.
+ * React Router's matchPath supports a simplified pattern syntax:
  *
- * @examples
- * 
- * ### 1. Simple Wildcards
- * Matches one or more segments in the route.
- * 
- * @example
- * Route: `/users/*path`
- * Matches:
- * - `/users/123`
- * - `/users/profile/settings`
- * 
- * ### 2. Nested Segments
- * Matches multiple segments within the same path.
- * 
- * @example
- * Route: `/items/:itemId/details`
- * Matches:
- * - `/items/123/details`
- * - `/items/456/details`
- * 
- * ### 3. Multiple Nested Segments
- * Matches paths with multiple dynamic parameters.
- * 
- * @example
- * Route: `/user/:userId/settings/:settingType`
- * Matches:
- * - `/user/123/settings/email`
- * - `/user/456/settings/password`
- * 
- * ### 4. File Extension Wildcards
- * Matches paths that include a file extension.
- * 
- * @example
- * Route: `/files/:fileName.:ext`
- * Matches:
- * - `/files/document.pdf`
- * - `/files/image.png`
- */
-
-  /**
-   * Routes that are publicly accessible without authentication.
-   * These routes do not require any user to be logged in.
-   * 
-   * @type {string[]}
-   * @example
-   * ['/', '/new-password', '/docs', '/onboarding', '/onboarding/*path']
-   */
-  export const publicRoutes = [
-    '/', 
-    '/new-password',
-    '/new-password/verify',
-    '/logout',
-    '/onboarding',
-    '/onboarding/*path',
-    '/docs',
-    '/docs/*path'
-  ];
-  
-  
-/**
- * Routes that are used for authentication.
- * Logged-in users will be redirected to DEFAULT_LOGIN_REDIRECT if they attempt to access these routes.
- * 
+ * - **Exact Match:**  
+ *   - `/accounts/login`  
+ *     Matches exactly `/accounts/login`.
+ *
+ * - **Wildcard (Splat) for Nested Routes:**  
+ *   - `/accounts/login/*`  
+ *     Matches `/accounts/login` and any sub-route like `/accounts/login/success` or `/accounts/login/error`.
+ *
+ * - **Parameterized Routes:**  
+ *   - `/accounts/verify/:token`  
+ *     Matches routes like `/accounts/verify/abc123` where `:token` is a dynamic segment.
+ *
+ * - **Catch-All Wildcard:**  
+ *   - `/*`  
+ *     Matches any route.
+ *
+ * Additional examples:
+ *
+ * ```js
+ * // Example 1: Exact match
+ * // Pattern: "/example" matches only "/example"
+ * matchPath("/example", "/example"); // => Match object
+ *
+ * // Example 2: Wildcard nested routes
+ * // Pattern: "/example/*" matches "/example", "/example/123", "/example/123/details", etc.
+ * matchPath("/example/*", "/example/123"); // => Match object
+ *
+ * // Example 3: Parameterized route
+ * // Pattern: "/example/:id" matches "/example/456" and extracts { id: "456" }
+ * matchPath("/example/:id", "/example/456"); // => { params: { id: "456" } }
+ *
+ * // Example 4: Combination of parameter and wildcard
+ * // Pattern: "/example/:id/*" matches "/example/789/foo/bar" and extracts { id: "789", "*": "foo/bar" }
+ * matchPath("/example/:id/*", "/example/789/foo/bar"); // => { params: { id: "789", "*": "foo/bar" } }
+ * ```
+ *
+ * @constant
  * @type {string[]}
- * @example
  */
-export const authRoutes = [
-    '/login', 
-    '/signup', 
-    '/logout', 
-    '/verify'
-  ];
+export const PUBLIC_API_ROUTES = [
+  '/accounts/login', 
+  '/accounts/signup', 
+  '/accounts/verify', 
+  '/accounts/token/refresh',
+  '/accounts/reset-password',
+  '/accounts/reset-password/confirm',
+];
   
 
   /**

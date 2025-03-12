@@ -62,7 +62,7 @@ export const AuthProvider = ({ children } :{ children: ReactNode }) => {
   const logout = async (redirect?: string) => {
     try {
       setUser(null);
-      const { data } = await authService.logout();
+      await authService.logout();
       navigate(redirect || DEFAULT_LOGOUT_REDIRECT)
     } catch(error:any){
       navigate(redirect || DEFAULT_LOGOUT_REDIRECT)

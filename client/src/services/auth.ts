@@ -24,6 +24,11 @@ class AuthService {
       Cookies.set(REFRESH_TOKEN, refresh_token);
     }
 
+    storeAccess(access_tokens: string) {
+      localStorage.setItem(ACCESS_TOKEN, access_tokens);
+      Cookies.set(ACCESS_TOKEN, access_tokens);
+    }
+
     getAccessAndRefresh(){
       return {
         access_token:  Cookies.get(ACCESS_TOKEN) || localStorage.getItem(ACCESS_TOKEN),

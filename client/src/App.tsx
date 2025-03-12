@@ -75,7 +75,7 @@ const router = createBrowserRouter([
         element: <RequestPasswordPage />,
       },
       {
-        path: "reset-password/verify",
+        path: "reset-password/confirm",
         element: <Verify />,
       },
       {
