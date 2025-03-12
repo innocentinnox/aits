@@ -178,3 +178,7 @@ CORS_ALLOW_ALL_ORIGINS = False  # Disable wildcard
 # Load CORS allowed origins from environment
 CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS", "").split()
 CORS_ALLOW_CREDENTIALS = True  # Keep credentials support enabled
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^http://localhost:\d+$",  # Allow all localhost ports
+    r"^http://127\.0\.0\.1:\d+$",
+]
