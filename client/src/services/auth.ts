@@ -1,4 +1,7 @@
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
 import axiosInstance from "@/lib/axios-instance";
+import Cookies from "js-cookie";
+import { Cookie } from "lucide-react";
 
 class AuthService {
     async signUp(formData: any) {
@@ -13,6 +16,28 @@ class AuthService {
         }
       
       }
+      
+    storeAccessAndRefresh(access_tokens: string, refresh_token: string) {
+      localStorage.setItem(ACCESS_TOKEN, access_tokens);
+      localStorage.setItem(REFRESH_TOKEN, refresh_token);
+      Cookies.set(ACCESS_TOKEN, access_tokens);
+      Cookies.set(REFRESH_TOKEN, refresh_token);
+    }
+
+    getAccessAndRefresh(){
+      return {
+        access_token:  Cookies.get(ACCESS_TOKEN) || localStorage.getItem(ACCESS_TOKEN),
+        refresh_token: Cookies.get(REFRESH_TOKEN) || localStorage.getItem(REFRESH_TOKEN)
+      }
+    }
+
+    deleteAccessAndRefresh(){
+      Cookies.remove(ACCESS_TOKEN);
+      Cookies.remove(REFRESH_TOKEN);
+      localStorage.removeItem(ACCESS_TOKEN);
+      localStorage.removeItem(REFRESH_TOKEN);
+    }
+
 
     async login(formData: any) {
       console.log("LOGIN_", formData)
@@ -24,9 +49,12 @@ class AuthService {
 
         try {
           const response = await axiosInstance.post("/accounts/login/", { ...formData }, { withCredentials: false });
-          // const tokens = response.data;
+          const access_tokens = response.data.access;
+          const refresh_token = response.data.refresh;
+
+          if(access_tokens && refresh_token) this.storeAccessAndRefresh(access_tokens, refresh_token);
           console.log(response)
-          return { message: response?.data?.message || "Logged in successfully" }
+          return { user: response?.data?.user, message: response?.data?.message || "Logged in successfully", access_tokens, refresh_token }
         } catch(error: any) {
           console.log(error.response.data)
           throw new Error(error.response?.data?.error || "Something went wrong :(")
@@ -35,7 +63,7 @@ class AuthService {
       }
 
     async logout() {
-        return await axiosInstance.post("/auth/logout", { withCredentials: true } );
+        return await axiosInstance.post("/accounts/logout", { withCredentials: true } );
       }
 
     async verify(formData: any) {
@@ -52,7 +80,7 @@ class AuthService {
       }
 
     async checkAuthStatus() {
-      return await axiosInstance.get("/auth/status", { withCredentials: true }  );
+      return await axiosInstance.get("/accounts/status/", { withCredentials: true }  );
     }
 }
 
