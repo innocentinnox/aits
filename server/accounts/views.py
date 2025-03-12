@@ -22,10 +22,15 @@ def status_view(request):
         'isAuthenticated': True,
         'user': {
             'id': request.user.id,
+            'username': request.user.username,
             'email': request.user.email,
-            'firstName': request.user.first_name,
-            'lastName': request.user.last_name,
-            'role': request.user.role
+            'role': request.user.role,
+            'college': request.user.college if hasattr(request.user, "college") else None,
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'profile_image': request.user.profile_image.url if request.user.profile_image else None,
+            'student_number': request.user.student_number if hasattr(request.user, "student_number") else None,
+            'registration_number': request.user.registration_number if hasattr(request.user, "registration_number") else None,
         }
     })
 
