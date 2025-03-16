@@ -1,18 +1,24 @@
 from django.db import models
 from django.conf import settings
+import uuid
+from datetime import timedelta
+from django.utils import timezone
 
 import random
 import string
 
 # Generate a 5-character alphanumeric token.
 def generate_issue_token():
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+    return f"ISS-{str(uuid.uuid4())[:8].upper()}"
 
 
 STATUS_CHOICES = [
-    ('submitted', 'Submitted'),
+    ('pending', 'Pending'),
     ('forwarded', 'Forwarded'),
+    ('in_progress', 'In Progress'),
     ('resolved', 'Resolved'),
+    # ('closed', 'Closed'),
+    ('rejected', 'Rejected'),
 ]
 
 SEMESTER_CHOICES = [
@@ -30,13 +36,15 @@ YEAR_OF_STUDY = [
 
 class IssueCategory(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    
+    description = models.TextField(blank=True, null=True)
+
     def __str__(self):
         return self.name
 
 class Issue(models.Model):
     token = models.CharField(max_length=5, unique=True, blank=True)
     category = models.ForeignKey(IssueCategory, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
     description = models.TextField()
     
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='issues')
@@ -53,15 +61,25 @@ class Issue(models.Model):
     forwarded_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='forwarded_issues')
     
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='submitted')
+
+    # Additional fields
     resolution_details = models.TextField(blank=True, null=True)
-    
+    attachments = models.FileField(upload_to='attachments/', blank=True, null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    resolved_at = models.DateTimeField(null=True, blank=True)
     
+    class Meta:
+        ordering = ['-created_at']
+
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = generate_issue_token()
         super().save(*args, **kwargs)
-        
+
+        # If status is changed to resolved, set resolved_at
+        if self.status == 'resolved' and not self.resolved_at:
+            self.resolved_at = timezone.now()
     def __str__(self):
-        return f"{self.title} {self.token}"
+        return f"{self.title} - {self.token}"

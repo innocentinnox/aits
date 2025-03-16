@@ -22,7 +22,7 @@ class IssueCreateView(generics.CreateAPIView):
     
     def perform_create(self, serializer):
         user = self.request.user
-        if user.role != 'Student':
+        if user.role != 'student':
             raise PermissionDenied("Only students can create issues.")
         
         # Find Registrar: --> of students college
@@ -39,6 +39,7 @@ class IssueCreateView(generics.CreateAPIView):
             subject="Issue Submitted Successfully",
             message=f"Your issue '{issue.title}' has been submitted with token {issue.token}. Details: {issue.description}"
         )
+        
         # Email the registrar with brief details.
         if registrar:
             send_notification(

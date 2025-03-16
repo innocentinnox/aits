@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import College, Notification
+from .models import College, Notification, Department
+
 
 User = get_user_model()
 
@@ -9,6 +10,10 @@ class CollegeSerializer(serializers.ModelSerializer):
     class Meta:
         model = College
         fields = ['id', 'name']
+class DepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Department
+        fields = '__all__'
 
 # Registration: Only username, email, and password are required.
 class RegisterSerializer(serializers.ModelSerializer):
@@ -36,6 +41,8 @@ class LoginSerializer(serializers.Serializer):
                     'email': user.email,
                     'role': user.role,
                     'college': user.college.name if user.college else None,
+                    'department': user.department.name if user.department else None,
+                    'date_of_birth': user.date_of_birth,
                     'first_name': user.first_name,
                     'last_name': user.last_name,
                     'profile_image': user.profile_image.url if user.profile_image else None,
@@ -61,7 +68,19 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         # All users can update first/last name, profile image, and college.
         # Student-specific fields (student_number, registration_number) are optional.
         fields = ['first_name', 'last_name','date_of_birth', 'profile_image', 'college', 'student_number', 'registration_number']
-        
+
+class UserSerializer(serializers.ModelSerializer):
+    college_name = serializers.ReadOnlyField(source='college.name')
+    department_name = serializers.ReadOnlyField(source='department.name')
+    
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 
+                  'role', 'college', 'college_name', 'department', 
+                  'department_name', 'student_number', 'registration_number', 
+                  'profile_image')
+        read_only_fields = ('id',)
+             
 # These are optional
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
