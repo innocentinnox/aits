@@ -1,7 +1,8 @@
 import MenuItem from "./MenuItem";
 import MenuIcons from "@/icons/Svg";
 import { PATHS } from "../icons/Svg";
-export default function Menu() {
+import { PopMenuProvider } from "@/context/usePopMenu";
+export default function Menu({ setIsMenuOpen }: { setIsMenuOpen: any }) {
   return (
     <ul className="mt-5 flex-col flex  ">
       {MenuIcons.map((item, i) => (
@@ -10,6 +11,7 @@ export default function Menu() {
           icon={item}
           path={PATHS[i]}
           key={PATHS[i]}
+          setIsMenuOpen={setIsMenuOpen}
         />
       ))}
     </ul>

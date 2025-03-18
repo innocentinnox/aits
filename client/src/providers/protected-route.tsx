@@ -7,12 +7,11 @@ const ProtectedRoute = () => {
   const { user, loading } = useAuth();
   const location = useLocation();
 
-
-  if (!user) {
-    // If not authenticated, redirect to login.
-    // Pass the current location so you can navigate back after logging in.
-    return <Navigate to="/auth/login" state={{ from: location }} replace />;
-  }
+  // if (!user) {
+  //   // If not authenticated, redirect to login.
+  //   // Pass the current location so you can navigate back after logging in.
+  //   return <Navigate to="/auth/login" state={{ from: location }} replace />;
+  // }
 
   // User is authenticated; render child routes.
   return <Outlet />;

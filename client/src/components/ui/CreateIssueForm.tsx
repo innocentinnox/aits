@@ -43,7 +43,7 @@ const formSchema = z.object({
 export const CreateIssueForm = ({ className }: { className?: string }) => {
   const navigate = useNavigate();
   const user = useCurrentUser();
-  console.log(user)
+  console.log(user);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -99,6 +99,7 @@ export const CreateIssueForm = ({ className }: { className?: string }) => {
               )}
             />
             <FormField
+              name="description"
               control={form.control}
               render={({ field }) => (
                 <FormItem>

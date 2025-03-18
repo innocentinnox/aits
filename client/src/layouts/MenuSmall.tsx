@@ -1,21 +1,18 @@
-import { AlignJustify, X } from "lucide-react";
-import React from "react";
+import { usePopMenu } from "@/context/usePopMenu";
+import { AlignJustify, LayoutList, X } from "lucide-react";
+import React, { useEffect } from "react";
 
-export default function MenuSmall({
-  onClickMenu,
-  popMenuClicked,
-}: {
-  onClickMenu: Function;
-  popMenuClicked: Boolean;
-}) {
+export default function MenuSmall() {
+  const { isMenuOpen, setIsMenuOpen } = usePopMenu();
+
   return (
     <div
       className="lg:hidden cursor-pointer"
       onClick={() => {
-        onClickMenu();
+        setIsMenuOpen((curval: Boolean) => !curval);
       }}
     >
-      {popMenuClicked ? (
+      {isMenuOpen ? (
         <X className="stroke-current text-zinc-600" size={30} />
       ) : (
         <AlignJustify className="stroke-current text-zinc-600" size={30} />

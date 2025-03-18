@@ -21,15 +21,15 @@ import ProtectedRoute from "./providers/protected-route";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout />,
+    element: <ProtectedRoute />,
     children: [
       {
-        index: true,
-        element: <Navigate to="dashboard" replace />,
-      },
-      {
-        element: <ProtectedRoute />, // Wraps protected routes
+        element: <AppLayout />,
         children: [
+          {
+            index: true,
+            element: <Navigate to="dashboard" replace />,
+          },
           {
             path: "dashboard",
             element: <DashBoard />,
@@ -42,13 +42,13 @@ const router = createBrowserRouter([
             path: "notifications",
             element: <Notifications />,
           },
+          {
+            path: "/details",
+            element: <DetailsForm />,
+          },
         ],
       },
     ],
-  },
-  {
-    path: "/details",
-    element: <DetailsForm />,
   },
   {
     path: "/auth",
