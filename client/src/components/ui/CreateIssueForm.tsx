@@ -16,7 +16,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
-import { authService } from "@/services";
 
 import {
   Select,
@@ -34,6 +33,7 @@ import { useCurrentUser } from "@/auth";
 const formSchema = z.object({
   issueTitle: z.string().min(30),
   description: z.string(),
+  category: z.string(),
   courseUnit: z.string().min(6),
   attachments: z.string(),
   lecturer: z.string(),
@@ -100,7 +100,6 @@ export const CreateIssueForm = ({ className }: { className?: string }) => {
             />
             <FormField
               control={form.control}
-              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Description</FormLabel>
