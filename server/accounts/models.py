@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth import get_user_model
 
+# Update role choices to include department_head
 ROLE_CHOICES = (
     ('registrar', 'Registrar'),
     ('lecturer', 'Lecturer'),
     ('student', 'Student'),
+    ('department_head', 'Department Head'),  # New role added
 )
 
 def user_profile_image_path(instance, filename):
@@ -30,26 +31,56 @@ class Department(models.Model):
     name = models.CharField(max_length=255)
     code = models.CharField(max_length=20, unique=True)
     school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='departments')
+    # Optional department head field
+    department_head = models.ForeignKey(
+        'accounts.CustomUser',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='headed_departments',
+        limit_choices_to={'role': 'department_head'}
+    )
    
     def __str__(self):
         return self.name
-   
+
 class Course(models.Model):
     code = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=255)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='courses')
-    lecturer = models.ForeignKey('accounts.CustomUser', on_delete=models.SET_NULL, null=True, blank=True, related_name='courses_taught')
-   
+    years = models.IntegerField(default=3)
+    description = models.TextField(blank=True, null=True)
+    
     def __str__(self):
         return f"{self.code} - {self.name}"
 
+class CourseUnit(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='units')
+    code = models.CharField(max_length=20)
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    lecturers = models.ManyToManyField(
+        'accounts.CustomUser', 
+        related_name='course_units',
+        help_text="Assign one or more lecturers to this course unit."
+    )
+    
+    def __str__(self):
+        return f"{self.code} - {self.title}"
+    
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        # Ensure that at least one lecturer is assigned.
+        if self.pk and self.lecturers.count() < 1:
+            raise ValidationError("At least one lecturer must be assigned to a course unit.")
+        
 class Class(models.Model):
     name = models.CharField(max_length=255)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='classes')
     
     def __str__(self):
         return f"{self.course.code} - {self.name}"
-   
+
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
@@ -58,7 +89,7 @@ class CustomUser(AbstractUser):
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True, related_name='users')
     profile_image = models.ImageField(upload_to=user_profile_image_path, null=True, blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
-    
+
     # Additional fields for students only
     student_number = models.CharField(max_length=50, blank=True, null=True)
     registration_number = models.CharField(max_length=50, blank=True, null=True)
@@ -74,7 +105,7 @@ class CustomUser(AbstractUser):
             elif email.endswith("@mak.ac.ug"):
                 self.role = "registrar"
             else:
-                self.role = "student"  # Assign a default group if no match
+                self.role = "student"  # Default role
         super().save(*args, **kwargs)
        
     def __str__(self):
