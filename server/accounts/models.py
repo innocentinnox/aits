@@ -1,13 +1,25 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-# Update role choices to include department_head
-ROLE_CHOICES = (
-    ('registrar', 'Registrar'),
-    ('lecturer', 'Lecturer'),
-    ('student', 'Student'),
-    ('department_head', 'Department Head'),  # New role added
-)
+# Role choices
+ROLES_DATA = {
+    "student": {
+        "email_hosts": ["students.mak.ac.ug"],
+        "name": "Student",
+    },
+    "lecturer": {
+        "email_hosts": ["cit.ac.ug", "chuss.mak.ac.ug", "cocis.mak.ac.ug", "cedat.mak.ac.ug"],
+        "name": "Lecturer",
+    },
+    "department_head": {
+        "email_hosts": ["mak.ac.ug", "cit.ac.ug", "chuss.mak.ac.ug", "cocis.mak.ac.ug", "cedat.mak.ac.ug"],
+        "name": "Department Head",
+    },
+    "registrar": {
+        "email_hosts": ["mak.ac.ug", "cit.ac.ug", "chuss.mak.ac.ug", "cocis.mak.ac.ug", "cedat.mak.ac.ug"],
+        "name": "Registrar",
+    },
+}
 
 def user_profile_image_path(instance, filename):
     return f"profile_images/user_{instance.id}/{filename}"
@@ -83,34 +95,39 @@ class Class(models.Model):
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
-    college = models.ForeignKey(College, on_delete=models.SET_NULL, null=True, blank=True, related_name='users')
-    school = models.ForeignKey(School, on_delete=models.SET_NULL, null=True, blank=True, related_name='school_users')
-    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True, related_name='users')
-    profile_image = models.ImageField(upload_to=user_profile_image_path, null=True, blank=True)
-    date_of_birth = models.DateField(blank=True, null=True)
+    role = models.CharField(
+        max_length=20,
+        choices=[(key, value["name"]) for key, value in ROLES_DATA.items()],  # Extract choices from ROLES
+        default="student",
+    )
 
-    # Additional fields for students only
+    # Foreign keys
+    college = models.ForeignKey("College", on_delete=models.SET_NULL, null=True, blank=True)
+    school = models.ForeignKey("School", on_delete=models.SET_NULL, null=True, blank=True)
+    department = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True, blank=True)
+
+    # Additional fields
+    profile_image = models.ImageField(upload_to="profiles/", null=True, blank=True)
+    date_of_birth = models.DateField(blank=True, null=True)
     student_number = models.CharField(max_length=50, blank=True, null=True)
     registration_number = models.CharField(max_length=50, blank=True, null=True)
-   
-    def save(self, *args, **kwargs):
-        # Auto-assign role based on email structure if role is not explicitly set.
-        if not self.role:
-            email = self.email.lower()
-            if email.endswith("@students.ac.ug"):
-                self.role = "student"
-            elif email.endswith("@cit.ac.ug"):
-                self.role = "lecturer"
-            elif email.endswith("@mak.ac.ug"):
-                self.role = "registrar"
-            else:
-                self.role = "student"  # Default role
-        super().save(*args, **kwargs)
-       
-    def __str__(self):
-        return f"{self.email} {self.role}"
 
+    def save(self, *args, **kwargs):
+        """Auto-assign role based on email domain dynamically."""
+        email_domain = self.email.split("@")[-1]  # Extract domain from email
+
+        for role, data in ROLES_DATA.items():
+            if email_domain in data["email_hosts"]:
+                self.role = role
+                break
+        else:
+            self.role = "student"  # Default role
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.email} ({self.role})"
+    
 # Notification model for browser popup alerts
 class Notification(models.Model):
     recipient = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='notifications')
