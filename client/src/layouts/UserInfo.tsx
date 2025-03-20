@@ -1,19 +1,55 @@
+<<<<<<< HEAD
 import { useAuth, useCurrentUser } from "@/auth";
 
 export default function UserInfo() {
   const user = useCurrentUser();
   const { logout } = useAuth()
+=======
+import { useCurrentUser } from "@/auth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { UserRound } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
+export default function UserInfo() {
+  const user = useCurrentUser();
+  const navigate = useNavigate();
+  function handleDetailsNavigation() {
+    navigate("details");
+  }
+>>>>>>> e1542282e364462dc74b4afb1d25027da2154bd5
   return (
     <div className="flex items-center justify-between gap-4 ">
       <div className="user-info text-zinc-600">
         <h2 className="font-semibold uppercase text-[0.8rem] sm:text-[1rem] ">
-          {user?.first_name} {user?.last_name}
+          john whales smith
         </h2>
         <p className="uppercase text-right text-[0.6rem] sm:text-[0.8rem]">
           student(COCIS)
         </p>
       </div>
-      <div className="w-[2.8rem] h-[2.8rem] bg-primary rounded-full"></div>
+      <div>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <div className="w-[2.8rem] h-[2.8rem] bg-primary rounded-full flex items-center justify-center outline-none">
+              <UserRound color="white" />
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>My Profile</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleDetailsNavigation}>
+              Edit Profile
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </div>
   );
 }

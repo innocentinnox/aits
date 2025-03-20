@@ -1,3 +1,4 @@
+import { PopMenuProvider } from "@/context/usePopMenu";
 import Logo from "./Logo";
 import MenuSmall from "./MenuSmall";
 import PopMenu from "./PopMenu";
@@ -18,11 +19,10 @@ function Header({ user }: { user?: string }) {
       {isUserRegistered && (
         <div className="flex gap-2 items-center ">
           <UserInfo />
-          <MenuSmall
-            onClickMenu={handleMenuClick}
-            popMenuClicked={popMenuClicked}
-          />
-          <PopMenu popMenuClicked={popMenuClicked} />
+          <PopMenuProvider>
+            <MenuSmall />
+            <PopMenu />
+          </PopMenuProvider>
         </div>
       )}
     </header>
