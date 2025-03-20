@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, College, Department, Course  # Import your custom user model
+from .models import CustomUser, College, School, Department, Course  # Import your custom user model
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
@@ -12,3 +12,4 @@ admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(College)
 admin.site.register(Department)
 admin.site.register(Course)
+admin.site.register(School)
