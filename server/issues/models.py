@@ -4,9 +4,6 @@ import uuid
 from datetime import timedelta
 from django.utils import timezone
 
-import random
-import string
-
 # Generate a 5-character alphanumeric token.
 def generate_issue_token():
     return f"ISS-{str(uuid.uuid4())[:8].upper()}"
@@ -21,18 +18,8 @@ STATUS_CHOICES = [
     ('rejected', 'Rejected'),
 ]
 
-SEMESTER_CHOICES = [
-    ('semester_1', 'Semester One'),
-    ('semester_2', 'Semester Two'),
-    ('semester_3', 'Semester Three'),
-]
-
-YEAR_OF_STUDY = [
-    ('first_year', 'First Year'),
-    ('second_year', 'Second Year'),
-    ('third_year', 'Third Year'),
-    
-]
+YEAR_CHOICES = [(1, "Year 1"), (2, "Year 2"), (3, "Year 3"), (4, "Year 4"), (5, "Year 5")]
+SEMESTER_CHOICES = [ (1, "Semester 1"), (2, "Semester 2") ]
 
 class IssueCategory(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -51,11 +38,11 @@ class Issue(models.Model):
     
     # Student specific details
     student_registration_number = models.CharField(max_length=50)
-    year_of_study = models.CharField(max_length=100, choices=YEAR_OF_STUDY)
     course_code = models.CharField(max_length=20)
-    semester = models.CharField(max_length=20, choices=SEMESTER_CHOICES)
-    college = models.ForeignKey('accounts.College', on_delete=models.CASCADE)
-    
+    college = models.ForeignKey('accounts.College', on_delete=models.CASCADE) 
+    year_of_study = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, default=1)
+    semester = models.PositiveSmallIntegerField(choices=SEMESTER_CHOICES, default=1)
+
     # Issue automatically assigned to the College Registrar --> Resolved or forwarded to the lecturer
     assigned_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_issues')
     forwarded_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='forwarded_issues')

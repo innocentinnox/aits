@@ -61,27 +61,36 @@ class Course(models.Model):
     name = models.CharField(max_length=255)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='courses')
     years = models.IntegerField(default=3)
+
     description = models.TextField(blank=True, null=True)
     
     def __str__(self):
         return f"{self.code} - {self.name}"
 
+from django.db import models
+
 class CourseUnit(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='units')
+    YEAR_CHOICES = [(1, "Year 1"), (2, "Year 2"), (3, "Year 3"), (4, "Year 4"), (5, "Year 5")]
+    SEMESTER_CHOICES = [ (1, "Semester 1"), (2, "Semester 2") ]
+
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="units")
     code = models.CharField(max_length=20)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     lecturers = models.ManyToManyField(
-        'accounts.CustomUser', 
-        related_name='course_units',
-        help_text="Assign one or more lecturers to this course unit."
+        "accounts.CustomUser",
+        related_name="course_units",
+        help_text="Assign one or more lecturers to this course unit.",
     )
-    
+    year_taken = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, default=1)
+    semester = models.PositiveSmallIntegerField(choices=SEMESTER_CHOICES, default=1)
+
     def __str__(self):
-        return f"{self.code} - {self.title}"
-    
+        return f"{self.code} - {self.title} (Year {self.year_taken}, Semester {self.semester})"
+
     def clean(self):
         from django.core.exceptions import ValidationError
+        
         # Ensure that at least one lecturer is assigned.
         if self.pk and self.lecturers.count() < 1:
             raise ValidationError("At least one lecturer must be assigned to a course unit.")
