@@ -1,7 +1,8 @@
-import { useCurrentUser } from "@/auth";
+import { useAuth, useCurrentUser } from "@/auth";
 
 export default function UserInfo() {
   const user = useCurrentUser();
+  const { logout } = useAuth()
   return (
     <div className="flex items-center justify-between gap-4 ">
       <div className="user-info text-zinc-600">

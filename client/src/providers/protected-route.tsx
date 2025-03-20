@@ -1,6 +1,5 @@
 // src/components/ProtectedRoute.jsx
 import { useAuth } from "@/auth";
-import FullWindowLoader from "@/components/loaders/full-window-loader";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const ProtectedRoute = () => {
