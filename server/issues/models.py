@@ -14,7 +14,6 @@ STATUS_CHOICES = [
     ('forwarded', 'Forwarded'),
     ('in_progress', 'In Progress'),
     ('resolved', 'Resolved'),
-    # ('closed', 'Closed'),
     ('rejected', 'Rejected'),
 ]
 

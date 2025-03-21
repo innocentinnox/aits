@@ -1,11 +1,4 @@
-<<<<<<< HEAD
 import { useAuth, useCurrentUser } from "@/auth";
-
-export default function UserInfo() {
-  const user = useCurrentUser();
-  const { logout } = useAuth()
-=======
-import { useCurrentUser } from "@/auth";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,13 +10,13 @@ import {
 import { UserRound } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export default function UserInfo() {
-  const user = useCurrentUser();
+
+  export default function UserInfo() {
+  const { logout, user } = useAuth()
   const navigate = useNavigate();
   function handleDetailsNavigation() {
     navigate("details");
   }
->>>>>>> e1542282e364462dc74b4afb1d25027da2154bd5
   return (
     <div className="flex items-center justify-between gap-4 ">
       <div className="user-info text-zinc-600">
