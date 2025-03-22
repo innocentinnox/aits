@@ -1,4 +1,4 @@
-from rest_framework import generics, status
+from rest_framework import generics, status 
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view
@@ -13,24 +13,35 @@ from .models import College, Notification
 
 User = get_user_model()
 
+def serialize_obj(obj):
+    """Helper function to serialize objects to include only name and code."""
+    if obj:
+        return {"name": obj.name, "code": obj.code}
+    return None
+
 @api_view(['GET'])
 def status_view(request):
     if not request.user.is_authenticated:
         return Response({'isAuthenticated': False}, status=status.HTTP_401_UNAUTHORIZED)
     
+    user = request.user
     return Response({
         'isAuthenticated': True,
         'user': {
-            'id': request.user.id,
-            'username': request.user.username,
-            'email': request.user.email,
-            'role': request.user.role,
-            'college': request.user.college if hasattr(request.user, "college") else None,
-            'first_name': request.user.first_name,
-            'last_name': request.user.last_name,
-            'profile_image': request.user.profile_image.url if request.user.profile_image else None,
-            'student_number': request.user.student_number if hasattr(request.user, "student_number") else None,
-            'registration_number': request.user.registration_number if hasattr(request.user, "registration_number") else None,
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'role': user.role,
+            'college': serialize_obj(user.college),      # returns {"name": ..., "code": ...} or None
+            'school': serialize_obj(user.school),          # returns {"name": ..., "code": ...} or None
+            'department': serialize_obj(user.department),  # returns {"name": ..., "code": ...} or None
+            # If you later add a course attribute to the user, you can include it similarly:
+            # 'course': serialize_obj(user.course) if hasattr(user, 'course') else None,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'profile_image': user.profile_image.url if user.profile_image else None,
+            'student_number': user.student_number,
+            'registration_number': user.registration_number,
         }
     })
 

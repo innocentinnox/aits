@@ -114,6 +114,7 @@ class CustomUser(AbstractUser):
     college = models.ForeignKey("College", on_delete=models.SET_NULL, null=True, blank=True)
     school = models.ForeignKey("School", on_delete=models.SET_NULL, null=True, blank=True)
     department = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True, blank=True)
+    course = models.ForeignKey("Course", on_delete=models.SET_NULL, null=True, blank=True, related_name="students")
 
     # Additional fields
     profile_image = models.ImageField(upload_to="profiles/", null=True, blank=True)

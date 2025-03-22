@@ -72,15 +72,19 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     college_name = serializers.ReadOnlyField(source='college.name')
     department_name = serializers.ReadOnlyField(source='department.name')
+    course_name = serializers.ReadOnlyField(source='course.name')
+    school_name = serializers.ReadOnlyField(source='school.name')
     
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'first_name', 'last_name', 
-                  'role', 'college', 'college_name', 'department', 
-                  'department_name', 'student_number', 'registration_number', 
-                  'profile_image')
+        fields = (
+            'id', 'username', 'email', 'first_name', 'last_name', 
+            'role', 'college', 'college_name', 'school', 'school_name',
+            'department', 'department_name', 'course', 'course_name',
+            'date_of_birth', 'student_number', 'registration_number', 
+            'profile_image'
+        )
         read_only_fields = ('id',)
-             
 # These are optional
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
