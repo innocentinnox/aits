@@ -17,13 +17,19 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 # Registration: Only username, email, and password are required.
 class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
-    
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'password')
+
     def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
         return user
 
 class LoginSerializer(serializers.Serializer):

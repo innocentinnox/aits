@@ -35,6 +35,7 @@ def status_view(request):
             'college': serialize_obj(user.college),      # returns {"name": ..., "code": ...} or None
             'school': serialize_obj(user.school),          # returns {"name": ..., "code": ...} or None
             'department': serialize_obj(user.department),  # returns {"name": ..., "code": ...} or None
+            'course': serialize_obj(user.course),  # returns {"name": ..., "code": ...} or None
             # If you later add a course attribute to the user, you can include it similarly:
             # 'course': serialize_obj(user.course) if hasattr(user, 'course') else None,
             'first_name': user.first_name,

@@ -32,7 +32,7 @@ export const AuthProvider = ({ children } :{ children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = (path: string) => window.location.href = path;
-
+  console.log("user: ", user);
   const checkAuthStatus = async () => {
     setLoading(true);
     try {

@@ -12,7 +12,7 @@ class AuthService {
           return { message: "Account created successfully" }
         } catch(error: any){
           console.log(error.response)
-          throw new Error("Something went wrong :(")
+          throw new Error(error.response?.data?.message || "Something went wrong :(")
         }
       
       }

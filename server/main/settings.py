@@ -162,6 +162,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'EXCEPTION_HANDLER': 'main.utils.exception_handler.custom_exception_handler',
 }
 
 # SimpleJWT settings with cookies (in production set secure=True)

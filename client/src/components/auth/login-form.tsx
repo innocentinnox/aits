@@ -51,7 +51,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
 
     return (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit((values) => onSubmit(values))} className={cn("space-y-8")}>
+          <form onSubmit={form.handleSubmit((values) => onSubmit(values))} className={cn("space-y-6")}>
             <FormField
               control={form.control}
               name="email"
