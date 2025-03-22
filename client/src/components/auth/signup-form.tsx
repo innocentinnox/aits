@@ -18,13 +18,7 @@ import { cn } from "@/lib/utils"
 import { useNavigate } from "react-router-dom"
 import { authService } from "@/services"
 
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-  } from "@/components/ui/select"
+
 import { PasswordInput } from "../ui/password-input"
 import { toast } from "sonner"
 import { useMutation } from "@tanstack/react-query"
