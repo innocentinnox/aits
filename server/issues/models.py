@@ -1,13 +1,18 @@
 from django.db import models
 from django.conf import settings
-import uuid
+import random
+import time
 from datetime import timedelta
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
 # Generate a 5-character token (using 8 characters for uniqueness).
-def generate_issue_token():
-    return f"ISS-{str(uuid.uuid4())[:8].upper()}"
+def generate_issue_token(category_id, user_id):
+    # Generate a random number with 4 to 6 digits.
+    random_part = random.randint(1000, 999999)
+    # Get the last 4 digits of the current epoch time.
+    time_factor = int(time.time()) % 10000  
+    return f"ISS-{category_id}{user_id}{random_part}{time_factor}"
 
 # Priority choices for categories and issues
 PRIORITY_CHOICES = [
@@ -41,7 +46,7 @@ class IssueCategory(models.Model):
         return f"{self.name} - {desc}"
 
 class Issue(models.Model):
-    token = models.CharField(max_length=12, unique=True, blank=True)
+    token = models.CharField(max_length=24, unique=True, blank=True)
     category = models.ForeignKey(IssueCategory, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.TextField()
@@ -87,11 +92,13 @@ class Issue(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.token:
-            self.token = generate_issue_token()
-        # Inherit priority from the category if not explicitly set.
-        if self.priority is None and self.category:
-            self.priority = self.category.priority
-        super().save(*args, **kwargs)
+            # Ensure that category and created_by are set.
+            if self.category_id and self.created_by_id:
+                self.token = generate_issue_token(self.category_id, self.created_by_id)
+            else:
+                # Fallback if for some reason they aren't set.
+                self.token = generate_issue_token(0, 0)
+            super().save(*args, **kwargs)
 
         # Set resolved_at when status changes to resolved (and it's not already set).
         if self.status == 'resolved' and not self.resolved_at:
