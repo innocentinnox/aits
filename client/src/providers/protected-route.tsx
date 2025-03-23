@@ -6,7 +6,7 @@ const ProtectedRoute = () => {
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  if(!user?.college){
+  if(user && !user?.college){
     return <Navigate to="/onboarding" state={{ from: location }} replace />;
   }
   
