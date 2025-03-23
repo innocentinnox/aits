@@ -8,11 +8,11 @@ from django.core.exceptions import ValidationError
 
 # Generate a 5-character token (using 8 characters for uniqueness).
 def generate_issue_token(category_id, user_id):
-    # Generate a random number with 4 to 6 digits.
-    random_part = random.randint(1000, 999999)
+    # Generate a random number with 3 digits.
+    random_part = random.randint(1000, 9999)
     # Get the last 4 digits of the current epoch time.
     time_factor = int(time.time()) % 10000  
-    return f"ISS-{category_id}{user_id}{random_part}{time_factor}"
+    return f"ISS-{category_id}-{user_id}-{random_part}-{time_factor}"
 
 # Priority choices for categories and issues
 PRIORITY_CHOICES = [
@@ -105,6 +105,8 @@ class Issue(models.Model):
             self.resolved_at = timezone.now()
             super().save(update_fields=['resolved_at'])
 
+    def attachment_list(self):
+            return self.attachments.all()
     def __str__(self):
         return f"{self.title} - {self.token}"
 

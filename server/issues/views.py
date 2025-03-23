@@ -3,9 +3,10 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
-from .models import Issue, IssueCategory
+from .models import Issue, IssueCategory, IssueAttachment
 from .serializers import IssueSerializer, IssueCategorySerializer
 from accounts.utils import send_notification, log_audit
+from rest_framework.parsers import MultiPartParser, FormParser
 
 User = get_user_model()
 
@@ -19,28 +20,27 @@ class IssueCategoryView(generics.ListCreateAPIView):
 class IssueCreateView(generics.CreateAPIView):
     serializer_class = IssueSerializer
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
     
     def perform_create(self, serializer):
         user = self.request.user
         if user.role != 'student':
             raise PermissionDenied("Only students can create issues.")
         
-        # Find Registrar: --> of students college
         registrar = User.objects.filter(role='registrar', college=user.college).first()
         issue = serializer.save(created_by=user, assigned_to=registrar)
-        
-        # Audit log for issue creation
         log_audit(user, "Issue Created", f"Issue '{issue.title}' with token {issue.token} created.")
         
-        # Email notifications:
-        # Email the student with full details.
+        # Process file attachments if any
+        for file in self.request.FILES.getlist('attachments'):
+            IssueAttachment.objects.create(issue=issue, file=file)
+        
+        # Email notifications...
         send_notification(
             recipient=user,
             subject="Issue Submitted Successfully",
             message=f"Your issue '{issue.title}' has been submitted with token {issue.token}. Details: {issue.description}"
         )
-        
-        # Email the registrar with brief details.
         if registrar:
             send_notification(
                 recipient=registrar,
