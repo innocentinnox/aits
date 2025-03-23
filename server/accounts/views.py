@@ -20,7 +20,7 @@ User = get_user_model()
 def serialize_obj(obj):
     """Helper function to serialize objects to include only name and id."""
     if obj:
-        return {"id": obj.id, "name": obj.name}
+        return {"id": obj.id, "name": obj.name, "code": obj.code}
     return None
 
 @api_view(['GET'])

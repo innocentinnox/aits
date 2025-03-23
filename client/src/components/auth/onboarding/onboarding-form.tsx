@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, use, us } from '@tanstack/react-query';
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
@@ -11,17 +11,19 @@ import { Button } from "@/components/ui/button";
 import axiosInstance from "@/lib/axios-instance";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { OnboardingSchema } from "./schema";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { useAuth } from "@/auth";
+import { useNavigate } from "react-router-dom";
 
 
 
 type OnboardingFormValues = z.infer<typeof OnboardingSchema>;
 
-interface OnboardingFormProps {
-  role: "student" | "lecturer" | "department_head" | "registrar";
-  onSubmit: (values: OnboardingFormValues) => void;
-}
-
-export const OnboardingForm = ({ role, onSubmit }: OnboardingFormProps) => {
+export const OnboardingForm = () => {
+  const { user, checkAuthStatus } = useAuth();
+  const role = user?.role;
+  
+  const navigate = useNavigate();
   const form = useForm<OnboardingFormValues>({
     resolver: zodResolver(OnboardingSchema),
     defaultValues: {
@@ -29,8 +31,8 @@ export const OnboardingForm = ({ role, onSubmit }: OnboardingFormProps) => {
       school: "",
       department: "",
       course: "",
-      student_number: "",
-      registration_number: "",
+      student_number: user?.student_number || "",
+      registration_number: user?.registration_number || "",
     },
   });
 
@@ -91,6 +93,24 @@ export const OnboardingForm = ({ role, onSubmit }: OnboardingFormProps) => {
   const showDepartment = role === "student" || role === "lecturer" || role === "department_head";
   const showCourse = role === "student" || role === "lecturer";
   const showStudentFields = role === "student";
+
+
+  // Form submission
+  const { mutate: onSubmit, isPending: updatingProfile } = useMutation({
+    mutationFn: async (values: OnboardingFormValues) => {
+      console.log("Submitting: ", values);
+      const res = await axiosInstance.put("/accounts/profile/", values);
+      checkAuthStatus()
+      .then(() => navigate(DEFAULT_LOGIN_REDIRECT))
+      return res.data;
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to update profile");
+    },
+    onSuccess: () => {
+      toast.success("Profile updated successfully");
+    },
+  });
 
   return (
     <Form {...form}>
@@ -237,7 +257,10 @@ export const OnboardingForm = ({ role, onSubmit }: OnboardingFormProps) => {
           </>
         )}
 
-        <Button type="submit" className="w-full">Update Profile</Button>
+        <Button type="submit" className="w-full !mt-4" disabled={updatingProfile}>
+          {updatingProfile ? "Updating..." : "Complete Profile"}
+        </Button>
+        {/* <Button>Update Profile</Button> */}
       </form>
     </Form>
   );

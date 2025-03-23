@@ -6,7 +6,10 @@ const ProtectedRoute = () => {
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  return <Navigate to="/onboarding" state={{ from: location }} replace />;
+  if(!user?.college){
+    return <Navigate to="/onboarding" state={{ from: location }} replace />;
+  }
+  
   if (!user) {
     // If not authenticated, redirect to login.
     // Pass the current location so you can navigate back after logging in.

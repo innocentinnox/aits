@@ -72,17 +72,34 @@ class LoginSerializer(serializers.Serializer):
     
 # Profile update serializer: Allows updating personal details.
 class ProfileUpdateSerializer(serializers.ModelSerializer):
-    college = serializers.SlugRelatedField(
+    college = serializers.PrimaryKeyRelatedField(
         queryset=College.objects.all(),
-        slug_field='name',
+        required=False,
+        allow_null=True
+    )
+    school = serializers.PrimaryKeyRelatedField(
+        queryset=School.objects.all(),
+        required=False,
+        allow_null=True
+    )
+    department = serializers.PrimaryKeyRelatedField(
+        queryset=Department.objects.all(),
+        required=False,
+        allow_null=True
+    )
+    course = serializers.PrimaryKeyRelatedField(
+        queryset=Course.objects.all(),
         required=False,
         allow_null=True
     )
     
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'date_of_birth', 'profile_image', 'college', 'student_number', 'registration_number']
-
+        fields = [
+            'first_name', 'last_name', 'date_of_birth', 'profile_image',
+            'college', 'school', 'department', 'course',
+            'student_number', 'registration_number'
+        ]
 class UserSerializer(serializers.ModelSerializer):
     college_name = serializers.ReadOnlyField(source='college.name')
     department_name = serializers.ReadOnlyField(source='department.name')

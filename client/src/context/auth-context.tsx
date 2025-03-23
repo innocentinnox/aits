@@ -10,14 +10,16 @@ export interface User {
   username: string;
   email: string;
   role: "student" | "lecturer" | "department_head" | "registrar";
-  college: string | null;
+  college: { id: number; name: string; code: string } | null;
+  school: { id: number; name: string; code: string } | null;
+  department: { id: number; name: string; code: string } | null;
+  course: { id: number; name: string; code: string } | null;
   first_name: string;
   last_name: string;
   profile_image: string | null;
   student_number: string | null;
   registration_number: string | null;
 }
-
 interface AuthContextProps {
   user: User | null;
   checkAuthStatus: () => Promise<void>;
