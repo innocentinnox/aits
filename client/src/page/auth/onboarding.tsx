@@ -28,7 +28,7 @@ export default function OnboardingPage() {
                   <path d="M3 9h18" />
                 </svg>
               </div>
-              <span>AITS</span>
+              <span>Onboarding</span>
             </div>
           </div>
 
