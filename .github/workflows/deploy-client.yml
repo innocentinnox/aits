@@ -32,8 +32,8 @@ jobs:
             ${{ runner.os }}-node-
 
       # Create the .env file from SERVER_SECRETS
-      # - name: Create .env file
-      #   run: echo "${{ secrets.PAY_SECRETS }}" > .env
+      - name: Create .env file
+        run: echo "${{ secrets.CLIENT_SECRETS }}" > .env
 
       # Install dependencies
       - name: Install dependencies
