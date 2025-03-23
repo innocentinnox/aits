@@ -1,12 +1,16 @@
-import { PUBLIC_API_ROUTES } from "@/routes";
+// In axios-instance.ts
+import { PUBLIC_API_ROUTES, PUBLIC_ROUTES } from "@/routes";
 import { authService } from "@/services";
 import axios from "axios";
 import { matchPath } from "react-router-dom";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_ENDPOINT,
-  withCredentials: true, // ensures cookies are sent with requests
+  withCredentials: true,
 });
+
+const currentRoute = window.location.pathname + window.location.search;
+const isCurrentRoutePublic =  PUBLIC_ROUTES.some((pattern) => matchPath(pattern, currentRoute))
 
 // Function to check if a route is public
 const isPublicAPIRoute = (url?: string): boolean => {
@@ -16,18 +20,20 @@ const isPublicAPIRoute = (url?: string): boolean => {
     const parsedUrl = new URL(url, window.location.origin);
     pathname = parsedUrl.pathname;
   } catch (e) {
-    // If not absolute, assume it's a relative path.
+    // Assume it's a relative path.
   }
   return PUBLIC_API_ROUTES.some((pattern) => matchPath(pattern, pathname));
 };
 
 
-// Request interceptor to attach token (unless the route is public)
+
+
+// Request interceptor remains unchanged (or uses our getValidAccessToken method)
 axiosInstance.interceptors.request.use(
-  (config) => {
+  async (config) => {
     if (isPublicAPIRoute(config.url)) return config;
 
-    const accessToken = authService.getAccessAndRefresh()?.access_token;
+    const accessToken = await authService.getValidAccessToken();
     if (accessToken && config.headers) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -36,34 +42,45 @@ axiosInstance.interceptors.request.use(
   (err) => Promise.reject(err)
 );
 
-// Response interceptor to handle token refresh.
+// Response interceptor now uses refreshAccessToken for separation of concern.
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    if (isPublicAPIRoute(originalRequest?.url)) {
-      return Promise.reject(error);
-    }
+    if (isPublicAPIRoute(originalRequest?.url)) return Promise.reject(error)
+    if (isCurrentRoutePublic) return Promise.reject(error); // Prevent redirect loop on public routes
+
     if (
       error.response &&
       error.response.status === 401 &&
       !originalRequest._retry
     ) {
-      if (originalRequest.url.includes("/accounts/token/refresh/"))  return Promise.reject(error);
+      // Prevent infinite loop if refresh fails.
+      if (originalRequest.url.includes("/accounts/token/refresh/")) {
+        // Redirect to login page when refresh token fails
+        window.location.href = '/auth/login';
+        return Promise.reject(error);
+      }
       
       originalRequest._retry = true;
       try {
-        const refreshResponse = await axiosInstance.post("/accounts/token/refresh/");
-        const newAccessToken = refreshResponse.data.access;
-        authService.storeAccess(newAccessToken);
-        if (originalRequest.headers) {
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        const newAccessToken = await authService.refreshAccessToken();
+        if (newAccessToken) {
+          if (originalRequest.headers) {
+            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          }
+          return axiosInstance(originalRequest);
+        } else {
+          // No access token available after refresh attempt
+          window.location.href = '/auth/login';
         }
-        return axiosInstance(originalRequest);
       } catch (refreshError) {
-        return Promise.reject(refreshError);
+        // Handle refresh token error
+        window.location.href = '/auth/login';
+        return Promise.reject(error);
       }
     }
+    
     return Promise.reject(error);
   }
 );

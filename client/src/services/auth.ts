@@ -2,6 +2,7 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
 import axiosInstance from "@/lib/axios-instance";
 import Cookies from "js-cookie";
 import { Cookie } from "lucide-react";
+import { jwtDecode } from "jwt-decode"; // Correct default import
 
 class AuthService {
     async signUp(formData: any) {
@@ -43,6 +44,68 @@ class AuthService {
       localStorage.removeItem(REFRESH_TOKEN);
     }
 
+    async refreshAccessToken(): Promise<string | null> {
+      const tokens = this.getAccessAndRefresh();
+      const refreshToken = tokens?.refresh_token;
+      if (!refreshToken) return null;
+      
+      try {
+        const refreshResponse = await axiosInstance.post("/accounts/token/refresh/", { refresh: refreshToken });
+        const newAccessToken = refreshResponse.data.access;
+        this.storeAccess(newAccessToken);
+        console.log("Successfully refreshed access token via AuthService.refreshAccessToken()");
+        return newAccessToken;
+      } catch (error) {
+        console.error("Failed to refresh access token", error);
+        return null;
+      }
+    }
+
+  // Method to check if the access token is valid, refresh it if necessary, and return it.
+  async getValidAccessToken(): Promise<string | null> {
+    const tokens = this.getAccessAndRefresh();
+    let accessToken = tokens?.access_token;
+    if (!accessToken) return null;
+
+    try {
+        const { exp } = jwtDecode<{ exp: number }>(accessToken);
+        const now = Math.floor(Date.now() / 1000);
+        const expiryDate = new Date(exp * 1000).toLocaleString();
+        console.log("Decoded access token", { exp, now, expiryDate });
+        if (exp < now) {
+          console.warn(`Access token expired at ${expiryDate}`);
+          // Check refresh token
+          const refreshToken = tokens?.refresh_token;
+          if (refreshToken) {
+            try {
+              const { exp: refreshExp } = jwtDecode<{ exp: number }>(refreshToken);
+              const refreshExpiryDate = new Date(refreshExp * 1000).toLocaleString();
+              console.log("Decoded refresh token", { refreshExp, now, refreshExpiryDate });
+              if (refreshExp > now) {
+                // Refresh token is valid; attempt refresh.
+                const refreshResponse = await axiosInstance.post("/accounts/token/refresh/", { refresh: refreshToken });
+                const newAccessToken = refreshResponse.data.access;
+                this.storeAccess(newAccessToken);
+                accessToken = newAccessToken;
+                console.log("Successfully refreshed access token.");
+              } else {
+                console.warn(`Refresh token expired at ${refreshExpiryDate}`);
+                return null;
+              }
+            } catch (err) {
+              console.error("Failed to decode refresh token", err);
+              return null;
+            }
+          }
+        } else {
+          console.log(`Access token will expire at ${expiryDate}`);
+        }
+      } catch (error) {
+        console.error("Failed to decode access token", error);
+        return null;
+      }
+      return accessToken;
+    }
 
     async login(formData: any) {
       console.log("LOGIN_", formData)

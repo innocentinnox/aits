@@ -1,4 +1,4 @@
-from rest_framework import generics, status 
+from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view
@@ -7,16 +7,20 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.exceptions import TokenError
 
-from .serializers import RegisterSerializer, ProfileUpdateSerializer, LoginSerializer, CollegeSerializer, NotificationSerializer
+from .serializers import (
+    RegisterSerializer, ProfileUpdateSerializer, LoginSerializer, 
+    CollegeSerializer, NotificationSerializer, SchoolSerializer, 
+    DepartmentSerializer, CourseSerializer
+)
 from .utils import log_audit
-from .models import College, Notification
+from .models import College, Notification, School, Department, Course
 
 User = get_user_model()
 
 def serialize_obj(obj):
-    """Helper function to serialize objects to include only name and code."""
+    """Helper function to serialize objects to include only name and id."""
     if obj:
-        return {"name": obj.name, "code": obj.code}
+        return {"id": obj.id, "name": obj.name}
     return None
 
 @api_view(['GET'])
@@ -32,12 +36,10 @@ def status_view(request):
             'username': user.username,
             'email': user.email,
             'role': user.role,
-            'college': serialize_obj(user.college),      # returns {"name": ..., "code": ...} or None
-            'school': serialize_obj(user.school),          # returns {"name": ..., "code": ...} or None
-            'department': serialize_obj(user.department),  # returns {"name": ..., "code": ...} or None
-            'course': serialize_obj(user.course),  # returns {"name": ..., "code": ...} or None
-            # If you later add a course attribute to the user, you can include it similarly:
-            # 'course': serialize_obj(user.course) if hasattr(user, 'course') else None,
+            'college': serialize_obj(user.college),      
+            'school': serialize_obj(user.school),          
+            'department': serialize_obj(user.department),  
+            'course': serialize_obj(user.course),  
             'first_name': user.first_name,
             'last_name': user.last_name,
             'profile_image': user.profile_image.url if user.profile_image else None,
@@ -82,8 +84,13 @@ class LoginView(generics.GenericAPIView):
                 status=status.HTTP_404_NOT_FOUND
             )
         
-        response = Response({"user": user_data["user"], "message": "Logged in successfully", "access": user_data["access"], "refresh": user_data["refresh"]}, status=status.HTTP_200_OK)
-        # Set JWT tokens in HTTP-only cookies
+        response = Response({
+            "user": user_data["user"],
+            "message": "Logged in successfully",
+            "access": user_data["access"],
+            "refresh": user_data["refresh"]
+        }, status=status.HTTP_200_OK)
+        
         response.set_cookie(
             key="access_token",
             value=user_data["access"],
@@ -133,26 +140,58 @@ class TokenRefreshCookieView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
-        # Retrieve the refresh token from the cookies
-        refresh_token = request.COOKIES.get("refresh_token")
+        # Try to get refresh token from the request body, then from cookies
+        refresh_token = request.data.get("refresh") or request.COOKIES.get("refresh_token")
         if not refresh_token:
             return Response({"error": "Refresh token missing"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # Create a RefreshToken instance using the token from the cookie
             refresh = RefreshToken(refresh_token)
-            # Generate a new access token
             new_access_token = str(refresh.access_token)
         except TokenError:
             return Response({"error": "Invalid refresh token"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Create the response and set the new access token as an HTTP-only cookie
         response = Response({"access": new_access_token}, status=status.HTTP_200_OK)
         response.set_cookie(
             key="access_token",
             value=new_access_token,
-            httponly=True,         # Prevent JavaScript access to this cookie
-            secure=False,          # Set to True in production when using HTTPS
-            samesite="Lax"         # Adjust as needed for your use-case
+            httponly=True,
+            secure=False,
+            samesite="Lax"
         )
         return response
+
+class CollegeListAPIView(generics.ListAPIView):
+    queryset = College.objects.all()
+    serializer_class = CollegeSerializer
+    permission_classes = [IsAuthenticated]
+
+class SchoolListAPIView(generics.ListAPIView):
+    serializer_class = SchoolSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        college_id = self.request.query_params.get('college_id')
+        if college_id:
+            return School.objects.filter(college__id=college_id)
+        return School.objects.none()
+
+class DepartmentListAPIView(generics.ListAPIView):
+    serializer_class = DepartmentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        school_id = self.request.query_params.get('school_id')
+        if school_id:
+            return Department.objects.filter(school__id=school_id)
+        return Department.objects.none()
+
+class CourseListAPIView(generics.ListAPIView):
+    serializer_class = CourseSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        department_id = self.request.query_params.get('department_id')
+        if department_id:
+            return Course.objects.filter(department__id=department_id)
+        return Course.objects.none()

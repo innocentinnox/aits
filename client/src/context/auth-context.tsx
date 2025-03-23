@@ -9,7 +9,7 @@ export interface User {
   id: number;
   username: string;
   email: string;
-  role: "Student" | "Lecturer";
+  role: "student" | "lecturer" | "department_head" | "registrar";
   college: string | null;
   first_name: string;
   last_name: string;

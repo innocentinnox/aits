@@ -1,8 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import College, Notification, Department
-
+from .models import College, Notification, School, Department, Course
 
 User = get_user_model()
 
@@ -10,10 +9,21 @@ class CollegeSerializer(serializers.ModelSerializer):
     class Meta:
         model = College
         fields = ['id', 'name']
+
+class SchoolSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = School
+        fields = ['id', 'name']
+
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
-        fields = '__all__'
+        fields = ['id', 'name']
+
+class CourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ['id', 'name']
 
 # Registration: Only username, email, and password are required.
 class RegisterSerializer(serializers.ModelSerializer):
@@ -71,9 +81,7 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        # All users can update first/last name, profile image, and college.
-        # Student-specific fields (student_number, registration_number) are optional.
-        fields = ['first_name', 'last_name','date_of_birth', 'profile_image', 'college', 'student_number', 'registration_number']
+        fields = ['first_name', 'last_name', 'date_of_birth', 'profile_image', 'college', 'student_number', 'registration_number']
 
 class UserSerializer(serializers.ModelSerializer):
     college_name = serializers.ReadOnlyField(source='college.name')
@@ -91,7 +99,7 @@ class UserSerializer(serializers.ModelSerializer):
             'profile_image'
         )
         read_only_fields = ('id',)
-# These are optional
+
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification

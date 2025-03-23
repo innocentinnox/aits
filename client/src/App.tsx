@@ -18,6 +18,7 @@ import { CreateIssueForm } from "./components/ui/CreateIssueForm";
 import Notifications from "./page/Notifications/Notifications";
 import { AuthProvider } from "./context/auth-context";
 import ProtectedRoute from "./providers/protected-route";
+import OnboardingPage from "./page/auth/onboarding";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -84,6 +85,14 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "*",
+    element: <Navigate to="/dashboard" replace />, // 404
+  },
+  {
+    path: "/onboarding",
+    element: <OnboardingPage />, // 404
+  }
 ]);
 
 function App() {

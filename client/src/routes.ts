@@ -51,6 +51,11 @@ export const PUBLIC_API_ROUTES = [
   '/accounts/reset-password/confirm',
 ];
   
+export const PUBLIC_ROUTES = [
+  '/auth/login', 
+  '/auth/signup',
+];
+  
 
   /**
    * The default redirect URL after a successful login.
