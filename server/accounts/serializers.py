@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import College, Notification, School, Department, Course
+from .models import College, Notification, School, Department, Course, CourseUnit
 
 User = get_user_model()
 
@@ -24,6 +24,11 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ['id', 'name']
+
+class CourseUnitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CourseUnit
+        fields = ['id', 'title', 'code']
 
 # Registration: Only username, email, and password are required.
 class RegisterSerializer(serializers.ModelSerializer):

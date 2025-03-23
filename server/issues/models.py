@@ -36,9 +36,8 @@ class Issue(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='issues')
     
     # Student specific details
-    student_registration_number = models.CharField(max_length=50)
     course = models.ForeignKey('accounts.Course', on_delete=models.CASCADE)
-    course_unit = models.ForeignKey('accounts.CourseUnit', on_delete=models.CASCADE)
+    course_unit = models.ForeignKey('accounts.CourseUnit', on_delete=models.SET_NULL, null=True, blank=True)
     college = models.ForeignKey('accounts.College', on_delete=models.CASCADE) 
     year_of_study = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, default=1)
     semester = models.PositiveSmallIntegerField(choices=SEMESTER_CHOICES, default=1)

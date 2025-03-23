@@ -10,10 +10,10 @@ from rest_framework_simplejwt.exceptions import TokenError
 from .serializers import (
     RegisterSerializer, ProfileUpdateSerializer, LoginSerializer, 
     CollegeSerializer, NotificationSerializer, SchoolSerializer, 
-    DepartmentSerializer, CourseSerializer
+    DepartmentSerializer, CourseSerializer, CourseUnitSerializer
 )
 from .utils import log_audit
-from .models import College, Notification, School, Department, Course
+from .models import College, Notification, School, Department, Course, CourseUnit
 
 User = get_user_model()
 
@@ -194,4 +194,14 @@ class CourseListAPIView(generics.ListAPIView):
         department_id = self.request.query_params.get('department_id')
         if department_id:
             return Course.objects.filter(department__id=department_id)
+        return Course.objects.none()
+class CourseUnitesListAPIView(generics.ListAPIView):
+    serializer_class = CourseUnitSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        course_id = self.request.query_params.get('course_id')
+        year_taken = self.request.query_params.get('year_taken')
+        if course_id:
+            return CourseUnit.objects.filter(course__id=course_id, year_taken=year_taken)
         return Course.objects.none()
