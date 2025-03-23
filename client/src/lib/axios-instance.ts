@@ -42,7 +42,7 @@ axiosInstance.interceptors.request.use(
   (err) => Promise.reject(err)
 );
 
-// Response interceptor now uses refreshAccessToken for separation of concern.
+// Response interceptor runs on every response and handles 401 errors
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
