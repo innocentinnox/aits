@@ -25,7 +25,7 @@ class IssueCategory(models.Model):
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.description.strip()[:60]}{'' if len(self.description) <= 60 else '...'}"
 
 class Issue(models.Model):
     token = models.CharField(max_length=5, unique=True, blank=True)
@@ -37,7 +37,8 @@ class Issue(models.Model):
     
     # Student specific details
     student_registration_number = models.CharField(max_length=50)
-    course_code = models.CharField(max_length=20)
+    course = models.ForeignKey('accounts.Course', on_delete=models.CASCADE)
+    course_unit = models.ForeignKey('accounts.CourseUnit', on_delete=models.CASCADE)
     college = models.ForeignKey('accounts.College', on_delete=models.CASCADE) 
     year_of_study = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, default=1)
     semester = models.PositiveSmallIntegerField(choices=SEMESTER_CHOICES, default=1)
