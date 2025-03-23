@@ -3,11 +3,18 @@ from django.conf import settings
 import uuid
 from datetime import timedelta
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 
-# Generate a 5-character alphanumeric token.
+# Generate a 5-character token (using 8 characters for uniqueness).
 def generate_issue_token():
     return f"ISS-{str(uuid.uuid4())[:8].upper()}"
 
+# Priority choices for categories and issues
+PRIORITY_CHOICES = [
+    (1, "Low"),
+    (2, "Medium"),
+    (3, "High"),
+]
 
 STATUS_CHOICES = [
     ('pending', 'Pending'),
@@ -15,57 +22,89 @@ STATUS_CHOICES = [
     ('in_progress', 'In Progress'),
     ('resolved', 'Resolved'),
     ('rejected', 'Rejected'),
+    ('closed', 'Closed'),
 ]
 
 YEAR_CHOICES = [(1, "Year 1"), (2, "Year 2"), (3, "Year 3"), (4, "Year 4"), (5, "Year 5")]
-SEMESTER_CHOICES = [ (1, "Semester 1"), (2, "Semester 2") ]
+SEMESTER_CHOICES = [(1, "Semester 1"), (2, "Semester 2")]
 
 class IssueCategory(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True, null=True)
+    # Priority for the category; issues in this category will inherit this by default.
+    priority = models.PositiveSmallIntegerField(choices=PRIORITY_CHOICES, default=2)
+    # Automatically assign issues of this category to a lecturer.
+    auto_assign_to_lecturer = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.name} - {self.description.strip()[:60]}{'' if len(self.description) <= 60 else '...'}"
+        desc = (self.description.strip()[:60] + '...') if self.description and len(self.description) > 60 else (self.description or '')
+        return f"{self.name} - {desc}"
 
 class Issue(models.Model):
-    token = models.CharField(max_length=5, unique=True, blank=True)
+    token = models.CharField(max_length=12, unique=True, blank=True)
     category = models.ForeignKey(IssueCategory, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.TextField()
-    
+
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='issues')
     
-    # Student specific details
+    # Student-specific details
     course = models.ForeignKey('accounts.Course', on_delete=models.CASCADE)
     course_unit = models.ForeignKey('accounts.CourseUnit', on_delete=models.SET_NULL, null=True, blank=True)
     college = models.ForeignKey('accounts.College', on_delete=models.CASCADE) 
     year_of_study = models.PositiveSmallIntegerField(choices=YEAR_CHOICES, default=1)
     semester = models.PositiveSmallIntegerField(choices=SEMESTER_CHOICES, default=1)
 
-    # Issue automatically assigned to the College Registrar --> Resolved or forwarded to the lecturer
+    # Automatically or manually assigned issue (for example, to the department head or Lecturer).
     assigned_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_issues')
-    forwarded_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='forwarded_issues')
-    
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='submitted')
+
+    # Issue priority; default is inherited from the category if not specified.
+    priority = models.PositiveSmallIntegerField(choices=PRIORITY_CHOICES, blank=True, null=True, default=2)
+
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
 
     # Additional fields
     resolution_details = models.TextField(blank=True, null=True)
-    attachments = models.FileField(upload_to='attachments/', blank=True, null=True)
-
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     resolved_at = models.DateTimeField(null=True, blank=True)
-    
+    # Track who last modified the issue.
+    modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_issues')
+
     class Meta:
         ordering = ['-created_at']
+
+    def clean(self):
+        # Example placeholder for status transition validations.
+        # You can check if the status is being set in a valid sequence.
+        # For instance, you might not allow transitioning from 'resolved' back to 'pending'.
+        # if self.pk:
+        #     old_instance = Issue.objects.get(pk=self.pk)
+        #     if old_instance.status == 'resolved' and self.status not in ['reopened', 'closed']:
+        #         raise ValidationError("Cannot change status from resolved to this state.")
+        pass
 
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = generate_issue_token()
+        # Inherit priority from the category if not explicitly set.
+        if self.priority is None and self.category:
+            self.priority = self.category.priority
         super().save(*args, **kwargs)
 
-        # If status is changed to resolved, set resolved_at
+        # Set resolved_at when status changes to resolved (and it's not already set).
         if self.status == 'resolved' and not self.resolved_at:
             self.resolved_at = timezone.now()
+            super().save(update_fields=['resolved_at'])
+
     def __str__(self):
         return f"{self.title} - {self.token}"
+
+class IssueAttachment(models.Model):
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name='attachments')
+    file = models.FileField(upload_to='attachments/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Attachment for {self.issue.token} uploaded at {self.uploaded_at}"
