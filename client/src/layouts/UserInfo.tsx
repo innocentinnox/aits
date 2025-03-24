@@ -1,4 +1,4 @@
-import { useAuth, useCurrentUser } from "@/auth";
+import { useAuth } from "@/auth";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 
   export default function UserInfo() {
-  const { logout, user } = useAuth()
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
   function handleDetailsNavigation() {
     navigate("details");
@@ -21,10 +21,10 @@ import { useNavigate } from "react-router-dom";
     <div className="flex items-center justify-between gap-4 ">
       <div className="user-info text-zinc-600">
         <h2 className="font-semibold uppercase text-[0.8rem] sm:text-[1rem] ">
-          john whales smith
+          {user?.first_name&&user?.first_name} {user?.last_name&&user?.last_name}
         </h2>
         <p className="uppercase text-right text-[0.6rem] sm:text-[0.8rem]">
-          student(COCIS)
+          <span className="capitalize">{user?.role}</span> ({user?.college?.code&&user?.college?.code})
         </p>
       </div>
       <div>
