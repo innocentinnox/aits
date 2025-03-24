@@ -7,6 +7,7 @@ from .models import Issue, IssueCategory, IssueAttachment
 from .serializers import IssueSerializer, IssueCategorySerializer
 from accounts.utils import send_notification, log_audit
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.db.models import Q
 
 User = get_user_model()
 
@@ -117,3 +118,102 @@ class IssueUpdateView(generics.UpdateAPIView):
         
         else:
             return Response({"error": "Not authorized to update this issue."}, status=status.HTTP_403_FORBIDDEN)
+        
+
+class IssueListView(generics.ListAPIView):
+    """
+    Returns a paginated list of issues for the current student.
+    Supports filtering via query parameters:
+      - search: text to search in title, description, or resolution_details.
+      - priority: filter by priority (1, 2, or 3).
+      - category: filter by IssueCategory id.
+      - assigned_to: filter by assigned_to user's email (case insensitive).
+      - college: filter by College id.
+      - course_unit: filter by CourseUnit id.
+      - status: filter by status (e.g., 'pending').
+      - year: filter by year_of_study.
+      - ordering: sort the results (e.g., 'priority', '-created_at').
+      - take: number of records per page (default: 10).
+      - skip: offset (default: 0).
+    The response includes metadata: total, take, skip and the issues list.
+    """
+    serializer_class = IssueSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        # Show only issues created by the student.
+        qs = Issue.objects.filter(created_by=user)
+
+        # Search filter (title, description, resolution_details)
+        search = self.request.query_params.get("search")
+        if search:
+            qs = qs.filter(
+                Q(title__icontains=search) |
+                Q(description__icontains=search) |
+                Q(resolution_details__icontains=search)
+            )
+
+        # Filter by priority
+        priority = self.request.query_params.get("priority")
+        if priority:
+            qs = qs.filter(priority=priority)
+
+        # Filter by category id
+        category = self.request.query_params.get("category")
+        if category:
+            qs = qs.filter(category__id=category)
+
+        # Filter by assigned_to (using email)
+        assigned_to = self.request.query_params.get("assigned_to")
+        if assigned_to:
+            qs = qs.filter(assigned_to__email__iexact=assigned_to)
+
+        # Filter by college id
+        college = self.request.query_params.get("college")
+        if college:
+            qs = qs.filter(college__id=college)
+
+        # Filter by course_unit id
+        course_unit = self.request.query_params.get("course_unit")
+        if course_unit:
+            qs = qs.filter(course_unit__id=course_unit)
+
+        # Filter by status
+        status_param = self.request.query_params.get("status")
+        if status_param:
+            qs = qs.filter(status__iexact=status_param)
+
+        # Filter by year_of_study
+        year = self.request.query_params.get("year")
+        if year:
+            qs = qs.filter(year_of_study=year)
+
+        # Sorting: ordering parameter (e.g., "priority", "-created_at")
+        ordering = self.request.query_params.get("ordering")
+        if ordering:
+            qs = qs.order_by(ordering)
+
+        return qs
+
+    def list(self, request, *args, **kwargs):
+        qs = self.get_queryset()
+        total = qs.count()
+        try:
+            take = int(request.query_params.get("take", 10))
+        except ValueError:
+            take = 10
+        try:
+            skip = int(request.query_params.get("skip", 0))
+        except ValueError:
+            skip = 0
+
+        # Apply pagination manually.
+        qs_paginated = qs[skip:skip + take]
+        serializer = self.get_serializer(qs_paginated, many=True)
+        return Response({
+            "total": total,
+            "take": take,
+            "skip": skip,
+            "issues": serializer.data
+        }, status=status.HTTP_200_OK)

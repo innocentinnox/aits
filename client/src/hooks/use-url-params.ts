@@ -51,7 +51,7 @@ const useUrlParams = () => {
     [searchParams]
   );
 
-  return { next, constructPath, getDecodedParams };
+  return { next, constructPath, getDecodedParams, searchParams };
 };
 
 export default useUrlParams;
