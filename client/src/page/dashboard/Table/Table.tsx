@@ -1,3 +1,4 @@
+import { NewIssueDialog } from "@/components/issues/issue-dialog";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
 const fakeData = [
@@ -127,6 +128,7 @@ export default function Table() {
   return (
     <>
       <div className="">
+        <NewIssueDialog />
         <table className="min-w-full bg-white border border-tertiary rounded-lg mt-8 ">
           <thead className=" border rounded-lg">
             <TableHeader />

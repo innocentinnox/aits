@@ -14,7 +14,7 @@ import NewPasswordPage from "./page/auth/new-password";
 import AppLayout from "./layouts/AppLayout";
 import DashBoard from "./page/dashboard/DashBoard";
 import DetailsForm from "./page/Details/Details";
-import { CreateIssueForm } from "./components/ui/CreateIssueForm";
+import { CreateIssueForm } from "./components/issues/create-Issue-form";
 import Notifications from "./page/Notifications/Notifications";
 import { AuthProvider } from "./context/auth-context";
 import ProtectedRoute from "./providers/protected-route";
@@ -35,10 +35,10 @@ const router = createBrowserRouter([
             path: "dashboard",
             element: <DashBoard />,
           },
-          {
-            path: "create",
-            element: <CreateIssueForm />,
-          },
+          // {
+          //   path: "create",
+          //   element: <CreateIssueForm />,
+          // },
           {
             path: "notifications",
             element: <Notifications />,

@@ -71,7 +71,6 @@ class AuthService {
         const { exp } = jwtDecode<{ exp: number }>(accessToken);
         const now = Math.floor(Date.now() / 1000);
         const expiryDate = new Date(exp * 1000).toLocaleString();
-        console.log("Decoded access token", { exp, now, expiryDate });
         if (exp < now) {
           console.warn(`Access token expired at ${expiryDate}`);
           // Check refresh token
@@ -80,7 +79,6 @@ class AuthService {
             try {
               const { exp: refreshExp } = jwtDecode<{ exp: number }>(refreshToken);
               const refreshExpiryDate = new Date(refreshExp * 1000).toLocaleString();
-              console.log("Decoded refresh token", { refreshExp, now, refreshExpiryDate });
               if (refreshExp > now) {
                 // Refresh token is valid; attempt refresh.
                 const refreshResponse = await axiosInstance.post("/accounts/token/refresh/", { refresh: refreshToken });
