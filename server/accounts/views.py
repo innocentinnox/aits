@@ -13,6 +13,7 @@ from .serializers import (
     DepartmentSerializer, CourseSerializer, CourseUnitSerializer
 )
 from .utils import log_audit
+from .utils import mailer
 from .models import College, Notification, School, Department, Course, CourseUnit
 
 User = get_user_model()
@@ -47,6 +48,9 @@ def status_view(request):
             'registration_number': user.registration_number,
         }
     })
+    
+
+    
 
 class CollegeView(generics.ListCreateAPIView):
     queryset = College.objects.all()

@@ -126,3 +126,8 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ['id', 'message', 'created_at', 'read']
+
+class EmailSerializer(serializers.Serializer):
+    to = serializers.EmailField()
+    subject = serializers.CharField(max_length=255)
+    html = serializers.CharField()
