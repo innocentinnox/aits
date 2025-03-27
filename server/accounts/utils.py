@@ -53,7 +53,17 @@ mailer = Mail(
         password=settings.EMAIL_HOST_PASSWORD
 )
 
-
+def send_notification(recipient, subject, message):
+     # Create: Notification record in database
+     Notification.objects.create(recipient=recipient, message=message)
+     print('Email sent: ', message)
+     # send_email(
+     #     subject,
+     #     message,
+     #     'no-reply@aits.messages.com',
+     #     [recipient.email],
+     #     fail_silently=False,
+     # )
 
 
 
