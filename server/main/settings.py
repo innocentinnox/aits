@@ -187,3 +187,14 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^http://localhost:\d+$",  # Allow all localhost ports
     r"^http://127\.0\.0\.1:\d+$",
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'mail.msg.ocunex.com')  # Default in case env is missing
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'aits@msg.ocunex.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+
+# Ensure DEFAULT_FROM_EMAIL is set
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
