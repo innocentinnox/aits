@@ -10,13 +10,29 @@ from rest_framework_simplejwt.exceptions import TokenError
 from .serializers import (
     RegisterSerializer, ProfileUpdateSerializer, LoginSerializer, 
     CollegeSerializer, NotificationSerializer, SchoolSerializer, 
-    DepartmentSerializer, CourseSerializer, CourseUnitSerializer
+    DepartmentSerializer, CourseSerializer, CourseUnitSerializer,
+    EmailSerializer
 )
 from .utils import log_audit
 from .utils import mailer
 from .models import College, Notification, School, Department, Course, CourseUnit
 
 User = get_user_model()
+
+# API to test if email can be sent
+class SendEmailAPIView(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request):
+        serializer = EmailSerializer(data=request.data)
+        if serializer.is_valid():
+            result = mailer.send(
+                to=serializer.validated_data['to'],
+                subject=serializer.validated_data['subject'],
+                html=serializer.validated_data['html']
+            )
+            return Response({"message": result}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 def serialize_obj(obj):
     """Helper function to serialize objects to include only name and id."""

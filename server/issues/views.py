@@ -9,6 +9,9 @@ from accounts.utils import send_notification, log_audit
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.db.models import Q
 
+from accounts.serializers import EmailSerializer
+from accounts.utils import mailer
+
 User = get_user_model()
 
 # Categories of issues
@@ -37,10 +40,26 @@ class IssueCreateView(generics.CreateAPIView):
             IssueAttachment.objects.create(issue=issue, file=file)
         
         # Email notifications...
+        result = mailer.send(
+                to=user,
+                subject="Issue Submitted Successfully",
+                html=f"""
+            <h3>Issue Submitted Successfully</h3>
+            <p>Your issue '{issue.title}' has been submitted.</p>
+            <p><strong>Token:</strong> {issue.token}</p>
+            <p><strong>Details:</strong> {issue.description}</p>
+            """
+            )
+        
         send_notification(
             recipient=user,
             subject="Issue Submitted Successfully",
-            message=f"Your issue '{issue.title}' has been submitted with token {issue.token}. Details: {issue.description}"
+            html=f"""
+            <h3>Issue Submitted Successfully</h3>
+            <p>Your issue '{issue.title}' has been submitted.</p>
+            <p><strong>Token:</strong> {issue.token}</p>
+            <p><strong>Details:</strong> {issue.description}</p>
+            """
         )
         if registrar:
             send_notification(
