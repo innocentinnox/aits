@@ -51,23 +51,18 @@ class IssueCreateView(generics.CreateAPIView):
             """
             )
         
-        send_notification(
-            recipient=user,
-            subject="Issue Submitted Successfully",
-            html=f"""
-            <h3>Issue Submitted Successfully</h3>
-            <p>Your issue '{issue.title}' has been submitted.</p>
-            <p><strong>Token:</strong> {issue.token}</p>
-            <p><strong>Details:</strong> {issue.description}</p>
-            """
-        )
         if registrar:
-            send_notification(
-                recipient=registrar,
+            result = mailer.send(
+                to=user,
                 subject="New Issue Assigned",
-                message=f"New issue submitted by {user.username}.\nToken: {issue.token}\nTitle: {issue.title}"
+                html=f"""
+            <h3>Issue Submitted Successfully</h3>
+            <p>New Issue submitted by '{user.username}'.</p>
+            <p><strong>Token:</strong> {issue.token}</p>
+            <p><strong>Title:</strong> {issue.title}</p>
+            """
             )
-
+        
 # Retrieve issue by token (for tracking)
 class IssueDetailView(generics.RetrieveAPIView):
     serializer_class = IssueSerializer
