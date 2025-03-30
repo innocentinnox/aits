@@ -44,7 +44,7 @@ class IssueCreateView(generics.CreateAPIView):
                 to=user,
                 subject="Issue Submitted Successfully",
                 html=f"""
-            <h3>Issue Submitted Successfully</h3>
+            <h3>Issue has been Submitted Successfully to the authorities.</h3>
             <p>Your issue '{issue.title}' has been submitted.</p>
             <p><strong>Token:</strong> {issue.token}</p>
             <p><strong>Details:</strong> {issue.description}</p>
@@ -53,10 +53,10 @@ class IssueCreateView(generics.CreateAPIView):
         
         if registrar:
             result = mailer.send(
-                to=user,
+                to=registrar,
                 subject="New Issue Assigned",
                 html=f"""
-            <h3>Issue Submitted Successfully</h3>
+            <h3>There has been a new issue created!</h3>
             <p>New Issue submitted by '{user.username}'.</p>
             <p><strong>Token:</strong> {issue.token}</p>
             <p><strong>Title:</strong> {issue.title}</p>
@@ -88,12 +88,15 @@ class IssueUpdateView(generics.UpdateAPIView):
             if action == 'resolve':
                 # Registrar resolves the issue
                 request.data['status'] = 'resolved'
-                msg = f"Issue '{issue.title}' has been resolved by the registrar."
                 # Notify student
-                send_notification(
-                    recipient=issue.created_by,
-                    subject="Issue Resolved",
-                    message=msg
+                result = mailer.send(
+                to=issue.created_by,
+                subject="Issue Resolved Successfully!",
+                html=f"""
+                    <h3>Your Issue has been resolved Successfully</h3>
+                    <p>Your issue '{issue.title}' has been resolved by the registrar.</p>
+                    <p><strong>Token:</strong> {issue.token}</p>
+                    """
                 )
             elif action == 'forward':
                 # Registrar forwards the issue to a lecturer; expect 'forwarded_to' field in request data
@@ -104,10 +107,15 @@ class IssueUpdateView(generics.UpdateAPIView):
                 # Notify lecturer
                 lecturer = User.objects.filter(id=lecturer_id, role='lecturer').first()
                 if lecturer:
-                    send_notification(
-                        recipient=lecturer,
+                    result = mailer.send(
+                        to=lecturer,
                         subject="Issue Forwarded to You",
-                        message=f"Issue '{issue.title}' (Token: {issue.token}) has been forwarded to you by the registrar."
+                        html=f"""
+                            <h3>There has been an issue forwarded to you.</h3>
+                            <p>Issue '{issue.title}'.</p>
+                            <p><strong>Token:</strong> {issue.token}</p>
+                            <p><strong>Action:</strong>This has been forwarded to you by the registrar! </p>
+                            """
                     )
                     # Audit log for forwarding
                     log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.")
