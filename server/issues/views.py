@@ -50,18 +50,26 @@ class IssueCreateView(generics.CreateAPIView):
             <p><strong>Details:</strong> {issue.description}</p>
             """
             )
+        if result:
+            return Response({"message": result}, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         if registrar:
             result = mailer.send(
                 to=registrar,
                 subject="New Issue Assigned",
                 html=f"""
-            <h3>There has been a new issue created!</h3>
-            <p>New Issue submitted by '{user.username}'.</p>
-            <p><strong>Token:</strong> {issue.token}</p>
-            <p><strong>Title:</strong> {issue.title}</p>
-            """
+                    <h3>There has been a new issue created!</h3>
+                    <p>New Issue submitted by '{user.username}'.</p>
+                    <p><strong>Token:</strong> {issue.token}</p>
+                    <p><strong>Title:</strong> {issue.title}</p>
+                    """
             )
+            if result:
+                return Response({"message": result}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 # Retrieve issue by token (for tracking)
 class IssueDetailView(generics.RetrieveAPIView):
@@ -90,14 +98,18 @@ class IssueUpdateView(generics.UpdateAPIView):
                 request.data['status'] = 'resolved'
                 # Notify student
                 result = mailer.send(
-                to=issue.created_by,
-                subject="Issue Resolved Successfully!",
-                html=f"""
-                    <h3>Your Issue has been resolved Successfully</h3>
-                    <p>Your issue '{issue.title}' has been resolved by the registrar.</p>
-                    <p><strong>Token:</strong> {issue.token}</p>
-                    """
+                    to=issue.created_by,
+                    subject="Issue Resolved Successfully!",
+                    html=f"""
+                        <h3>Your Issue has been resolved Successfully</h3>
+                        <p>Your issue '{issue.title}' has been resolved by the registrar.</p>
+                        <p><strong>Token:</strong> {issue.token}</p>
+                        """
                 )
+                if result:
+                    return Response({"message": result}, status=status.HTTP_200_OK)
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             elif action == 'forward':
                 # Registrar forwards the issue to a lecturer; expect 'forwarded_to' field in request data
                 lecturer_id = request.data.get('forwarded_to')
@@ -117,6 +129,10 @@ class IssueUpdateView(generics.UpdateAPIView):
                             <p><strong>Action:</strong>This has been forwarded to you by the registrar! </p>
                             """
                     )
+                    if result:
+                        return Response({"message": result}, status=status.HTTP_200_OK)
+                    else:
+                        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
                     # Audit log for forwarding
                     log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.")
                 else:
@@ -131,11 +147,20 @@ class IssueUpdateView(generics.UpdateAPIView):
             request.data['status'] = 'resolved'
             log_audit(user, "Issue Resolved", f"Lecturer {user.username} resolved issue '{issue.title}'.")
             # Notify student upon resolution.
-            send_notification(
-                recipient=issue.created_by,
-                subject="Issue Resolved by Lecturer",
-                message=f"Your issue '{issue.title}' (Token: {issue.token}) has been resolved."
+            result = mailer.send(
+                    to=issue.created_by,
+                    subject="Issue Resolved by Lecturer",
+                    html=f"""
+                        <h3>The Lecturer has resolved your issue.</h3>
+                        <p>Your Issue '{issue.title}'.</p>
+                        <p><strong>Token:</strong> {issue.token}</p>
+                        <p><strong>Action:</strong>This has been resolved by the Lecturer! </p>
+                        """
             )
+            if result:
+                return Response({"message": result}, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             return super().patch(request, *args, **kwargs)
         
         else:
