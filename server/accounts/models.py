@@ -1,6 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+import uuid
+from django.db import models
+from django.utils import timezone
+from datetime import timedelta
+
+TOKEN_TYPE_CHOICES = (
+    ('email_verification', 'Email Verification'),
+    ('password_reset', 'Password Reset'), 
+)
+
 # Role choices
 ROLES_DATA = {
     "student": {
@@ -170,3 +180,21 @@ class AuditLog(models.Model):
    
     def __str__(self):
         return f"{self.timestamp} - {self.user}: {self.action}"
+
+class UnifiedToken(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    code = models.CharField(max_length=6)
+    email = models.EmailField()
+    token_type = models.CharField(max_length=20, choices=TOKEN_TYPE_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_used = models.BooleanField(default=False)
+    expires_at = models.DateTimeField(blank=True, null=True)
+    
+    def save(self, *args, **kwargs):
+        if not self.expires_at:
+            self.expires_at = timezone.now() + timedelta(hours=1)
+        super().save(*args, **kwargs)
+        
+    def __str__(self):
+        return f"{self.email} - {self.token_type} - {self.id}"
+    

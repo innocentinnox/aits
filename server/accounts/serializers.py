@@ -1,7 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import College, Notification, School, Department, Course, CourseUnit
+from .models import College, Notification, School, Department, Course, CourseUnit, UnifiedToken
+
+import random
 
 User = get_user_model()
 
