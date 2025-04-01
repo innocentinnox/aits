@@ -133,3 +133,9 @@ class EmailSerializer(serializers.Serializer):
     to = serializers.EmailField()
     subject = serializers.CharField(max_length=255)
     html = serializers.CharField()
+
+
+class UnifiedTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UnifiedToken
+        fields = ['id', 'email', 'token_type', 'created_at']
