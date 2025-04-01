@@ -44,12 +44,12 @@ class IssueCreateView(generics.CreateAPIView):
                 to=user,
                 subject="Issue Submitted Successfully",
                 html=f"""
-            <h3>Issue has been Submitted Successfully to the authorities.</h3>
-            <p>Your issue '{issue.title}' has been submitted.</p>
-            <p><strong>Token:</strong> {issue.token}</p>
-            <p><strong>Details:</strong> {issue.description}</p>
-            """
-            )
+                    <h3>Issue has been Submitted Successfully to the authorities.</h3>
+                    <p>Your issue '{issue.title}' has been submitted.</p>
+                    <p><strong>Token:</strong> {issue.token}</p>
+                    <p><strong>Details:</strong> {issue.description}</p>
+                    """
+                )
         if result:
             return Response({"message": result}, status=status.HTTP_200_OK)
         else:
