@@ -21,7 +21,7 @@ User = get_user_model()
 
 # API to test if email can be sent
 class SendEmailAPIView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     
     def post(self, request):
         serializer = EmailSerializer(data=request.data)
