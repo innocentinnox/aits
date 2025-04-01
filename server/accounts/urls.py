@@ -5,7 +5,9 @@ from .views import (RegisterView, LoginView, logout_view, CollegeView, ProfileUp
     DepartmentListAPIView,
     CourseListAPIView,
     CourseUnitesListAPIView,
-    SendEmailAPIView
+    SendEmailAPIView,
+    SignupAPIView, 
+    VerifyTokenAPIView,
     )
 
 from rest_framework_simplejwt.views import TokenRefreshView
@@ -29,5 +31,9 @@ urlpatterns = [
     path('course-units/', CourseUnitesListAPIView.as_view(), name='course-units-list'),
     
     path('send-email/', SendEmailAPIView.as_view(), name='send-email'),
+    
+    # Verification
+    path('signup/', SignupAPIView.as_view(), name='signup'),
+    path('verify/', VerifyTokenAPIView.as_view(), name='verify-token'),
 ]
 
