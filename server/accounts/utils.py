@@ -55,6 +55,10 @@ mailer = Mail(
         password=settings.EMAIL_HOST_PASSWORD
 )
 
+def send_notification(recipient, subject, message):
+    # Create a notification object in the database
+    Notification.objects.create(recipient=recipient, subject=subject, message=message)
+
 
 def log_audit(user, action, description=""):
     AuditLog.objects.create(user=user, action=action, description=description)
