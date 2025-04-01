@@ -151,10 +151,10 @@ class IssueUpdateView(generics.UpdateAPIView):
                     to=issue.created_by,
                     subject="Issue Resolved by Lecturer",
                     html=f"""
-                        <h3>The Lecturer has resolved your issue.</h3>
-                        <p>Your Issue '{issue.title}'.</p>
-                        <p><strong>Token:</strong> {issue.token}</p>
-                        <p><strong>Action:</strong>This has been resolved by the Lecturer! </p>
+                        <h3>The Lecturer has resolved your issue!.</h3>
+                        <p>Your Issue with title: ' {issue.title} '.</p>
+                        <p><strong>Token: </strong> {issue.token}</p>
+                        <p><strong>Action: </strong>This issue has been resolved by the Lecturer! </p>
                         """
             )
             if result:
