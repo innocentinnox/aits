@@ -4,12 +4,12 @@
 - Python=>3.10
 
 ## Contributors
-- Wangoda Francis `**Team Lead and Backend**`
-- Bwanika Robert `**Frontend**`
-- Mujuni Innocent `**Backend and Frontend**`
-- Matsiko Ian Sezi `**Backend**`
-- Kinda Kelsey Naluwafu `**Frontend**`
-- Naluyima Pauline Oliver `**Backend**`
+- Wangoda Francis `Team Lead and Backend`
+- Bwanika Robert `Frontend`
+- Mujuni Innocent `Backend and Frontend`
+- Matsiko Ian Sezi `Backend`
+- Kinda Kelsey Naluwafu `Frontend`
+- Naluyima Pauline Oliver `Backend`
 
 ## Project setup / Steps / Commands
 In this module, we will be starting our project. To do this we will need to create a virtual environment.
