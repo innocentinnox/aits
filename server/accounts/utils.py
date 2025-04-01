@@ -11,6 +11,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from django.conf import settings
 
+from twilio.rest import Client
+
     
 class Mail:
     def __init__(self, host, port, user, password):
@@ -54,7 +56,18 @@ mailer = Mail(
 )
 
 
-
-
 def log_audit(user, action, description=""):
     AuditLog.objects.create(user=user, action=action, description=description)
+
+
+def send_sms_notification(user, message):
+    Client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+    try:
+        # Send the SMS using Twilio
+        Client.messages.create(
+            body=message,
+            from_=settings.TWILIO_PHONE_NUMBER,
+            to=user.phone_number  # Assuming user has a phone_number field
+        )
+    except Exception as e:
+        logging.error("SMS_NOTIFICATION_ERROR: %s", e)
