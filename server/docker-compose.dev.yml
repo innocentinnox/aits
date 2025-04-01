@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  django-web:
+    build: .
+    container_name: django-docker
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./static:/app/staticfiles
+    env_file:
+      - .env

@@ -71,16 +71,16 @@ export const OnboardingForm = () => {
     enabled: !!schoolId,
   });
 
-  // Fetch courses when a department is selected
-  const departmentId = form.watch("department");
+  // Fetch courses when a school is selected
+  // const departmentId = form.watch("department");
   const { data: courses, isPending: fetchingCourses } = useQuery({
-    queryKey: ["courses", departmentId],
+    queryKey: ["courses", schoolId],
     queryFn: async () => {
-      if (!departmentId) return [];
-      const res = await axiosInstance.get("/accounts/courses/", { params: { department_id: departmentId } });
+      if (!schoolId) return [];
+      const res = await axiosInstance.get("/accounts/courses/", { params: { school_id: schoolId } });
       return res.data as { id: number; name: string }[];
     },
-    enabled: !!departmentId,
+    enabled: !!schoolId,
   });
 
   // Determine which fields to show based on the user role:
@@ -206,9 +206,9 @@ export const OnboardingForm = () => {
               <FormItem>
                 <FormLabel>Course</FormLabel>
                 <FormControl>
-                  <Select value={field.value} onValueChange={field.onChange} disabled={fetchingCourses || !departmentId}>
+                  <Select value={field.value} onValueChange={field.onChange} disabled={fetchingCourses || !schoolId}>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder={departmentId && fetchingCourses ? "Loading..." : "Select Course"} />
+                      <SelectValue placeholder={schoolId && fetchingCourses ? "Loading..." : "Select Course"} />
                     </SelectTrigger>
                     <SelectContent>
                       {courses?.map((c) => (

@@ -212,9 +212,22 @@ class CourseListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         department_id = self.request.query_params.get('department_id')
-        if department_id:
-            return Course.objects.filter(department__id=department_id)
+        school_id = self.request.query_params.get('school_id')
+        college_id = self.request.query_params.get('college_id')
+
+        if department_id or school_id or college_id:
+            filters = {}
+            if department_id:
+                filters["department__id"] = department_id
+            if school_id:
+                filters["school__id"] = school_id
+            if college_id:
+                filters["school__college__id"] = college_id
+
+            return Course.objects.filter(**filters)
+
         return Course.objects.none()
+
 class CourseUnitesListAPIView(generics.ListAPIView):
     serializer_class = CourseUnitSerializer
     permission_classes = [IsAuthenticated]

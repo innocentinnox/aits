@@ -59,9 +59,9 @@ class Department(models.Model):
 class Course(models.Model):
     code = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=255)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='courses')
+    school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='courses')
+    department = models.ForeignKey(Department, on_delete=models.DO_NOTHING, related_name='courses')
     years = models.IntegerField(default=3)
-
     description = models.TextField(blank=True, null=True)
     
     def __str__(self):
