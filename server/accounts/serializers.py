@@ -139,3 +139,30 @@ class UnifiedTokenSerializer(serializers.ModelSerializer):
     class Meta:
         model = UnifiedToken
         fields = ['id', 'email', 'token_type', 'created_at']
+
+
+class VerifyTokenSerializer(serializers.Serializer):
+    token = serializers.UUIDField()
+    code = serializers.CharField(max_length=6)
+    
+    def validate(self, data):
+        try:
+            token_obj = UnifiedToken.objects.get(id=data['token'])
+        except UnifiedToken.DoesNotExist:
+            raise serializers.ValidationError("Token not found")
+        
+        # Check expiration
+        if token_obj.created_at < timezone.now():
+            raise serializers.ValidationError("Token has expired")
+        
+        # Check if already used
+        if token_obj.is_used:
+            raise serializers.ValidationError("Token has already been used")
+        
+        # Check if the code matches
+        if token_obj.code != data['code']:
+            raise serializers.ValidationError("Invalid code")
+        
+        # validation passed, attach the token instance for use in the view
+        data['token_obj'] = token_obj
+        return data
