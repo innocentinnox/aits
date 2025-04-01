@@ -11,11 +11,11 @@ from .serializers import (
     RegisterSerializer, ProfileUpdateSerializer, LoginSerializer, 
     CollegeSerializer, NotificationSerializer, SchoolSerializer, 
     DepartmentSerializer, CourseSerializer, CourseUnitSerializer,
-    EmailSerializer
+    EmailSerializer, UnifiedTokenSerializer, VerifyTokenSerializer, 
 )
 from .utils import log_audit
-from .utils import mailer
-from .models import College, Notification, School, Department, Course, CourseUnit
+from .utils import mailer, generate_6_digit_code, send_verification_email
+from .models import College, UnifiedToken, Notification, School, Department, Course, CourseUnit
 
 User = get_user_model()
 
@@ -238,3 +238,68 @@ class CourseUnitesListAPIView(generics.ListAPIView):
         if course_id:
             return CourseUnit.objects.filter(course__id=course_id, year_taken=year_taken)
         return Course.objects.none()
+
+# For verification
+class SignupAPIView(generics.CreateAPIView):
+    """
+    Endpoint for user signup. On signup:
+      - A user record is created.
+      - A new unified token is generated for email verification.
+      - The 6-digit code is emailed to the user.
+      - The response includes the token's ID (but not the code).
+    """
+    serializer_class = SignupSerializer
+
+    def perform_create(self, serializer):
+        user = serializer.save()
+        # Generate token for email verification
+        token_instance = UnifiedToken.objects.create(
+            code=generate_6_digit_code(),
+            email=user.email,
+            token_type="email_verification",
+        )
+        # Send verification email
+        send_verification_email(user.email, token_instance)
+        # For audit/logging, you might log the event here
+        self.token_instance = token_instance  # store for later use in response
+    
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        
+        # Add the token ID to the response without exposing the code
+        token_data = UnifiedTokenSerializer(self.token_instance).data
+        response.data.update({"token_id": token_data["id"]})
+        return response
+
+
+class VerifyTokenAPIView(APIView):
+    """
+    Endpoint for verifying the token.
+    Expected request body:
+      {
+        "token": "<token_id>",
+        "code": "<6-digit code>"
+      }
+    If verification succeeds:
+      - For email verification tokens, respond with { "next": "/auth/login" }.
+      - For password reset tokens, respond with { "next": "/auth/reset/new-password" }.
+    """
+    def post(self, request):
+        serializer = VerifyTokenSerializer(data=request.data)
+        if serializer.is_valid():
+            token_obj = serializer.validated_data['token_obj']
+            # Mark token as used
+            token_obj.is_used = True
+            token_obj.save()
+
+            # Determine next route based on token type
+            if token_obj.token_type == "email_verification":
+                next_route = "/auth/login"
+            elif token_obj.token_type == "password_reset":
+                next_route = "/auth/reset/new-password"
+            else:
+                next_route = "/"
+
+            return Response({"next": next_route}, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
