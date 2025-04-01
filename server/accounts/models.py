@@ -70,8 +70,18 @@ class Course(models.Model):
 from django.db import models
 
 class CourseUnit(models.Model):
-    YEAR_CHOICES = [(1, "Year 1"), (2, "Year 2"), (3, "Year 3"), (4, "Year 4"), (5, "Year 5")]
-    SEMESTER_CHOICES = [ (1, "Semester 1"), (2, "Semester 2") ]
+    YEAR_CHOICES = [
+        (1, "Year 1"), 
+        (2, "Year 2"), 
+        (3, "Year 3"), 
+        (4, "Year 4"), 
+        (5, "Year 5")
+    ]
+
+    SEMESTER_CHOICES = [
+        (1, "Semester 1"), 
+        (2, "Semester 2") 
+    ]
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="units")
     code = models.CharField(max_length=20)
