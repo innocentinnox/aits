@@ -134,6 +134,17 @@ class EmailSerializer(serializers.Serializer):
     subject = serializers.CharField(max_length=255)
     html = serializers.CharField()
 
+# This is for code verification
+class SignupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'password']
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
+
 
 class UnifiedTokenSerializer(serializers.ModelSerializer):
     class Meta:
