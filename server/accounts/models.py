@@ -139,6 +139,7 @@ class CustomUser(AbstractUser):
     # Additional fields
     profile_image = models.ImageField(upload_to="profiles/", null=True, blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
+    email_verified = models.DateField(blank=True, null=True)
     student_number = models.CharField(max_length=50, blank=True, null=True)
     registration_number = models.CharField(max_length=50, blank=True, null=True)
 
@@ -183,19 +184,16 @@ class AuditLog(models.Model):
 
 class UnifiedToken(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    code = models.CharField(max_length=6)
+    code = models.CharField(max_length=6)  # 6-digit numeric code
     email = models.EmailField()
     token_type = models.CharField(max_length=20, choices=TOKEN_TYPE_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
-    is_used = models.BooleanField(default=False)
     expires_at = models.DateTimeField(blank=True, null=True)
-    
+
     def save(self, *args, **kwargs):
-        # Default token expiration is 1 hour from creation if not set.
         if not self.expires_at:
             self.expires_at = timezone.now() + timedelta(hours=1)
         super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.email} - {self.token_type} ({self.id})"
-    
