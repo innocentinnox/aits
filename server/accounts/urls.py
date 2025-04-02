@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (RegisterView, LoginView, logout_view, CollegeView, ProfileUpdateView, NotificationListView, status_view, TokenRefreshCookieView, CollegeView,   
+from .views import (RegisterView, LoginView, CollegeView, ProfileUpdateView, NotificationListView, status_view, TokenRefreshCookieView, CollegeView,   
     CollegeListAPIView,
     SchoolListAPIView,
     DepartmentListAPIView,
@@ -9,6 +9,7 @@ from .views import (RegisterView, LoginView, logout_view, CollegeView, ProfileUp
     SignupAPIView, 
     VerifyTokenAPIView,
     PasswordResetRequestAPIView,
+    LogoutView
     )
 
 from rest_framework_simplejwt.views import TokenRefreshView
@@ -18,7 +19,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 urlpatterns = [
     path('signup/', SignupAPIView.as_view(), name='signup'),
     path('login/', LoginView.as_view(), name='login'),
-    path('logout/', logout_view, name='logout'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     # path('colleges/', CollegeView.as_view(), name='colleges'),
     path('profile/', ProfileUpdateView.as_view(), name='profile-update'),
     path('notifications/', NotificationListView.as_view(), name='notifications'),

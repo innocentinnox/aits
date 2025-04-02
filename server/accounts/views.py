@@ -141,16 +141,18 @@ class ProfileUpdateView(generics.UpdateAPIView):
         user = serializer.save()
         log_audit(user, "Profile Updated", f"User {user.email} updated their profile.")
 
-@api_view(['POST'])
-def logout_view(request):
-    user = request.user if request.user.is_authenticated else None
-    if user:
-        log_audit(user, "User Logged Out", f"User {user.email} logged out.")
+class LogoutView(APIView):
+    permission_classes = [AllowAny]
     
-    response = Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
-    response.delete_cookie("access_token")
-    response.delete_cookie("refresh_token")
-    return response
+    def post(self, request):
+        user = request.user if request.user.is_authenticated else None
+        if user:
+            log_audit(user, "User Logged Out", f"User {user.email} logged out.")
+        
+        response = Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
+        response.delete_cookie("access_token")
+        response.delete_cookie("refresh_token")
+        return response
 
 class NotificationListView(generics.ListAPIView):
     serializer_class = NotificationSerializer
@@ -242,7 +244,10 @@ class CourseUnitesListAPIView(generics.ListAPIView):
             return CourseUnit.objects.filter(course__id=course_id, year_taken=year_taken)
         return Course.objects.none()
 
-# For verification
+"""
+    This will be used for email verification and password reset
+"""
+
 class SignupAPIView(APIView):
     """
     On Signup:
@@ -268,6 +273,7 @@ class SignupAPIView(APIView):
             return Response(response_data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class PasswordResetRequestAPIView(APIView):
     """
