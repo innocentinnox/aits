@@ -112,5 +112,28 @@ body {
             color: #888;
         }
 
+        .signup-btn {
+            background-color:#39903b;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 15px 0;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .signup-btn:hover {
+            background-color:#39903b;
+        }
+        
+        .bg-shape {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
         
         
