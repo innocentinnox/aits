@@ -22,8 +22,8 @@ export default function MenuItem({
   path: string;
 }) {
   const [showIssueDialog, setShowIssueDialog] = useState(false);
-  const { user, logout } = useAuth();
-  console.log(user);
+  const { logout } = useAuth();
+
   // Activate modal window
   if (path === "create")
     return (
