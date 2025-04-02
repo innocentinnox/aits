@@ -40,6 +40,19 @@ body {
     margin-bottom: 60px;
 }
 
+.welcome-text {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.login-desc {
+    font-size: 14px;
+    opacity: 0.9;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
 .signin-btn {
     background-color: transparent;
     color: white;
@@ -78,41 +91,41 @@ body {
         
         .divider::after {
             margin-left: 10px;
-        }
+}
         
-        .signup-form {
+.signup-form {
             display: flex;
             flex-direction: column;
             gap: 15px;
-        }
+}
         
-        .form-group {
+.form-group {
             position: relative;
-        }
+}
         
-        .form-input {
+.form-input {
             width: 100%;
             padding: 15px 15px;
             border: 1px solid #e1e1e1;
             border-radius: 8px;
             font-size: 14px;
             background-color: #f9f9f9;
-        }
+}
 
-        .form-input:focus {
+.form-input:focus {
             outline: none;
             border-color: #39903b;
-        }
+}
         
-        .input-icon {
+.input-icon {
             position: absolute;
             top: 50%;
             left: 15px;
             transform: translateY(-50%);
             color: #888;
-        }
+}
 
-        .signup-btn {
+.signup-btn {
             background-color:#39903b;
             color: white;
             border: none;
@@ -122,18 +135,18 @@ body {
             cursor: pointer;
             margin-top: 20px;
             transition: all 0.3s ease;
-        }
+}
         
-        .signup-btn:hover {
+.signup-btn:hover {
             background-color:#39903b;
-        }
+}
         
-        .bg-shape {
+.bg-shape {
             position: absolute;
             width: 200px;
             height: 200px;
             border-radius: 50%;
             background-color: rgba(255, 255, 255, 0.05);
-        }
+}
         
         
