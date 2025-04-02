@@ -135,11 +135,11 @@ class EmailSerializer(serializers.Serializer):
     subject = serializers.CharField(max_length=255)
     html = serializers.CharField()
 
-# This is for code verification
+"""
+    This is used for email verifications and code verifications
+"""
+# This serializer is used to send a verification code to the user's email.
 class SignupSerializer(serializers.ModelSerializer):
-    #first_name = serializers.CharField(required=False, allow_blank=True, default='')
-    #last_name = serializers.CharField(required=False, allow_blank=True, default='')
-
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'password', 'first_name', 'last_name']
@@ -156,11 +156,13 @@ class SignupSerializer(serializers.ModelSerializer):
         )
         return user
 
+# This serializer is used to create a token for email verification.
 class UnifiedTokenSerializer(serializers.ModelSerializer):
     class Meta:
         model = UnifiedToken
         fields = '__all__'
 
+# This serializer is used to verify the token and code sent to the user.
 class VerifyTokenSerializer(serializers.Serializer):
     token = serializers.UUIDField()
     code = serializers.CharField(max_length=6)
