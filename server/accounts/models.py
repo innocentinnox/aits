@@ -177,7 +177,7 @@ class AuditLog(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     user_agent = models.CharField(max_length=255, null=True, blank=True)
-   
+
     def __str__(self):
         return f"{self.timestamp} - {self.user}: {self.action}"
 
@@ -191,10 +191,11 @@ class UnifiedToken(models.Model):
     expires_at = models.DateTimeField(blank=True, null=True)
     
     def save(self, *args, **kwargs):
+        # Default token expiration is 1 hour from creation if not set.
         if not self.expires_at:
             self.expires_at = timezone.now() + timedelta(hours=1)
         super().save(*args, **kwargs)
-        
+
     def __str__(self):
-        return f"{self.email} - {self.token_type} - {self.id}"
+        return f"{self.email} - {self.token_type} ({self.id})"
     
