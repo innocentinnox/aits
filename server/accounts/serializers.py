@@ -136,20 +136,29 @@ class EmailSerializer(serializers.Serializer):
 
 # This is for code verification
 class SignupSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(required=False, allow_blank=True, default='')
+    last_name = serializers.CharField(required=False, allow_blank=True, default='')
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password']
+        fields = ['id', 'username', 'email', 'password', 'first_name', 'last_name']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
+        user = User.objects.create_user(
+            username=validated_data.get('username'),
+            email=validated_data.get('email'),
+            password=validated_data.get('password'),
+            first_name=validated_data.get('first_name', ''),
+            last_name=validated_data.get('last_name', '')
+        )
         return user
 
 
 class UnifiedTokenSerializer(serializers.ModelSerializer):
     class Meta:
         model = UnifiedToken
-        fields = ['id', 'email', 'token_type', 'created_at']
+        fields = ['id', 'code', 'email', 'token_type', 'created_at', 'is_used', 'expires_at'] #['id', 'email', 'token_type', 'created_at']
 
 
 class VerifyTokenSerializer(serializers.Serializer):
