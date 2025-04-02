@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import College, Notification, School, Department, Course, CourseUnit, UnifiedToken
+from django.utils import timezone
 
 import random
 
@@ -136,8 +137,8 @@ class EmailSerializer(serializers.Serializer):
 
 # This is for code verification
 class SignupSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(required=False, allow_blank=True, default='')
-    last_name = serializers.CharField(required=False, allow_blank=True, default='')
+    #first_name = serializers.CharField(required=False, allow_blank=True, default='')
+    #last_name = serializers.CharField(required=False, allow_blank=True, default='')
 
     class Meta:
         model = User
@@ -151,38 +152,34 @@ class SignupSerializer(serializers.ModelSerializer):
             password=validated_data.get('password'),
             first_name=validated_data.get('first_name', ''),
             last_name=validated_data.get('last_name', '')
+            # token=validated_data.get('token'),
         )
         return user
-
 
 class UnifiedTokenSerializer(serializers.ModelSerializer):
     class Meta:
         model = UnifiedToken
-        fields = ['id', 'code', 'email', 'token_type', 'created_at', 'is_used', 'expires_at'] #['id', 'email', 'token_type', 'created_at']
-
+        fields = '__all__'
 
 class VerifyTokenSerializer(serializers.Serializer):
     token = serializers.UUIDField()
     code = serializers.CharField(max_length=6)
-    
+    new_password = serializers.CharField(required=False, write_only=True)
+
     def validate(self, data):
         try:
             token_obj = UnifiedToken.objects.get(id=data['token'])
         except UnifiedToken.DoesNotExist:
-            raise serializers.ValidationError("Token not found")
-        
-        # Check expiration
-        if token_obj.created_at < timezone.now():
-            raise serializers.ValidationError("Token has expired")
-        
-        # Check if already used
+            raise serializers.ValidationError("Token not found.")
+
+        if token_obj.expires_at < timezone.now():
+            raise serializers.ValidationError("Token has expired.")
+
         if token_obj.is_used:
-            raise serializers.ValidationError("Token has already been used")
-        
-        # Check if the code matches
+            raise serializers.ValidationError("Token has already been used.")
+
         if token_obj.code != data['code']:
-            raise serializers.ValidationError("Invalid code")
-        
-        # validation passed, attach the token instance for use in the view
+            raise serializers.ValidationError("Invalid code.")
+
         data['token_obj'] = token_obj
         return data
