@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, use, us } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
@@ -90,7 +90,7 @@ export const OnboardingForm = () => {
   // - Lecturer and student need school, department, and course.
   // - Student also provides student_number and registration_number.
   const showSchool = role !== "registrar";
-  const showDepartment = role === "student" || role === "lecturer" || role === "department_head";
+  const showDepartment = role === "lecturer" || role === "department_head";
   const showCourse = role === "student" || role === "lecturer";
   const showStudentFields = role === "student";
 

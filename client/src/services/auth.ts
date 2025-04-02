@@ -129,7 +129,14 @@ class AuthService {
       }
 
     async logout() {
-        return await axiosInstance.post("/accounts/logout", { withCredentials: true } );
+        this.deleteAccessAndRefresh();
+        try{
+          await axiosInstance.post("/accounts/logout", { withCredentials: true } );
+          return { message: "Logged out successfully" }
+        } catch(error: any) { 
+          console.log(error.response.data)
+          throw new Error(error?.response?.data?.message || "Something went wrong :(")
+        }
       }
 
     async verify(formData: any) {

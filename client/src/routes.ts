@@ -46,9 +46,9 @@ export const PUBLIC_API_ROUTES = [
   '/accounts/login', 
   '/accounts/signup', 
   '/accounts/verify', 
+  '/accounts/logout', 
   '/accounts/token/refresh',
-  '/accounts/reset-password',
-  '/accounts/reset-password/confirm',
+  '/accounts/password-reset',
 ];
   
 export const PUBLIC_ROUTES = [

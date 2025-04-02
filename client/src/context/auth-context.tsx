@@ -4,6 +4,7 @@ import { ReactNode } from 'react';
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { DEFAULT_LOGOUT_REDIRECT } from '@/routes';
 import FullWindowLoader from '@/components/loaders/full-window-loader';
+import { toast } from 'sonner';
 
 export interface User {
   id: number;
@@ -63,11 +64,12 @@ export const AuthProvider = ({ children } :{ children: ReactNode }) => {
 
   const logout = async (redirect?: string) => {
     try {
-      setUser(null);
       await authService.logout();
+      setUser(null);
       navigate(redirect || DEFAULT_LOGOUT_REDIRECT)
+      toast.success("Logged out successfully");
     } catch(error:any){
-      navigate(redirect || DEFAULT_LOGOUT_REDIRECT)
+      toast.error(error?.message || "Something went wrong");
     }
   };
 
