@@ -11,8 +11,10 @@ from .serializers import (
     RegisterSerializer, ProfileUpdateSerializer, LoginSerializer, 
     CollegeSerializer, NotificationSerializer, SchoolSerializer, 
     DepartmentSerializer, CourseSerializer, CourseUnitSerializer,
-    EmailSerializer, UnifiedTokenSerializer, VerifyTokenSerializer, 
+    EmailSerializer, UnifiedTokenSerializer, VerifyTokenSerializer,
+    SignupSerializer
 )
+
 from .utils import log_audit
 from .utils import mailer, generate_6_digit_code, send_verification_email
 from .models import College, UnifiedToken, Notification, School, Department, Course, CourseUnit
@@ -240,36 +242,40 @@ class CourseUnitesListAPIView(generics.ListAPIView):
         return Course.objects.none()
 
 # For verification
-class SignupAPIView(generics.CreateAPIView):
+class SignupAPIView(APIView):
     """
-    Endpoint for user signup. On signup:
-      - A user record is created.
-      - A new unified token is generated for email verification.
-      - The 6-digit code is emailed to the user.
-      - The response includes the token's ID (but not the code).
+    Signup endpoint that creates a new user, generates a verification token,
+    sends an email with the 6-digit code, and returns the token's ID.
     """
-    serializer_class = SignupSerializer
-
-    def perform_create(self, serializer):
-        user = serializer.save()
-        # Generate token for email verification
-        token_instance = UnifiedToken.objects.create(
-            code=generate_6_digit_code(),
-            email=user.email,
-            token_type="email_verification",
-        )
-        # Send verification email
-        send_verification_email(user.email, token_instance)
-        # For audit/logging, you might log the event here
-        self.token_instance = token_instance  # store for later use in response
-    
-    def create(self, request, *args, **kwargs):
-        response = super().create(request, *args, **kwargs)
-        
-        # Add the token ID to the response without exposing the code
-        token_data = UnifiedTokenSerializer(self.token_instance).data
-        response.data.update({"token_id": token_data["id"]})
-        return response
+    def post(self, request, *args, **kwargs):
+        serializer = SignupSerializer(data=request.data)
+        if serializer.is_valid():
+            # Create the user record
+            user = serializer.save()
+            
+            # 6 digit verification code
+            verification_code = generate_6_digit_code()
+            
+            # Generate a 6-digit verification code and create a token
+            token_instance = UnifiedToken.objects.create(
+                code=verification_code,
+                email=user.email,
+                token_type="email_verification"
+            )
+            
+            # Send verification email with the code (code is not returned to the client)
+            send_verification_email(user.email, token_instance)
+            
+            # Serialize token data (only return the token ID)
+            token_data = UnifiedTokenSerializer(token_instance).data
+            
+            # Prepare response: include user data and the token's ID
+            response_data = serializer.data
+            response_data.update({"token_id": token_data["id"]})
+            
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class VerifyTokenAPIView(APIView):
