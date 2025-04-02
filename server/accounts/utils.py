@@ -13,6 +13,9 @@ from email.mime.multipart import MIMEMultipart
 from django.conf import settings
 from django.core.mail import send_mail
 
+from rest_framework import status
+from rest_framework.response import Response
+
 from twilio.rest import Client
 
     
@@ -82,15 +85,12 @@ def generate_6_digit_code():
     return f"{random.randint(0, 999999):06d}"  
 
 
-def send_verification_email(user_email, token_instance, issue_title=None, issue_description=None):
-    #Send an email containing the 6-digit code for verification.
-    #The email content can be customized based on context (signup or password reset).
-    
+def send_verification_email(user_email, token_instance):
     result = mailer.send(
             to=user_email,
             subject="Email Verification" if token_instance.token_type == "email_verification" else "Password Reset",
             html=f"""
-                <h3>{subject}</h3>
+                <h3>Email Verification!</h3>
                 <p>Your verification code is: <strong>{token_instance.code}</strong></p>
             """
         )
@@ -98,31 +98,3 @@ def send_verification_email(user_email, token_instance, issue_title=None, issue_
         return Response({"message": result}, status=status.HTTP_200_OK)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    
-    
-    
-    
-    
-    
-    #subject = "Email Verification" if token_instance.token_type == "email_verification" else "Password Reset"
-    #html_content = f"""
-                #<h3> {subject} </h3>
-                #<p>Your verification code is: <strong>{token_instance.code}</strong></p>
-    #"""
-    
-    # Optionally, include issue details if provided
-    #if issue_title and issue_description:
-        #html_content += f"""
-                    #<p>Your issue '{issue_title}' has been submitted.</p>
-                    #<p><strong>Token:</strong> {token_instance.id}</p>
-                    #<p><strong>Details:</strong> {issue_description}</p>
-        #"""
-    #send_mail(
-        #subject,
-        #'',  # Plain text version (can be left blank)
-        # settings.DEFAULT_FROM_EMAIL,
-        #[user_email],
-        #html_message=html_content,
-        #fail_silently=False,
-    #)
