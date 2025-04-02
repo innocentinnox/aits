@@ -1,11 +1,15 @@
 from django.urls import path
-from .views import (RegisterView, LoginView, logout_view, CollegeView, ProfileUpdateView, NotificationListView, status_view, TokenRefreshCookieView, CollegeView,   
+from .views import (RegisterView, LoginView, CollegeView, ProfileUpdateView, NotificationListView, status_view, TokenRefreshCookieView, CollegeView,   
     CollegeListAPIView,
     SchoolListAPIView,
     DepartmentListAPIView,
     CourseListAPIView,
     CourseUnitesListAPIView,
-    SendEmailAPIView
+    SendEmailAPIView,
+    SignupAPIView, 
+    VerifyTokenAPIView,
+    PasswordResetRequestAPIView,
+    LogoutView
     )
 
 from rest_framework_simplejwt.views import TokenRefreshView
@@ -13,9 +17,9 @@ from rest_framework_simplejwt.views import TokenRefreshView
 
 
 urlpatterns = [
-    path('signup/', RegisterView.as_view(), name='signup'),
+    path('signup/', SignupAPIView.as_view(), name='signup'),
     path('login/', LoginView.as_view(), name='login'),
-    path('logout/', logout_view, name='logout'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     # path('colleges/', CollegeView.as_view(), name='colleges'),
     path('profile/', ProfileUpdateView.as_view(), name='profile-update'),
     path('notifications/', NotificationListView.as_view(), name='notifications'),
@@ -29,5 +33,9 @@ urlpatterns = [
     path('course-units/', CourseUnitesListAPIView.as_view(), name='course-units-list'),
     
     path('send-email/', SendEmailAPIView.as_view(), name='send-email'),
+    
+    # Verification
+    
+    path('password-reset/', PasswordResetRequestAPIView.as_view(), name='password-reset'),
+    path('verify/', VerifyTokenAPIView.as_view(), name='verify-token'),
 ]
-

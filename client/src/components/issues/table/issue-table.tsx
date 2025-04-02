@@ -1,27 +1,22 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Check, ChevronDown, MessageSquare, Search, X } from "lucide-react"
+import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Badge } from "@/components/ui/badge"
-import { Skeleton } from "@/components/ui/skeleton"
-import { cn } from "@/lib/utils"
 import { fetchIssues } from "@/lib/issues"
 import type { Issue, IssueParams } from "@/types"
 import { useNavigate } from "react-router-dom"
 import useUrlParams from "@/hooks/use-url-params"
+
+// Import our new components
+import FilterDropdown from "./filter-dropdown"
+import TablePagination from "./table-pagination"
+import TableSkeleton from "./table-skeleton"
+import IssueRow from "./issue-row"
+import SearchBar from "./search-bar"
+import StatusTabs from "./status-tabs"
 
 export default function IssueTable() {
   const navigate = useNavigate();
@@ -34,7 +29,7 @@ export default function IssueTable() {
     skip: 0,
     search: "",
     priority: "",
-    status: "",
+    statuses: [],
     assigned_to: "",
     ordering: "",
   })
@@ -46,7 +41,7 @@ export default function IssueTable() {
       skip: Number(searchParams.get("skip")) || 0,
       search: searchParams.get("search") || "",
       priority: searchParams.get("priority") || "",
-      status: searchParams.get("status") || "",
+      statuses: searchParams.get("statuses")?.split(",") || [],
       assigned_to: searchParams.get("assigned_to") || "",
       ordering: searchParams.get("ordering") || "",
     }
@@ -72,14 +67,15 @@ export default function IssueTable() {
   }, [params])
 
   // Update URL with new params
-  const updateParams = (newParams: Partial<IssueParams>) => {
-    const updatedParams = { ...params, ...newParams }
-
+  const updateParams = ({statuses, ...newParams}: Partial<IssueParams>) => {
+    let updatedParams = { ...params, ...newParams, statuses: statuses?.join(",") }
+    statuses && statuses?.length > 0 && (updatedParams.statuses = statuses.join(","))
+    
     // Reset skip to 0 when filters change
     if (
       newParams.search !== undefined ||
       newParams.priority !== undefined ||
-      newParams.status !== undefined ||
+      (statuses !== undefined && statuses.length > 0) ||
       newParams.assigned_to !== undefined ||
       newParams.ordering !== undefined
     ) {
@@ -98,45 +94,7 @@ export default function IssueTable() {
   }
 
   // Calculate pagination
-  const totalPages = Math.ceil(total / params.take)
   const currentPage = Math.floor(params.skip / params.take) + 1
-
-  // Generate page numbers for pagination
-  const getPageNumbers = () => {
-    const pages = []
-    const maxVisiblePages = 5
-
-    // Always show first page
-    pages.push(1)
-
-    // Calculate range of pages to show around current page
-    const startPage = Math.max(2, currentPage - Math.floor(maxVisiblePages / 2))
-    const endPage = Math.min(totalPages - 1, startPage + maxVisiblePages - 2)
-
-    // Adjust if we're near the beginning
-    if (startPage > 2) {
-      pages.push("ellipsis")
-    }
-
-    // Add middle pages
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(i)
-    }
-
-    // Adjust if we're near the end
-    if (endPage < totalPages - 1) {
-      pages.push("ellipsis")
-    }
-
-    // Always show last page if there is more than one page
-    if (totalPages > 1) {
-      pages.push(totalPages)
-    }
-
-    return pages
-  }
-
-  const pageNumbers = getPageNumbers()
 
   // Handle page change
   const goToPage = (page: number) => {
@@ -148,176 +106,65 @@ export default function IssueTable() {
     updateParams({
       search: "",
       priority: "",
-      status: "",
+      statuses: [],
       assigned_to: "",
       skip: 0,
     })
   }
 
-  // Render priority badge
-  const renderPriorityBadge = (priority: number) => {
-    switch (priority) {
-      case 1:
-        return <Badge className="bg-destructive">High</Badge>
-      case 2:
-        return <Badge className="bg-warning text-warning-foreground">Medium</Badge>
-      case 3:
-        return <Badge className="bg-green-500">Low</Badge>
-      default:
-        return null
-    }
-  }
+  // Define filter options
+  const priorityOptions = [
+    { value: "1", label: "High" },
+    { value: "2", label: "Medium" },
+    { value: "3", label: "Low" },
+  ]
 
-  // Format date
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    const now = new Date()
-    const diffTime = Math.abs(now.getTime() - date.getTime())
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  const statusOptions = [
+    { value: "open", label: "Open" },
+    { value: "in_progress", label: "In Progress" },
+    { value: "resolved", label: "Resolved" },
+    { value: "closed", label: "Closed" },
+  ]
 
-    if (diffDays <= 1) {
-      return "today"
-    } else if (diffDays <= 7) {
-      return `${diffDays} days ago`
-    } else if (diffDays <= 30) {
-      return `${Math.floor(diffDays / 7)} weeks ago`
-    } else {
-      return date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      })
-    }
-  }
+  const assigneeOptions = [
+    { value: "john.doe@example.com", label: "John Doe" },
+    { value: "jane.smith@example.com", label: "Jane Smith" },
+    { value: "alex.johnson@example.com", label: "Alex Johnson" },
+  ]
 
   return (
     <div className="w-full space-y-4">
       {/* Search and filters */}
       <div className="flex flex-col sm:flex-row gap-4">
-        <div className="relative flex-1">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search issues..."
-            className="pl-8"
-            value={params.search}
-            onChange={(e) => updateParams({ search: e.target.value })}
-          />
-        </div>
+        <SearchBar 
+          value={params.search}
+          onChange={(value) => updateParams({ search: value })}
+          placeholder="Search issues..."
+        />
 
         <div className="flex flex-wrap gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="flex gap-1">
-                Priority
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40">
-              <DropdownMenuLabel>Filter by priority</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => updateParams({ priority: "1" })}>
-                <Check className={cn("mr-2 h-4 w-4", params.priority === "1" ? "opacity-100" : "opacity-0")} />
-                High
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => updateParams({ priority: "2" })}>
-                <Check className={cn("mr-2 h-4 w-4", params.priority === "2" ? "opacity-100" : "opacity-0")} />
-                Medium
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => updateParams({ priority: "3" })}>
-                <Check className={cn("mr-2 h-4 w-4", params.priority === "3" ? "opacity-100" : "opacity-0")} />
-                Low
-              </DropdownMenuItem>
-              {params.priority && (
-                <>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => updateParams({ priority: "" })}>Clear filter</DropdownMenuItem>
-                </>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <FilterDropdown
+            title="Priority"
+            options={priorityOptions}
+            currentValue={params.priority}
+            onChange={(value) => updateParams({ priority: value })}
+          />
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="flex gap-1">
-                Status
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40">
-              <DropdownMenuLabel>Filter by status</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => updateParams({ status: "open" })}>
-                <Check className={cn("mr-2 h-4 w-4", params.status === "open" ? "opacity-100" : "opacity-0")} />
-                Open
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => updateParams({ status: "in_progress" })}>
-                <Check className={cn("mr-2 h-4 w-4", params.status === "in_progress" ? "opacity-100" : "opacity-0")} />
-                In Progress
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => updateParams({ status: "resolved" })}>
-                <Check className={cn("mr-2 h-4 w-4", params.status === "resolved" ? "opacity-100" : "opacity-0")} />
-                Resolved
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => updateParams({ status: "closed" })}>
-                <Check className={cn("mr-2 h-4 w-4", params.status === "closed" ? "opacity-100" : "opacity-0")} />
-                Closed
-              </DropdownMenuItem>
-              {params.status && (
-                <>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => updateParams({ status: "" })}>Clear filter</DropdownMenuItem>
-                </>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <FilterDropdown
+            title="Status"
+            options={statusOptions}
+            currentValue={params.statuses?.length == 1 ? params.statuses[0] : ""}
+            onChange={(value) => updateParams({ statuses: [value] })}
+          />
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="flex gap-1">
-                Assignee
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>Filter by assignee</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <DropdownMenuItem onClick={() => updateParams({ assigned_to: "john.doe@example.com" })}>
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      params.assigned_to === "john.doe@example.com" ? "opacity-100" : "opacity-0",
-                    )}
-                  />
-                  John Doe
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => updateParams({ assigned_to: "jane.smith@example.com" })}>
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      params.assigned_to === "jane.smith@example.com" ? "opacity-100" : "opacity-0",
-                    )}
-                  />
-                  Jane Smith
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => updateParams({ assigned_to: "alex.johnson@example.com" })}>
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      params.assigned_to === "alex.johnson@example.com" ? "opacity-100" : "opacity-0",
-                    )}
-                  />
-                  Alex Johnson
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-              {params.assigned_to && (
-                <>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => updateParams({ assigned_to: "" })}>Clear filter</DropdownMenuItem>
-                </>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <FilterDropdown
+            title="Assignee"
+            options={assigneeOptions}
+            currentValue={params.assigned_to}
+            onChange={(value) => updateParams({ assigned_to: value })}
+            groupOptions={true}
+            width="w-56"
+          />
 
           <Select value={params.ordering} onValueChange={(value) => updateParams({ ordering: value })}>
             <SelectTrigger className="w-[180px]">
@@ -333,7 +180,7 @@ export default function IssueTable() {
             </SelectContent>
           </Select>
 
-          {(params.search || params.priority || params.status || params.assigned_to) && (
+          {(params.search || params.priority || (params.statuses && params.statuses?.length > 0) || params.assigned_to) && (
             <Button variant="ghost" onClick={clearFilters} className="h-10 px-3">
               <X className="h-4 w-4 mr-2" />
               Clear filters
@@ -343,31 +190,11 @@ export default function IssueTable() {
       </div>
 
       {/* Status tabs */}
-      <div className="flex border-b">
-        <Button
-          variant="ghost"
-          className={cn(
-            "rounded-none border-b-2 border-transparent px-4",
-            params.status !== "closed" && "border-primary",
-          )}
-          onClick={() => updateParams({ status: "" })}
-        >
-          Open
-          <Badge variant="outline" className="ml-2">
-            {total}
-          </Badge>
-        </Button>
-        <Button
-          variant="ghost"
-          className={cn(
-            "rounded-none border-b-2 border-transparent px-4",
-            params.status === "closed" && "border-primary",
-          )}
-          onClick={() => updateParams({ status: "closed" })}
-        >
-          Closed
-        </Button>
-      </div>
+      <StatusTabs
+        currentStatuses={params.statuses || []}
+        onStatusChange={(statuses) => updateParams({ statuses })}
+        openCount={total}
+      />
 
       {/* Issues table */}
       <div className="rounded-md border">
@@ -383,68 +210,14 @@ export default function IssueTable() {
           </TableHeader>
           <TableBody>
             {isLoading ? (
-              // Skeleton loading state
-              Array.from({ length: params.take }).map((_, index) => (
-                <TableRow key={`skeleton-${index}`}>
-                  <TableCell>
-                    <Skeleton className="h-6 w-6 rounded-full" />
-                  </TableCell>
-                  <TableCell>
-                    <div className="space-y-2">
-                      <Skeleton className="h-4 w-full max-w-[300px]" />
-                      <Skeleton className="h-3 w-full max-w-[200px]" />
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className="h-6 w-16" />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className="h-4 w-24" />
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Skeleton className="h-4 w-8 ml-auto" />
-                  </TableCell>
-                </TableRow>
-              ))
+              <TableSkeleton rowCount={params.take} />
             ) : issues.length > 0 ? (
-              issues.map((issue) => (
-                <TableRow key={issue.id}>
-                  <TableCell>
-                    <div className="flex h-6 w-6 items-center justify-center rounded-full border">
-                      <Check className="h-3 w-3" />
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="font-medium">{issue.title}</div>
-                    <div className="text-sm text-muted-foreground">
-                      #{issue.id} • {issue.status === "closed" ? "closed" : "opened"} {formatDate(issue.created_at)} by{" "}
-                      {issue.created_by}
-                    </div>
-                  </TableCell>
-                  <TableCell>{renderPriorityBadge(issue.priority)}</TableCell>
-                  <TableCell>
-                    {issue.assigned_to ? (
-                      <div className="flex items-center gap-2">
-                        <div className="h-6 w-6 rounded-full bg-primary/10" />
-                        <span className="text-sm">{issue.assigned_to.split("@")[0]}</span>
-                      </div>
-                    ) : (
-                      <span className="text-sm text-muted-foreground">Unassigned</span>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex items-center justify-end">
-                      <MessageSquare className="mr-1 h-3.5 w-3.5 text-muted-foreground" />
-                      <span>{issue.comments_count}</span>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))
+              issues.map((issue) => <IssueRow key={issue.id} issue={issue} />)
             ) : (
               <TableRow>
-                <TableCell colSpan={5} className="h-24 text-center">
+                <TableHead colSpan={5} className="h-24 text-center">
                   No issues found.
-                </TableCell>
+                </TableHead>
               </TableRow>
             )}
           </TableBody>
@@ -453,59 +226,15 @@ export default function IssueTable() {
 
       {/* Pagination */}
       {!isLoading && total > 0 && (
-        <div className="flex items-center justify-between">
-          <div className="text-sm text-muted-foreground">
-            Showing {params.skip + 1}-{Math.min(params.skip + params.take, total)} of {total} issues
-          </div>
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm" onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1}>
-              Previous
-            </Button>
-
-            {pageNumbers.map((page, index) =>
-              page === "ellipsis" ? (
-                <span key={`ellipsis-${index}`} className="px-2">
-                  ...
-                </span>
-              ) : (
-                <Button
-                  key={`page-${page}`}
-                  variant={currentPage === page ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => goToPage(Number(page))}
-                >
-                  {page}
-                </Button>
-              ),
-            )}
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => goToPage(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </Button>
-
-            <Select
-              value={params.take.toString()}
-              onValueChange={(value) => updateParams({ take: Number(value), skip: 0 })}
-            >
-              <SelectTrigger className="w-[70px]">
-                <SelectValue placeholder="10" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="5">5</SelectItem>
-                <SelectItem value="10">10</SelectItem>
-                <SelectItem value="20">20</SelectItem>
-                <SelectItem value="50">50</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+        <TablePagination
+          total={total}
+          currentPage={currentPage}
+          pageSize={params.take}
+          skip={params.skip}
+          onPageChange={goToPage}
+          onPageSizeChange={(size) => updateParams({ take: size, skip: 0 })}
+        />
       )}
     </div>
   )
 }
-

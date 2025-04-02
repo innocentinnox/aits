@@ -26,7 +26,7 @@ export interface Issue {
     assigned_to?: string
     college?: string
     course_unit?: string
-    status?: string
+    statuses?: string[]
     year?: string
     ordering?: string
   }

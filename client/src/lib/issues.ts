@@ -6,7 +6,7 @@ export async function fetchIssues(params: IssueParams): Promise<IssueResponse> {
   await new Promise((resolve) => setTimeout(resolve, 800))
 
   // Destructure params
-  const { take = 10, skip = 0, search = "", priority = "", status = "", assigned_to = "", ordering = "" } = params
+  const { take = 10, skip = 0, search = "", priority = "", statuses = [], assigned_to = "", ordering = "" } = params
 
   // Filter issues based on params
   let filteredIssues = [...mockIssues]
@@ -28,8 +28,8 @@ export async function fetchIssues(params: IssueParams): Promise<IssueResponse> {
   }
 
   // Apply status filter
-  if (status) {
-    filteredIssues = filteredIssues.filter((issue) => issue.status === status)
+  if (statuses.length > 0) {
+    filteredIssues = filteredIssues.filter((issue) =>  statuses.includes(issue.status))
   }
 
   // Apply assignee filter
