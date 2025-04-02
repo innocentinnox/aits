@@ -18,6 +18,7 @@ from .serializers import (
 from .utils import log_audit
 from .utils import mailer, generate_6_digit_code, send_verification_email
 from .models import College, UnifiedToken, Notification, School, Department, Course, CourseUnit
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -244,68 +245,95 @@ class CourseUnitesListAPIView(generics.ListAPIView):
 # For verification
 class SignupAPIView(APIView):
     """
-    Signup endpoint that creates a new user, generates a verification token,
-    sends an email with the 6-digit code, and returns the token's ID.
+    On Signup:
+      - Create user
+      - Generate a token for email verification
+      - Send an email with the 6-digit code
+      - Return response with token_id
     """
+    permission_classes = [AllowAny]
     def post(self, request, *args, **kwargs):
         serializer = SignupSerializer(data=request.data)
         if serializer.is_valid():
-            # Create the user record
             user = serializer.save()
-            
-            # 6 digit verification code
-            verification_code = generate_6_digit_code()
-            
-            # Generate a 6-digit verification code and create a token
             token_instance = UnifiedToken.objects.create(
-                code=verification_code,
+                code=generate_6_digit_code(),
                 email=user.email,
                 token_type="email_verification"
             )
-            
-            # Send verification email with the code (code is not returned to the client)
             send_verification_email(user.email, token_instance)
-            
-            # Serialize token data (only return the token ID)
             token_data = UnifiedTokenSerializer(token_instance).data
-            
-            # Prepare response: include user data and the token's ID
             response_data = serializer.data
             response_data.update({"token_id": token_data["id"]})
-            
             return Response(response_data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class PasswordResetRequestAPIView(APIView):
+    """
+    Password Reset Request Endpoint:
+      - Accepts an email and, if the user exists, generates a password reset token.
+      - Sends an email with the 6-digit code.
+      - Returns the token_id.
+    """
+    def post(self, request, *args, **kwargs):
+        email = request.data.get("email")
+        if not email:
+            return Response({"error": "Email is required."}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({"error": "User with this email does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        code_verification = generate_6_digit_code()
+        
+        token_instance = UnifiedToken.objects.create(
+            code=code_verification,
+            email=email,
+            token_type="password_reset"
+        )
+        send_verification_email(email, token_instance)
+        token_data = UnifiedTokenSerializer(token_instance).data
+        return Response({"token_id": token_data["id"]}, status=status.HTTP_200_OK)
+
 
 class VerifyTokenAPIView(APIView):
     """
-    Endpoint for verifying the token.
-    Expected request body:
-      {
-        "token": "<token_id>",
-        "code": "<6-digit code>"
-      }
-    If verification succeeds:
-      - For email verification tokens, respond with { "next": "/auth/login" }.
-      - For password reset tokens, respond with { "next": "/auth/reset/new-password" }.
+    Verification Endpoint:
+      - Accepts token and 6-digit code.
+      - If 'new_password' is provided, assumes password reset flow.
+      - Otherwise, assumes email verification.
     """
-    def post(self, request):
+    permission_classes = [AllowAny]
+    def post(self, request, *args, **kwargs):
         serializer = VerifyTokenSerializer(data=request.data)
         if serializer.is_valid():
             token_obj = serializer.validated_data['token_obj']
-            # Mark token as used
-            token_obj.is_used = True
-            token_obj.save()
-
-            # Determine next route based on token type
+            # Mark the token as used
             if token_obj.token_type == "email_verification":
-                next_route = "/auth/login"
+                # Email verification: simply return next step for login
+                try:
+                    user = User.objects.get(email=token_obj.email)
+                    user.email_verified = timezone.now()
+                    user.save()
+                    token_obj.delete()  # Delete the token after use
+                    return Response({"next": "/auth/login", "message": "Email verified"}, status=status.HTTP_200_OK)
+                except User.DoesNotExist:
+                    return Response({"error": "User not found."}, status=status.HTTP_400_BAD_REQUEST)
+                
             elif token_obj.token_type == "password_reset":
-                next_route = "/auth/reset/new-password"
+                new_password = request.data.get("new_password")
+                if not new_password:
+                    return Response({"error": "New password is required for password reset."}, status=status.HTTP_400_BAD_REQUEST)
+                # Update the user's password
+                try:
+                    user = User.objects.get(email=token_obj.email)
+                    user.set_password(new_password)
+                    user.save()
+                    return Response({"next": "/auth/login"}, status=status.HTTP_200_OK)
+                except User.DoesNotExist:
+                    return Response({"error": "User not found."}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                next_route = "/"
-
-            return Response({"next": next_route}, status=status.HTTP_200_OK)
+                return Response({"error": "Invalid token type."}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
