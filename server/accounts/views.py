@@ -11,11 +11,14 @@ from .serializers import (
     RegisterSerializer, ProfileUpdateSerializer, LoginSerializer, 
     CollegeSerializer, NotificationSerializer, SchoolSerializer, 
     DepartmentSerializer, CourseSerializer, CourseUnitSerializer,
-    EmailSerializer
+    EmailSerializer, UnifiedTokenSerializer, VerifyTokenSerializer,
+    SignupSerializer
 )
+
 from .utils import log_audit
-from .utils import mailer
-from .models import College, Notification, School, Department, Course, CourseUnit
+from .utils import mailer, generate_6_digit_code, send_verification_email
+from .models import College, UnifiedToken, Notification, School, Department, Course, CourseUnit
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -238,3 +241,99 @@ class CourseUnitesListAPIView(generics.ListAPIView):
         if course_id:
             return CourseUnit.objects.filter(course__id=course_id, year_taken=year_taken)
         return Course.objects.none()
+
+# For verification
+class SignupAPIView(APIView):
+    """
+    On Signup:
+      - Create user
+      - Generate a token for email verification
+      - Send an email with the 6-digit code
+      - Return response with token_id
+    """
+    permission_classes = [AllowAny]
+    def post(self, request, *args, **kwargs):
+        serializer = SignupSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            token_instance = UnifiedToken.objects.create(
+                code=generate_6_digit_code(),
+                email=user.email,
+                token_type="email_verification"
+            )
+            send_verification_email(user.email, token_instance)
+            token_data = UnifiedTokenSerializer(token_instance).data
+            response_data = serializer.data
+            response_data.update({"token_id": token_data["id"]})
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class PasswordResetRequestAPIView(APIView):
+    """
+    Password Reset Request Endpoint:
+      - Accepts an email and, if the user exists, generates a password reset token.
+      - Sends an email with the 6-digit code.
+      - Returns the token_id.
+    """
+    def post(self, request, *args, **kwargs):
+        email = request.data.get("email")
+        if not email:
+            return Response({"error": "Email is required."}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({"error": "User with this email does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        code_verification = generate_6_digit_code()
+        
+        token_instance = UnifiedToken.objects.create(
+            code=code_verification,
+            email=email,
+            token_type="password_reset"
+        )
+        send_verification_email(email, token_instance)
+        token_data = UnifiedTokenSerializer(token_instance).data
+        return Response({"token_id": token_data["id"]}, status=status.HTTP_200_OK)
+
+
+class VerifyTokenAPIView(APIView):
+    """
+    Verification Endpoint:
+      - Accepts token and 6-digit code.
+      - If 'new_password' is provided, assumes password reset flow.
+      - Otherwise, assumes email verification.
+    """
+    permission_classes = [AllowAny]
+    def post(self, request, *args, **kwargs):
+        serializer = VerifyTokenSerializer(data=request.data)
+        if serializer.is_valid():
+            token_obj = serializer.validated_data['token_obj']
+            # Mark the token as used
+            if token_obj.token_type == "email_verification":
+                # Email verification: simply return next step for login
+                try:
+                    user = User.objects.get(email=token_obj.email)
+                    user.email_verified = timezone.now()
+                    user.save()
+                    token_obj.delete()  # Delete the token after use
+                    return Response({"next": "/auth/login", "message": "Email verified"}, status=status.HTTP_200_OK)
+                except User.DoesNotExist:
+                    return Response({"error": "User not found."}, status=status.HTTP_400_BAD_REQUEST)
+                
+            elif token_obj.token_type == "password_reset":
+                new_password = request.data.get("new_password")
+                if not new_password:
+                    return Response({"error": "New password is required for password reset."}, status=status.HTTP_400_BAD_REQUEST)
+                # Update the user's password
+                try:
+                    user = User.objects.get(email=token_obj.email)
+                    user.set_password(new_password)
+                    user.save()
+                    return Response({"next": "/auth/login"}, status=status.HTTP_200_OK)
+                except User.DoesNotExist:
+                    return Response({"error": "User not found."}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({"error": "Invalid token type."}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
