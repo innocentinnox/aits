@@ -22,6 +22,7 @@ import AdminLayout from "./admin/AdminLayout";
 import Statistics from "./admin/stat/Statistics";
 import DashboardAdmin from "./admin/dashboard/DashboardAdmin";
 import StudentLayout from "./student/StudentLayout";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -126,11 +127,11 @@ const router = createBrowserRouter([
       },
     ],
   },
-  // Not found can't be dashboard
-  // {
-  //   path: "*",
-  //   element: <Navigate to="/dashboard" replace />, // 404
-  // },
+
+  {
+    path: "*",
+    element: <Navigate to="/" />, // 404
+  },
   {
     path: "/onboarding",
     element: <OnboardingPage />, // 404

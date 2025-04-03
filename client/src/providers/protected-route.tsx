@@ -6,10 +6,10 @@ const ProtectedRoute = () => {
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  if (!user) {
+  if (!user && !loading) {
     // If not authenticated, redirect to login.
     // Pass the current location so you can navigate back after logging in.
-    console.log("login try");
+
     return <Navigate to="/auth/login" state={{ from: location }} replace />;
   }
 
