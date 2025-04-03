@@ -213,10 +213,11 @@ body {
     align-items:center;
     background-color:#39903b;
     color: white;
-    padding: 10px 20px;
+    padding: 15px 30px;
 }
 
-.header-left {
+.header-logo {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
