@@ -23,7 +23,7 @@ def issue_status_changed(sender, instance, created, **kwargs):
             to=instance.created_by,
             subject="Issue Submitted Successfully",
             html=f"""
-                <h3>Issue has been Submitted Successfully to the authorities.</h3>
+                <h3>Issue has been Submitted Successfully.</h3>
                 <p>Your issue '{instance.title}' has been submitted.</p>
                 <p><strong>Token:</strong> {instance.token}</p>
                 <p><strong>Details:</strong> {instance.description}</p>
