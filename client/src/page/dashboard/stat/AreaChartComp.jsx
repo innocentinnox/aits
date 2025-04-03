@@ -5,6 +5,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  ResponsiveContainer,
 } from "recharts";
 
 const data = [
@@ -54,27 +55,30 @@ const data = [
 
 export default function AreaChartComp() {
   return (
-    <AreaChart
-      width={500}
-      height={300}
-      data={data}
-      margin={{
-        top: 10,
-        right: 30,
-        left: 0,
-        bottom: 0,
-      }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Area
-        type="monotone"
-        dataKey="uv"
-        stroke="hsl(142.1 76.2% 36.3%)"
-        fill="hsl(142.1 76.2% 30.3%)"
-      />
-    </AreaChart>
+    <div>
+      <div>Issuses</div>
+      <ResponsiveContainer minWidth={400} height={300}>
+        <AreaChart
+          data={data}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="uv"
+            stroke="hsl(142.1 76.2% 36.3%)"
+            fill="hsl(142.1 76.2% 30.3%)"
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
   );
 }

@@ -18,7 +18,7 @@ export default function DashBoard() {
       </Heading>
       <CardGrid />
       <StatGrid />
-      <div className="container py-10 mx-auto px-4">
+      <div className=" py-10 w-[100%] px-4">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Issues</h1>
           <div className="flex items-center gap-4">
