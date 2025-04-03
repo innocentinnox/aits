@@ -30,6 +30,7 @@ class IssueCreateView(generics.CreateAPIView):
         if user.role != 'student':
             raise PermissionDenied("Only students can create issues.")
         
+        # Getting registrar and the college she belongs to
         registrar = User.objects.filter(role='registrar', college=user.college).first()
         issue = serializer.save(created_by=user, assigned_to=registrar)
         log_audit(user, "Issue Created", f"Issue '{issue.title}' with token {issue.token} created.")
@@ -60,7 +61,7 @@ class IssueDetailView(generics.RetrieveAPIView):
     queryset = Issue.objects.all()
     permission_classes = [IsAuthenticated]
 
-
+# This will be used for resolving and forwarding issues
 class IssueUpdateView(generics.UpdateAPIView):
     serializer_class = IssueSerializer
     queryset = Issue.objects.all()
