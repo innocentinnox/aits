@@ -11,7 +11,7 @@ export default function Menu({
 }) {
   const { user } = useAuth();
   // Check for user role
-  if (user?.role === "registrar")
+  if (user?.role === "department_head")
     return (
       <ul className="mt-5 flex-col flex  ">
         {ADMIN_NAV_ITEMS.map(({ path, name, icon }, index) => (
