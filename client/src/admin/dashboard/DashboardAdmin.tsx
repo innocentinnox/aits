@@ -1,13 +1,7 @@
-import CardGrid from "@/page/dashboard/CardGrid";
-import StatGrid from "@/admin/stat/StatGrid";
+import IssueTable from "@/components/issues/table/issue-table";
 
 function DashboardAdmin() {
-  return (
-    <>
-      <CardGrid />
-      <StatGrid />
-    </>
-  );
+  return <IssueTable />;
 }
 
 export default DashboardAdmin;
