@@ -30,6 +30,7 @@ class IssueCreateView(generics.CreateAPIView):
         if user.role != 'student':
             raise PermissionDenied("Only students can create issues.")
         
+        # Getting registrar and the college she belongs to
         registrar = User.objects.filter(role='registrar', college=user.college).first()
         issue = serializer.save(created_by=user, assigned_to=registrar)
         log_audit(user, "Issue Created", f"Issue '{issue.title}' with token {issue.token} created.")
@@ -52,55 +53,6 @@ class IssueCreateView(generics.CreateAPIView):
             headers=headers
         )
 
-"""# Issue view: --> Only for students
-class IssueCreateView(generics.CreateAPIView):
-    serializer_class = IssueSerializer
-    permission_classes = [IsAuthenticated]
-    parser_classes = [MultiPartParser, FormParser]
-    
-    def perform_create(self, serializer):
-        user = self.request.user
-        if user.role != 'student':
-            raise PermissionDenied("Only students can create issues.")
-        
-        registrar = User.objects.filter(role='registrar', college=user.college).first()
-        issue = serializer.save(created_by=user, assigned_to=registrar)
-        log_audit(user, "Issue Created", f"Issue '{issue.title}' with token {issue.token} created.")
-        
-        # Process file attachments if any
-        for file in self.request.FILES.getlist('attachments'):
-            IssueAttachment.objects.create(issue=issue, file=file)
-        
-        # Email notifications...
-        result = mailer.send(
-                to=user,
-                subject="Issue Submitted Successfully",
-                html=f
-                    #<h3>Issue has been Submitted Successfully to the authorities.</h3>
-                    #<p>Your issue '{issue.title}' has been submitted.</p>
-                    #<p><strong>Details:</strong> {issue.description}</p>
-                    #
-                #)
-        if result:
-            return Response({"message": result}, status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-        if registrar:
-            result = mailer.send(
-                to=registrar,
-                subject="New Issue Assigned",
-                html=f
-                    <h3>There has been a new issue created!</h3>
-                    <p>New Issue submitted by '{user.username}'.</p>
-                    <p><strong>Token:</strong> {issue.token}</p>
-                    <p><strong>Title:</strong> {issue.title}</p>
-                    
-            )
-            if result:
-                return Response({"message": result}, status=status.HTTP_200_OK)
-            else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)"""
         
 # Retrieve issue by token (for tracking)
 class IssueDetailView(generics.RetrieveAPIView):
@@ -109,7 +61,7 @@ class IssueDetailView(generics.RetrieveAPIView):
     queryset = Issue.objects.all()
     permission_classes = [IsAuthenticated]
 
-
+# This will be used for resolving and forwarding issues
 class IssueUpdateView(generics.UpdateAPIView):
     serializer_class = IssueSerializer
     queryset = Issue.objects.all()
