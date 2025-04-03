@@ -11,7 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image:ivorytower.jpg;
+    background-image:url(ivorytower.jpg);
 }
 
 .form-container {
