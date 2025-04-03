@@ -45,6 +45,8 @@ export const LoginForm = ({ className }: { className?: string }) => {
         onSuccess: (res) => {
           const user: User = res?.user;
           toast.success(res?.message);
+          console.log("userrrrrrrrrrrrrrrr", user);
+          console.log("DASHBOARD_ROUTES[user.role]", DASHBOARD_ROUTES[user.role]);
           navigate(DASHBOARD_ROUTES[user.role] || "/")
         },
         onError: (res: any) => {

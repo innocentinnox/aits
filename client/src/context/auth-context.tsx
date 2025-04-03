@@ -57,7 +57,7 @@ export const AuthProvider = ({ children } :{ children: ReactNode }) => {
     try {
       const data = await authService.login(credentials);
       if(data.user?.id){ await checkAuthStatus() } 
-      return { ...data, user }
+      return { ...data, user: data.user }
     } catch(error:any){
       throw new Error(error?.message || "Something went wrong");
     }
