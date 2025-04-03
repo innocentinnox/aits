@@ -21,6 +21,7 @@ import OnboardingPage from "./page/auth/onboarding";
 import AdminLayout from "./admin/AdminLayout";
 import Statistics from "./admin/stat/Statistics";
 import DashboardAdmin from "./admin/dashboard/DashboardAdmin";
+import StudentLayout from "./student/StudentLayout";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/",
+            element: <StudentLayout />,
             children: [
               {
                 path: "",
@@ -50,26 +52,30 @@ const router = createBrowserRouter([
               },
             ],
           },
-          {
-            path: "/lecturer",
-            element: <AdminLayout />,
-            children: [
-              {
-                path: "",
-                element: <DashBoard />,
-              },
-              {
-                path: "notifications",
-                element: <Notifications />,
-              },
-            ],
-          },
+          // {
+          //   path: "/lecturer",
+          //   element: <AdminLayout />,
+          //   children: [
+          //     {
+          //       path: "",
+          //       element: <DashBoard />,
+          //     },
+          //     {
+          //       path: "notifications",
+          //       element: <Notifications />,
+          //     },
+          //   ],
+          // },
           {
             path: "/admin",
             element: <AdminLayout />,
             children: [
               {
-                path: "",
+                index: true,
+                element: <Navigate to="dashboard" replace />,
+              },
+              {
+                path: "dashboard",
                 element: <DashboardAdmin />,
               },
               {
