@@ -144,16 +144,13 @@ class CustomUser(AbstractUser):
     registration_number = models.CharField(max_length=50, blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        """Auto-assign role based on email domain dynamically."""
-        email_domain = self.email.split("@")[-1]  # Extract domain from email
-
-        for role, data in ROLES_DATA.items():
-            if email_domain in data["email_hosts"]:
-                self.role = role
-                break
-        else:
-            self.role = "student"  # Default role
-
+        # Only auto-assign if this is a new record and the role is still the default value.
+        if self.pk is None and self.role == "student":
+            email_domain = self.email.split("@")[-1]  # Extract domain from email
+            for role, data in ROLES_DATA.items():
+                if email_domain in data["email_hosts"]:
+                    self.role = role
+                    break
         super().save(*args, **kwargs)
 
     def __str__(self):
