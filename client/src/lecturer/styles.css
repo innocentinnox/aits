@@ -11,7 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f5f5f5;
+    background-image:ivorytower.jpg;
 }
 
 .form-container {
@@ -210,8 +210,8 @@ body {
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    background-color: #00A651;
+    align-items:center;
+    background-color:#39903b;
     color: white;
     padding: 10px 20px;
 }
