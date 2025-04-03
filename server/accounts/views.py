@@ -121,7 +121,7 @@ class LoginView(generics.GenericAPIView):
             samesite="Lax",
         )
         return response
-
+# Updating user profile
 class ProfileUpdateView(generics.UpdateAPIView):
     serializer_class = ProfileUpdateSerializer
     permission_classes = [IsAuthenticated]
@@ -133,6 +133,7 @@ class ProfileUpdateView(generics.UpdateAPIView):
         user = serializer.save()
         log_audit(user, "Profile Updated", f"User {user.email} updated their profile.")
 
+# Logout API
 class LogoutView(APIView):
     permission_classes = [AllowAny]
     
@@ -266,7 +267,7 @@ class SignupAPIView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+# This will be used for email verification and password reset
 class PasswordResetRequestAPIView(APIView):
     """
     Password Reset Request Endpoint:
@@ -294,7 +295,7 @@ class PasswordResetRequestAPIView(APIView):
         token_data = UnifiedTokenSerializer(token_instance).data
         return Response({"token_id": token_data["id"]}, status=status.HTTP_200_OK)
 
-
+# verify token and reset password
 class VerifyTokenAPIView(APIView):
     """
     Verification Endpoint:
