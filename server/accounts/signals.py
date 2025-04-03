@@ -4,6 +4,8 @@ from django.dispatch import receiver
 from .models import UnifiedToken
 from .utils import mailer
 
+from issues.models import Issue
+
 import logging
 
 logger = logging.getLogger(__name__)
