@@ -46,8 +46,9 @@ You can use your new .env file to store API keys, secret_keys, app_passwords and
 ***
 ***
 
-3) Packages and requirements - Our project will rely on a whole bunch of 3rd party packages (requirements) to function. We will be using a Python package manager to install packages throughout this course. 
-I have already created a requirements.txt file. Check out AITS/server/requirements.txt
+3) Packages and requirements - Our project will rely on a whole bunch of 3rd party packages (requirements) to function. We will be using a Python package manager to install packages throughout this course.
+4)  
+**I have already created a requirements.txt file. Check out AITS/server/requirements.txt**
 ```
 Let's go ahead and install our project requirements. Add the following code to your terminal.
 ```
