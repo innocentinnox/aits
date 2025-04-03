@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { PieChart, Pie, Sector } from "recharts";
+import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
 
 const data = [
   { name: "Group A", value: 400 },
@@ -91,19 +91,23 @@ export default function PieChartComp() {
   );
 
   return (
-    <PieChart width={400} height={400}>
-      <Pie
-        activeIndex={activeIndex}
-        activeShape={renderActiveShape}
-        data={data}
-        cx={200}
-        cy={200}
-        innerRadius={60}
-        outerRadius={80}
-        fill="hsl(142.1 76.2% 30.3%)"
-        dataKey="value"
-        onMouseEnter={onPieEnter}
-      />
-    </PieChart>
+    <div>
+      <div className="text-center">Issuse Catergory</div>
+
+      <PieChart width={400} height={400}>
+        <Pie
+          activeIndex={activeIndex}
+          activeShape={renderActiveShape}
+          data={data}
+          cx={200}
+          cy={200}
+          innerRadius={60}
+          outerRadius={80}
+          fill="hsl(142.1 76.2% 30.3%)"
+          dataKey="value"
+          onMouseEnter={onPieEnter}
+        />
+      </PieChart>
+    </div>
   );
 }

@@ -19,6 +19,7 @@ import { AuthProvider } from "./context/auth-context";
 import ProtectedRoute from "./providers/protected-route";
 import OnboardingPage from "./page/auth/onboarding";
 import AdminLayout from "./admin/AdminLayout";
+import Statistics from "./page/dashboard/stat/Statistics";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
               {
                 path: "dashboard",
                 element: <DashBoard />,
+              },
+              {
+                path: "statistics",
+                element: <Statistics />,
               },
               {
                 path: "notifications",
