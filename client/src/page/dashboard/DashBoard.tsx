@@ -7,11 +7,15 @@ import { useState } from "react";
 import PieChartComp from "./stat/PieChartComp";
 import AreaChartComp from "./stat/AreaChartComp";
 import StatGrid from "./stat/StatGrid";
+import Heading from "@/components/ui/Heading";
 
 export default function DashBoard() {
   const [showIssueDialog, setShowIssueDialog] = useState(false);
   return (
     <>
+      <Heading as="h2" className="text-center">
+        Issues Statistics
+      </Heading>
       <CardGrid />
       <StatGrid />
       <div className="container py-10 mx-auto px-4">

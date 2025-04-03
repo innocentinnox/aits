@@ -55,7 +55,7 @@ const data = [
 export default function AreaChartComp() {
   return (
     <AreaChart
-      width={400}
+      width={500}
       height={300}
       data={data}
       margin={{
@@ -69,7 +69,12 @@ export default function AreaChartComp() {
       <XAxis dataKey="name" />
       <YAxis />
       <Tooltip />
-      <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+      <Area
+        type="monotone"
+        dataKey="uv"
+        stroke="hsl(142.1 76.2% 36.3%)"
+        fill="hsl(142.1 76.2% 30.3%)"
+      />
     </AreaChart>
   );
 }

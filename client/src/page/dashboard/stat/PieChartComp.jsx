@@ -100,7 +100,7 @@ export default function PieChartComp() {
         cy={200}
         innerRadius={60}
         outerRadius={80}
-        fill="#8884d8"
+        fill="hsl(142.1 76.2% 30.3%)"
         dataKey="value"
         onMouseEnter={onPieEnter}
       />
