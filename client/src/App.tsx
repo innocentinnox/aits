@@ -19,7 +19,8 @@ import { AuthProvider } from "./context/auth-context";
 import ProtectedRoute from "./providers/protected-route";
 import OnboardingPage from "./page/auth/onboarding";
 import AdminLayout from "./admin/AdminLayout";
-import Statistics from "./page/dashboard/stat/Statistics";
+import Statistics from "./admin/stat/Statistics";
+import DashboardAdmin from "./admin/dashboard/DashboardAdmin";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "",
+                element: <DashBoard />,
+              },
+              {
+                path: "dashboard",
                 element: <DashBoard />,
               },
               {
@@ -65,7 +70,7 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "",
-                element: <DashBoard />,
+                element: <DashboardAdmin />,
               },
               {
                 path: "statistics",

@@ -1,6 +1,6 @@
 import Heading from "@/components/ui/Heading";
 import StatGrid from "./StatGrid";
-import CardGrid from "../CardGrid";
+import CardGrid from "../../page/dashboard/CardGrid";
 
 function Statistics() {
   return (

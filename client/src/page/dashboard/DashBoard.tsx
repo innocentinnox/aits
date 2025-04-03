@@ -4,9 +4,9 @@ import IssueTable from "@/components/issues/table/issue-table";
 import { NewIssueDialog } from "@/components/issues/issue-dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import PieChartComp from "./stat/PieChartComp";
-import AreaChartComp from "./stat/AreaChartComp";
-import StatGrid from "./stat/StatGrid";
+import PieChartComp from "../../admin/stat/PieChartComp";
+import AreaChartComp from "../../admin/stat/AreaChartComp";
+import StatGrid from "../../admin/stat/StatGrid";
 import Heading from "@/components/ui/Heading";
 import { useAuth } from "@/auth";
 

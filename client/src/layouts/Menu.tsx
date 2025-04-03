@@ -1,11 +1,7 @@
-import {
-  STUDENT_PATHS,
-  STUDENT_ICONS,
-  ADMIN_ICONS,
-  ADMIN_PATHS,
-} from "../icons/Svg";
+import { ADMIN_NAV_ITEMS, STUDENT_NAV_ITEMS } from "../icons/Svg";
 import { PopMenuProvider } from "@/context/usePopMenu";
 import MenuItem from "./MenuItem";
+import { useAuth } from "@/auth";
 export default function Menu({
   setIsMenuOpen,
   role,
@@ -13,16 +9,17 @@ export default function Menu({
   setIsMenuOpen: any;
   role: string;
 }) {
+  const { user } = useAuth();
   // Check for user role
-  if (true)
+  if (user?.role === "registrar")
     return (
       <ul className="mt-5 flex-col flex  ">
-        {ADMIN_ICONS.map((icon, index) => (
+        {ADMIN_NAV_ITEMS.map(({ path, name, icon }, index) => (
           <MenuItem
-            name={`${ADMIN_PATHS[index]}`}
+            name={name}
             icon={icon}
-            path={"admin" + "/" + ADMIN_PATHS[index]}
-            key={ADMIN_PATHS[index]}
+            path={path}
+            key={name}
             setIsMenuOpen={setIsMenuOpen}
           />
         ))}
@@ -30,12 +27,12 @@ export default function Menu({
     );
   return (
     <ul className="mt-5 flex-col flex  ">
-      {STUDENT_ICONS.map((icon, index) => (
+      {STUDENT_NAV_ITEMS.map(({ path, name, icon }, index) => (
         <MenuItem
-          name={`${STUDENT_PATHS[index]}`}
+          name={name}
           icon={icon}
-          path={STUDENT_PATHS[index]}
-          key={STUDENT_PATHS[index]}
+          path={path}
+          key={name}
           setIsMenuOpen={setIsMenuOpen}
         />
       ))}

@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Sector } from "recharts";
 
 const data = [
   { name: "Group A", value: 400 },
