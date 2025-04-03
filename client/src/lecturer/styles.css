@@ -199,4 +199,10 @@ body {
     width: 150px;
     height: 150px;
 }
-        
+
+
+.corner-block {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
