@@ -6,11 +6,12 @@ import { DEFAULT_LOGOUT_REDIRECT } from '@/routes';
 import FullWindowLoader from '@/components/loaders/full-window-loader';
 import { toast } from 'sonner';
 
+export type Role = "student" | "lecturer" | "department_head" | "registrar";
 export interface User {
   id: number;
   username: string;
   email: string;
-  role: "student" | "lecturer" | "department_head" | "registrar";
+  role: Role;
   college: { id: number; name: string; code: string } | null;
   school: { id: number; name: string; code: string } | null;
   department: { id: number; name: string; code: string } | null;
@@ -56,7 +57,7 @@ export const AuthProvider = ({ children } :{ children: ReactNode }) => {
     try {
       const data = await authService.login(credentials);
       if(data.user?.id){ await checkAuthStatus() } 
-      return { ...data }
+      return { ...data, user }
     } catch(error:any){
       throw new Error(error?.message || "Something went wrong");
     }

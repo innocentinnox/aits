@@ -21,6 +21,8 @@ import { PasswordInput } from "../ui/password-input";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/auth";
+import { User } from "@/context/auth-context";
+import { DASHBOARD_ROUTES } from "@/routes";
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string().min(4).max(20)
@@ -40,9 +42,10 @@ export const LoginForm = ({ className }: { className?: string }) => {
 
       const { isPending: loading, mutate: onSubmit } = useMutation({
         mutationFn: (values:  z.infer<typeof formSchema>) => login(values),
-        onSuccess: (res: any) => {
+        onSuccess: (res) => {
+          const user: User = res?.user;
           toast.success(res?.message);
-          navigate("/")
+          navigate(DASHBOARD_ROUTES[user.role] || "/")
         },
         onError: (res: any) => {
           toast.error(res?.message)

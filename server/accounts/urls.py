@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (RegisterView, LoginView, CollegeView, ProfileUpdateView, NotificationListView, status_view, TokenRefreshCookieView, CollegeView,   
+from .views import (LoginView, CollegeView, ProfileUpdateView, NotificationListView, status_view, TokenRefreshCookieView, CollegeView,   
     CollegeListAPIView,
     SchoolListAPIView,
     DepartmentListAPIView,

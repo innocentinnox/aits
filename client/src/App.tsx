@@ -29,31 +29,42 @@ const router = createBrowserRouter([
         element: <AppLayout />,
         children: [
           {
-            index: true,
-            element: <Navigate to="dashboard" replace />,
+            path: "/",
+            children: [
+              {
+                path: "",
+                element: <DashBoard />,
+              },
+              {
+                path: "notifications",
+                element: <Notifications />,
+              },
+              {
+                path: "details",
+                element: <DetailsForm />,
+              },
+            ],
           },
           {
-            path: "dashboard",
-            element: <DashBoard />,
-          },
-          {
-            path: "notifications",
-            element: <Notifications />,
-          },
-          {
-            path: "/details",
-            element: <DetailsForm />,
+            path: "/lecturer",
+            element: <AdminLayout />,
+            children: [
+              {
+                path: "",
+                element: <DashBoard />,
+              },
+              {
+                path: "notifications",
+                element: <Notifications />,
+              },
+            ],
           },
           {
             path: "/admin",
             element: <AdminLayout />,
             children: [
               {
-                index: true,
-                element: <Navigate to="dashboard" replace />,
-              },
-              {
-                path: "dashboard",
+                path: "",
                 element: <DashBoard />,
               },
               {
