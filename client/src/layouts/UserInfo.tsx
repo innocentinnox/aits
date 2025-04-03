@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserRound } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import LogoutButton from "./LogoutButton";
 
 export default function UserInfo() {
   const { logout, user } = useAuth();
@@ -41,6 +42,9 @@ export default function UserInfo() {
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleDetailsNavigation}>
               Edit Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => logout()}>
+              <LogoutButton handler={() => logout()} name={undefined} />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

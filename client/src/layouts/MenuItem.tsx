@@ -7,8 +7,9 @@ import {
 } from "@/components/ui/accordion";
 import { usePopMenu } from "@/context/usePopMenu";
 import { NewIssueDialog } from "@/components/issues/issue-dialog";
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import { useAuth } from "@/auth";
+import LogoutButton from "./LogoutButton";
 
 export default function MenuItem({
   name,
@@ -17,7 +18,7 @@ export default function MenuItem({
   setIsMenuOpen,
 }: {
   name: string;
-  icon: any;
+  icon: ReactElement;
   setIsMenuOpen: any;
   path: string;
 }) {
@@ -25,7 +26,7 @@ export default function MenuItem({
   const { logout } = useAuth();
 
   // Activate modal window
-  if (path === "create")
+  if (path.includes("create"))
     return (
       <>
         <NewIssueDialog
@@ -48,19 +49,8 @@ export default function MenuItem({
       </>
     );
   //Activate logout function
-  if (path === "logout")
-    return (
-      <li
-        className="flex items-center gap-2 py-3 pl-6 pr-4 text-zinc-900 hover:bg-zinc-200 hover:text-zinc-700 "
-        onClick={() => {
-          // call logout function
-          logout();
-        }}
-      >
-        <span>{icon}</span>
-        <span className="text-[1rem] capitalize text-semibold"> {name}</span>
-      </li>
-    );
+  if (path.includes("logout"))
+    return <LogoutButton handler={() => logout()} name={name} />;
   return (
     <>
       <NavLink to={path}>

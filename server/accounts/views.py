@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.exceptions import TokenError
 
 from .serializers import (
-    RegisterSerializer, ProfileUpdateSerializer, LoginSerializer, 
+    ProfileUpdateSerializer, LoginSerializer, 
     CollegeSerializer, NotificationSerializer, SchoolSerializer, 
     DepartmentSerializer, CourseSerializer, CourseUnitSerializer,
     EmailSerializer, UnifiedTokenSerializer, VerifyTokenSerializer,
@@ -76,14 +76,6 @@ class CollegeView(generics.ListCreateAPIView):
     serializer_class = CollegeSerializer
     permission_classes = [AllowAny]
 
-class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = RegisterSerializer
-    permission_classes = [AllowAny]
-    
-    def perform_create(self, serializer):
-        user = serializer.save()
-        log_audit(user, "User signed up", f"User {user.email} signed up")
 
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
@@ -129,7 +121,7 @@ class LoginView(generics.GenericAPIView):
             samesite="Lax",
         )
         return response
-
+# Updating user profile
 class ProfileUpdateView(generics.UpdateAPIView):
     serializer_class = ProfileUpdateSerializer
     permission_classes = [IsAuthenticated]
@@ -141,6 +133,7 @@ class ProfileUpdateView(generics.UpdateAPIView):
         user = serializer.save()
         log_audit(user, "Profile Updated", f"User {user.email} updated their profile.")
 
+# Logout API
 class LogoutView(APIView):
     permission_classes = [AllowAny]
     
@@ -274,7 +267,7 @@ class SignupAPIView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+# This will be used for email verification and password reset
 class PasswordResetRequestAPIView(APIView):
     """
     Password Reset Request Endpoint:
@@ -302,7 +295,7 @@ class PasswordResetRequestAPIView(APIView):
         token_data = UnifiedTokenSerializer(token_instance).data
         return Response({"token_id": token_data["id"]}, status=status.HTTP_200_OK)
 
-
+# verify token and reset password
 class VerifyTokenAPIView(APIView):
     """
     Verification Endpoint:

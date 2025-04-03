@@ -14,11 +14,11 @@ import NewPasswordPage from "./page/auth/new-password";
 import AppLayout from "./layouts/AppLayout";
 import DashBoard from "./page/dashboard/DashBoard";
 import DetailsForm from "./page/Details/Details";
-import { CreateIssueForm } from "./components/issues/create-Issue-form";
 import Notifications from "./page/Notifications/Notifications";
 import { AuthProvider } from "./context/auth-context";
 import ProtectedRoute from "./providers/protected-route";
 import OnboardingPage from "./page/auth/onboarding";
+import AdminLayout from "./admin/AdminLayout";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,24 +28,49 @@ const router = createBrowserRouter([
         element: <AppLayout />,
         children: [
           {
-            index: true,
-            element: <Navigate to="dashboard" replace />,
+            path: "/",
+            children: [
+              {
+                path: "",
+                element: <DashBoard />,
+              },
+              {
+                path: "notifications",
+                element: <Notifications />,
+              },
+              {
+                path: "details",
+                element: <DetailsForm />,
+              },
+            ],
           },
           {
-            path: "dashboard",
-            element: <DashBoard />,
+            path: "/lecturer",
+            element: <AdminLayout />,
+            children: [
+              {
+                path: "",
+                element: <DashBoard />,
+              },
+              {
+                path: "notifications",
+                element: <Notifications />,
+              },
+            ],
           },
-          // {
-          //   path: "create",
-          //   element: <CreateIssueForm />,
-          // },
           {
-            path: "notifications",
-            element: <Notifications />,
-          },
-          {
-            path: "/details",
-            element: <DetailsForm />,
+            path: "/admin",
+            element: <AdminLayout />,
+            children: [
+              {
+                path: "",
+                element: <DashBoard />,
+              },
+              {
+                path: "notifications",
+                element: <Notifications />,
+              },
+            ],
           },
         ],
       },
@@ -85,14 +110,15 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "*",
-    element: <Navigate to="/dashboard" replace />, // 404
-  },
+  // Not found can't be dashboard
+  // {
+  //   path: "*",
+  //   element: <Navigate to="/dashboard" replace />, // 404
+  // },
   {
     path: "/onboarding",
     element: <OnboardingPage />, // 404
-  }
+  },
 ]);
 
 function App() {

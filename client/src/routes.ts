@@ -1,3 +1,5 @@
+import { Role } from "./context/auth-context";
+
 /**
  * Public API routes that should not have the access token attached.
  *
@@ -55,6 +57,13 @@ export const PUBLIC_ROUTES = [
   '/auth/login', 
   '/auth/signup',
 ];
+  
+export const DASHBOARD_ROUTES: Record<Role, string> = {
+  "student": "/",
+  "lecturer": "/lecturer",
+  "registrar": "/admin",
+  "department_head": "/department-head",
+};
   
 
   /**
