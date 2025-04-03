@@ -1,8 +1,14 @@
 from django.db.models.signals import post_save
+from django.contrib.auth import get_user_model
 from django.dispatch import receiver
 from .models import UnifiedToken
 from .utils import mailer
+
+import logging
+
 logger = logging.getLogger(__name__)
+
+User = get_user_model()
 
 @receiver(post_save, sender=UnifiedToken)
 def send_email_on_token_creation(sender, instance, created, **kwargs):
