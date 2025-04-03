@@ -1,10 +1,12 @@
+from django.db import transaction
+from django.contrib.auth import get_user_model
+
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.exceptions import TokenError
 
 from .serializers import (
@@ -21,6 +23,10 @@ from .models import College, UnifiedToken, Notification, School, Department, Cou
 from django.utils import timezone
 
 User = get_user_model()
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 # API to test if email can be sent
 class SendEmailAPIView(APIView):
@@ -249,23 +255,51 @@ class SignupAPIView(APIView):
       - Send an email with the 6-digit code
       - Return response with token_id
     """
+    queryset = User.objects.all()
+    serializer_class = SignupSerializer
     permission_classes = [AllowAny]
+    
     def post(self, request, *args, **kwargs):
         serializer = SignupSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-            token_instance = UnifiedToken.objects.create(
-                code=generate_6_digit_code(),
-                email=user.email,
-                token_type="email_verification"
-            )
-            send_verification_email(user.email, token_instance)
-            token_data = UnifiedTokenSerializer(token_instance).data
-            response_data = serializer.data
-            response_data.update({"token_id": token_data["id"]})
-            return Response(response_data, status=status.HTTP_201_CREATED)
-        else:
+        
+        if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            # Wrap everything in a transaction
+            with transaction.atomic():
+                # Create user
+                user = serializer.save()
+                
+                # Generate verification token
+                token_instance = UnifiedToken.objects.create(
+                    code=generate_6_digit_code(),
+                    email=user.email,
+                    token_type="email_verification"
+                )
+                
+                # Send verification email
+                send_verification_email(user.email, token_instance)
+                
+                # Prepare response
+                token_data = UnifiedTokenSerializer(token_instance).data
+                response_data = serializer.data
+                response_data.update({"token_id": token_data["id"]})
+                
+                return Response(response_data, status=status.HTTP_201_CREATED)
+                
+        except Exception as e:
+            logger.error(f"Registration failed for {request.data.get('email', 'unknown email')}: {str(e)}")
+            # More specific error handling to help diagnose the issue
+            if 'duplicate key' in str(e).lower():
+                return Response(
+                    {"error": "A user with this email already exists."},
+                    status=status.HTTP_409_CONFLICT
+                )
+            return Response(
+                {"error": "Registration failed. Please try again later.", "detail": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 # This will be used for email verification and password reset
 class PasswordResetRequestAPIView(APIView):
