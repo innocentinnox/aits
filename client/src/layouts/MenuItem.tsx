@@ -26,7 +26,7 @@ export default function MenuItem({
   const { logout } = useAuth();
 
   // Activate modal window
-  if (path === "create")
+  if (path.includes("create"))
     return (
       <>
         <NewIssueDialog
@@ -49,7 +49,7 @@ export default function MenuItem({
       </>
     );
   //Activate logout function
-  if (path === "logout")
+  if (path.includes("logout"))
     return <LogoutButton handler={() => logout()} name={name} />;
   return (
     <>

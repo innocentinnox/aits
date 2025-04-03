@@ -4,12 +4,16 @@ import IssueTable from "@/components/issues/table/issue-table";
 import { NewIssueDialog } from "@/components/issues/issue-dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import PieChartComp from "./stat/PieChartComp";
+import AreaChartComp from "./stat/AreaChartComp";
+import StatGrid from "./stat/StatGrid";
 
 export default function DashBoard() {
   const [showIssueDialog, setShowIssueDialog] = useState(false);
   return (
     <>
       <CardGrid />
+      <StatGrid />
       <div className="container py-10 mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Issues</h1>
