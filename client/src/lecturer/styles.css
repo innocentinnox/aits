@@ -17,6 +17,17 @@ body {
     background-repeat: no-repeat;
 }
 
+.logo-icon {
+    width: 35px;
+    height: 35px;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
 .form-container {
     display: flex;
     width: 800px;
@@ -144,7 +155,7 @@ body {
 }
         
 .signup-btn:hover {
-            background-color:#39903b;
+            background-color: red;
 }
 
 .signup-section {
@@ -180,6 +191,8 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-weight:bold;
+    color: red;
 }
 
 .social-btn:hover {
@@ -213,6 +226,20 @@ body {
     height: 100px;
 }
 
+.yellow-block {
+    background-color: #F9C74F;
+    bottom: -50px;
+    left: -50px;
+    z-index: -1;
+}
+
+.red-block {
+    background-color: #E76F51;
+    top: -50px;
+    right: -50px;
+    z-index: -1;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -229,12 +256,11 @@ body {
 }
 
 .nav-link {
-    color:red;
+    color: white;
     text-decoration: none;
     font-size: 14px;
     opacity: 0.8;
     transition: opacity 0.3s;
-    font-weight:bold;
 }
 
 .nav-link:hover {
