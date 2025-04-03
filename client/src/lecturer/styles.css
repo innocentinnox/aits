@@ -140,7 +140,22 @@ body {
 .signup-btn:hover {
             background-color:#39903b;
 }
-        
+
+.signup-section {
+    width: 60%;
+    background-color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-title {
+    color:#39903b;
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
 .bg-shape {
             position: absolute;
             width: 200px;
