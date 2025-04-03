@@ -2,7 +2,7 @@ from django.db.models.signals import post_save
 from django.contrib.auth import get_user_model
 from django.dispatch import receiver
 from .models import UnifiedToken
-from .utils import mailer
+from .utils import mailer, send_verification_email
 
 from issues.models import Issue
 
