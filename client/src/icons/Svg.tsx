@@ -23,8 +23,8 @@ export const STUDENT_NAV_ITEMS = [
 ];
 
 export const ADMIN_NAV_ITEMS = [
-  { name: "dashboard", path: "", icon: <House /> },
-  { name: "statistics", path: "statistics", icon: <ChartBarStacked /> },
-  { name: "notifications", path: "notifications", icon: <Bell /> },
-  { name: "logout", path: "logout", icon: <LogOut /> },
+  { name: "dashboard", path: "admin/dashboard", icon: <House /> },
+  { name: "statistics", path: "admin/statistics", icon: <ChartBarStacked /> },
+  { name: "notifications", path: "admin/notifications", icon: <Bell /> },
+  { name: "logout", path: "admin/logout", icon: <LogOut /> },
 ];
