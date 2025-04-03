@@ -182,10 +182,11 @@ class IssueListView(generics.ListAPIView):
         if course_unit:
             qs = qs.filter(course_unit__id=course_unit)
 
-        # Filter by status
-        status_param = self.request.query_params.get("status")
+        # Filter by status with comma-separated values
+        status_param = self.request.query_params.get("statuses")
         if status_param:
-            qs = qs.filter(status__iexact=status_param)
+            statuses = [s.strip() for s in status_param.split(",") if s.strip()]
+            qs = qs.filter(status__in=statuses)
 
         # Filter by year_of_study
         year = self.request.query_params.get("year")
