@@ -76,14 +76,6 @@ class CollegeView(generics.ListCreateAPIView):
     serializer_class = CollegeSerializer
     permission_classes = [AllowAny]
 
-class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = RegisterSerializer
-    permission_classes = [AllowAny]
-    
-    def perform_create(self, serializer):
-        user = serializer.save()
-        log_audit(user, "User signed up", f"User {user.email} signed up")
 
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
