@@ -4,20 +4,19 @@ import IssueTable from "@/components/issues/table/issue-table";
 import { NewIssueDialog } from "@/components/issues/issue-dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import PieChartComp from "./stat/PieChartComp";
-import AreaChartComp from "./stat/AreaChartComp";
-import StatGrid from "./stat/StatGrid";
+import PieChartComp from "../../admin/stat/PieChartComp";
+import AreaChartComp from "../../admin/stat/AreaChartComp";
+import StatGrid from "../../admin/stat/StatGrid";
 import Heading from "@/components/ui/Heading";
+import { useAuth } from "@/auth";
 
 export default function DashBoard() {
   const [showIssueDialog, setShowIssueDialog] = useState(false);
+  const { user } = useAuth();
   return (
     <>
-      <Heading as="h2" className="text-center">
-        Issues Statistics
-      </Heading>
-      <CardGrid />
-      <StatGrid />
+      {user?.role === "student" && <CardGrid />}
+
       <div className=" py-10 w-[100%] px-4">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Issues</h1>

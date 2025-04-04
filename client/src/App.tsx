@@ -19,6 +19,10 @@ import { AuthProvider } from "./context/auth-context";
 import ProtectedRoute from "./providers/protected-route";
 import OnboardingPage from "./page/auth/onboarding";
 import AdminLayout from "./admin/AdminLayout";
+import Statistics from "./admin/stat/Statistics";
+import DashboardAdmin from "./admin/dashboard/DashboardAdmin";
+import StudentLayout from "./student/StudentLayout";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,21 +32,41 @@ const router = createBrowserRouter([
         element: <AppLayout />,
         children: [
           {
-            index: true,
-            element: <Navigate to="dashboard" replace />,
+            path: "/",
+            element: <StudentLayout />,
+            children: [
+              {
+                path: "",
+                element: <DashBoard />,
+              },
+              {
+                path: "dashboard",
+                element: <DashBoard />,
+              },
+              {
+                path: "notifications",
+                element: <Notifications />,
+              },
+              {
+                path: "details",
+                element: <DetailsForm />,
+              },
+            ],
           },
-          {
-            path: "dashboard",
-            element: <DashBoard />,
-          },
-          {
-            path: "notifications",
-            element: <Notifications />,
-          },
-          {
-            path: "/details",
-            element: <DetailsForm />,
-          },
+          // {
+          //   path: "/lecturer",
+          //   element: <AdminLayout />,
+          //   children: [
+          //     {
+          //       path: "",
+          //       element: <DashBoard />,
+          //     },
+          //     {
+          //       path: "notifications",
+          //       element: <Notifications />,
+          //     },
+          //   ],
+          // },
           {
             path: "/admin",
             element: <AdminLayout />,
@@ -53,7 +77,11 @@ const router = createBrowserRouter([
               },
               {
                 path: "dashboard",
-                element: <DashBoard />,
+                element: <DashboardAdmin />,
+              },
+              {
+                path: "statistics",
+                element: <Statistics />,
               },
               {
                 path: "notifications",
@@ -99,11 +127,11 @@ const router = createBrowserRouter([
       },
     ],
   },
-  // Not found can't be dashboard
-  // {
-  //   path: "*",
-  //   element: <Navigate to="/dashboard" replace />, // 404
-  // },
+
+  {
+    path: "*",
+    element: <Navigate to="/" />, // 404
+  },
   {
     path: "/onboarding",
     element: <OnboardingPage />, // 404

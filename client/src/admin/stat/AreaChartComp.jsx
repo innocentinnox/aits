@@ -56,8 +56,8 @@ const data = [
 export default function AreaChartComp() {
   return (
     <div>
-      <div>Issuses</div>
-      <ResponsiveContainer minWidth={400} height={300}>
+      <div className="text-center">Issuses</div>
+      <ResponsiveContainer width={"100%"} height={300}>
         <AreaChart
           data={data}
           margin={{
@@ -67,7 +67,7 @@ export default function AreaChartComp() {
             bottom: 0,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid strokeDasharray="1 1" />
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />

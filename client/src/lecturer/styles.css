@@ -8,10 +8,24 @@
 
 body {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     min-height: 100vh;
     background-color: #f5f5f5;
+    background-image:url(ivorytower.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.logo-icon {
+    width: 35px;
+    height: 35px;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
 .form-container {
@@ -21,6 +35,9 @@ body {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     overflow: hidden;
+    margin: auto;
+    background-color: white;
+    position: relative;
 }
 
 .login-section {
@@ -31,13 +48,7 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
     gap: 8px;
-    margin-bottom: 60px;
 }
 
 .welcome-text {
@@ -66,7 +77,7 @@ body {
 }
 
 .signin-btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: red;
 }
 
 .divider {
@@ -138,15 +149,114 @@ body {
 }
         
 .signup-btn:hover {
-            background-color:#39903b;
+            background-color: red;
 }
-        
+
+.signup-section {
+    width: 60%;
+    background-color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-title {
+    color:red;
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.social-login {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.social-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight:bold;
+    color: red;
+}
+
+.social-btn:hover {
+    background-color: #f9f9f9;
+}
+
 .bg-shape {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.05);
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.05);
 }
-        
-        
+
+.shape1 {
+    bottom: -100px;
+    right: -50px;
+}
+
+.shape2 {
+    top: -80px;
+    left: -80px;
+    width: 150px;
+    height: 150px;
+}
+
+
+.corner-block {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
+
+.yellow-block {
+    background-color: #F9C74F;
+    bottom: -50px;
+    left: -50px;
+    z-index: -1;
+}
+
+.red-block {
+    background-color: #E76F51;
+    top: -50px;
+    right: -50px;
+    z-index: -1;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    background-color:#39903b;
+    color: white;
+    padding: 15px 30px;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.nav-link:hover {
+    opacity: 1;
+}

@@ -17,6 +17,8 @@ import TableSkeleton from "./table-skeleton"
 import IssueRow from "./issue-row"
 import SearchBar from "./search-bar"
 import StatusTabs from "./status-tabs"
+import { useQuery } from "@tanstack/react-query"
+import axiosInstance from "@/lib/axios-instance"
 
 export default function IssueTable() {
   const navigate = useNavigate();
@@ -48,11 +50,18 @@ export default function IssueTable() {
     setParams(currentParams)
   }, [searchParams])
 
+  const { data: issuesData, isLoading: isLoadingIssues } = useQuery({
+    queryFn: () => axiosInstance.get("/issues/list/", { params: { ...params, statuses: params.statuses?.join(",") } }),
+    queryKey: ["issues", searchParams.toString()],
+  })
+  console.log(issuesData)
   // Fetch issues when params change
   useEffect(() => {
+    
     const loadIssues = async () => {
       setIsLoading(true)
       try {
+        
         const response = await fetchIssues(params)
         setIssues(response.issues)
         setTotal(response.total)

@@ -2,6 +2,7 @@ import {
   Bell,
   BellElectric,
   BellOff,
+  ChartBarStacked,
   ChartNoAxesCombined,
   CircleHelp,
   Disc,
@@ -14,7 +15,16 @@ import {
   Paperclip,
 } from "lucide-react";
 
-export const STUDENT_ICONS = [<House />, <FilePlus2 />, <Bell />, <LogOut />];
-export const ADMIN_ICONS = [<House />, <FilePlus2 />, <Bell />, <LogOut />];
-export const STUDENT_PATHS = ["dashboard", "create", "notifications", "logout"];
-export const ADMIN_PATHS = ["dashboard", "create", "notifications", "logout"];
+export const STUDENT_NAV_ITEMS = [
+  { name: "dashboard", path: "", icon: <House /> },
+  { name: "create", path: "create", icon: <FilePlus2 /> },
+  { name: "notifications", path: "notifications", icon: <Bell /> },
+  { name: "logout", path: "logout", icon: <LogOut /> },
+];
+
+export const ADMIN_NAV_ITEMS = [
+  { name: "dashboard", path: "admin/dashboard", icon: <House /> },
+  { name: "statistics", path: "admin/statistics", icon: <ChartBarStacked /> },
+  { name: "notifications", path: "admin/notifications", icon: <Bell /> },
+  { name: "logout", path: "admin/logout", icon: <LogOut /> },
+];
