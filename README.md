@@ -19,14 +19,7 @@ In this module, we will be starting our project. To do this we will need to crea
 ```
 python -m venv venv
 ```
-Now activate the virtual environment with the following command.
-```
-# windows machine
-venv\Scripts\activate.bat
 
-#mac/linux
-source venv/bin/activate
-```
 You will know your virtual environment is active when your terminal displays the following:
 ```
 (venv) path\to\project\aits>
