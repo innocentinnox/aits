@@ -6,7 +6,7 @@ export default function Card({
 }: {
   title: string;
   value: string | number;
-  icon: JSX.Element;
+  icon: any;
 }) {
   return (
     <div className={`${styles.card} bg-white w-[100%] sm:w-[32%] shadow-lg`}>
