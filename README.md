@@ -32,23 +32,12 @@ You will know your virtual environment is active when your terminal displays the
 (venv) path\to\project\aits>
 ```
 
-2) Secrets and Environment Variables - It is good practice to separate sensitive information from your project. We have installed a package called 'python-dotenv' that helps us manage secrets easily. Let's go ahead and create a env file to store information that is specific to our working environment. Use the following command in your terminal.
 
-```
-# windows machine
-copy env.template .env
 
-#mac/linux
-cp env.template .env
-```
-
-You can use your new .env file to store API keys, secret_keys, app_passwords and you will gain access to these in the Django app.
-***
-***
-
-3) Packages and requirements - Our project will rely on a whole bunch of 3rd party packages (requirements) to function. We will be using a Python package manager to install packages throughout this course.
-4)  
+2) Packages and requirements - Our project will rely on a whole bunch of 3rd party packages (requirements) to function. We will be using a Python package manager to install packages throughout this course.
+ 
 **I have already created a requirements.txt file. Check out AITS/server/requirements.txt**
+
 ```
 Let's go ahead and install our project requirements. Add the following code to your terminal.
 ```
