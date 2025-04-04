@@ -47,8 +47,7 @@ export const LoginForm = ({ className }: { className?: string }) => {
       toast.success(res?.message);
       console.log("userrrrrrrrrrrrrrrr", user);
       console.log("DASHBOARD_ROUTES[user.role]", DASHBOARD_ROUTES[user.role]);
-      // navigate(DASHBOARD_ROUTES[user.role] || "/")  since the role is department_head
-      navigate("/", { replace: true });
+      navigate(DASHBOARD_ROUTES[user.role] || "/")
     },
     onError: (res: any) => {
       toast.error(res?.message);
