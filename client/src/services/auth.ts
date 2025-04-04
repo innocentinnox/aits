@@ -3,6 +3,7 @@ import axiosInstance from "@/lib/axios-instance";
 import Cookies from "js-cookie";
 import { Cookie } from "lucide-react";
 import { jwtDecode } from "jwt-decode"; // Correct default import
+import { User } from "@/context/auth-context";
 
 class AuthService {
   async signUp(formData: any) {
@@ -14,7 +15,7 @@ class AuthService {
         { withCredentials: false }
       );
       console.log(response);
-      return { message: "Account created successfully" };
+      return { ...response.data, message: "Account created successfully" };
     } catch (error: any) {
       console.log(error.response);
       throw new Error(
@@ -145,10 +146,11 @@ class AuthService {
         this.storeAccessAndRefresh(access_tokens, refresh_token);
       console.log(response);
       return {
-        user: response?.data?.user,
+        user: response?.data?.user as User,
         message: response?.data?.message || "Logged in successfully",
         access_tokens,
         refresh_token,
+        token_id: String(response?.data?.token_id) || null, 
       };
     } catch (error: any) {
       console.log(error.response.data);
@@ -170,11 +172,12 @@ class AuthService {
   }
 
   async verify(formData: any) {
-    return await axiosInstance.post(
-      "/auth/verify",
-      { ...formData },
-      { withCredentials: true }
-    );
+    return { message: "Verification successful" };
+    // return await axiosInstance.post(
+    //   "/auth/verify",
+    //   { ...formData },
+    //   { withCredentials: true }
+    // );
   }
 
   async newPassword(formData: any) {

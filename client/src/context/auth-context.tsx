@@ -27,12 +27,7 @@ interface AuthContextProps {
   checkAuthStatus: () => Promise<void>;
   login: (
     credentials: any
-  ) => Promise<{
-    user: any;
-    message: any;
-    access_tokens: any;
-    refresh_token: any;
-  }>;
+  ) => Promise<Awaited<ReturnType<typeof authService.login>>>;
   logout: (redirect?: string) => Promise<void>;
   loading: boolean;
 }
@@ -66,7 +61,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (data.user?.id) {
         await checkAuthStatus();
       }
-      return { ...data, user: data.user };
+      return data;
     } catch (error: any) {
       throw new Error(error?.message || "Something went wrong");
     }

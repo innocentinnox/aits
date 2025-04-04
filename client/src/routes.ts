@@ -53,7 +53,7 @@ export const PUBLIC_API_ROUTES = [
   "/accounts/password-reset",
 ];
 
-export const PUBLIC_ROUTES = ["/auth/login", "/auth/signup"];
+export const PUBLIC_ROUTES = ["/auth/login", "/auth/signup", "/auth/verify", "/auth/reset-password"];
 
 export const DASHBOARD_ROUTES: Record<Role, string> = {
   student: "/",
