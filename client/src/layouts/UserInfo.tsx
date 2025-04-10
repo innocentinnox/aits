@@ -21,27 +21,14 @@ export default function UserInfo() {
   return (
     <div className="flex items-center justify-between gap-4 ">
       <div className="user-info text-zinc-600">
-        {/* //dev */}
-        {user?.role === "student" ? (
-          <h2 className="font-semibold uppercase text-[0.8rem] sm:text-[1rem] ">
-            {user?.first_name && user?.first_name}
-            {user?.last_name && user?.last_name}
-          </h2>
-        ) : (
-          <h2 className="font-semibold uppercase text-[0.8rem] sm:text-[1rem] ">
-            Academic Registrar
-          </h2>
-        )}
-        {user?.role === "student" ? (
-          <p className="uppercase text-right text-[0.6rem] sm:text-[0.8rem]">
-            <span className="capitalize">{user?.role}</span> (
-            {user?.college?.code && user?.college?.code})
-          </p>
-        ) : (
-          <p className="uppercase text-right text-[0.6rem] sm:text-[0.8rem]">
-            <span className="capitalize"></span> {user?.first_name}
-          </p>
-        )}
+        <h2 className="font-semibold uppercase text-[0.8rem] sm:text-[1rem] ">
+          {user?.username}
+        </h2>
+
+        <p className="uppercase text-right text-[0.6rem] sm:text-[0.8rem]">
+          <span className="capitalize">{user?.role}</span> (
+          {user?.college?.code && user?.college?.code})
+        </p>
       </div>
       <div>
         <DropdownMenu>
