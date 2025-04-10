@@ -9,10 +9,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserRound } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import LogoutButton from "./LogoutButton";
 
-
-  export default function UserInfo() {
+export default function UserInfo() {
   const { logout, user } = useAuth();
+
   const navigate = useNavigate();
   function handleDetailsNavigation() {
     navigate("details");
@@ -20,12 +21,27 @@ import { useNavigate } from "react-router-dom";
   return (
     <div className="flex items-center justify-between gap-4 ">
       <div className="user-info text-zinc-600">
-        <h2 className="font-semibold uppercase text-[0.8rem] sm:text-[1rem] ">
-          {user?.first_name&&user?.first_name} {user?.last_name&&user?.last_name}
-        </h2>
-        <p className="uppercase text-right text-[0.6rem] sm:text-[0.8rem]">
-          <span className="capitalize">{user?.role}</span> ({user?.college?.code&&user?.college?.code})
-        </p>
+        {/* //dev */}
+        {user?.role === "student" ? (
+          <h2 className="font-semibold uppercase text-[0.8rem] sm:text-[1rem] ">
+            {user?.first_name && user?.first_name}
+            {user?.last_name && user?.last_name}
+          </h2>
+        ) : (
+          <h2 className="font-semibold uppercase text-[0.8rem] sm:text-[1rem] ">
+            Academic Registrar
+          </h2>
+        )}
+        {user?.role === "student" ? (
+          <p className="uppercase text-right text-[0.6rem] sm:text-[0.8rem]">
+            <span className="capitalize">{user?.role}</span> (
+            {user?.college?.code && user?.college?.code})
+          </p>
+        ) : (
+          <p className="uppercase text-right text-[0.6rem] sm:text-[0.8rem]">
+            <span className="capitalize"></span> {user?.first_name}
+          </p>
+        )}
       </div>
       <div>
         <DropdownMenu>
@@ -39,6 +55,9 @@ import { useNavigate } from "react-router-dom";
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleDetailsNavigation}>
               Edit Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => logout()}>
+              <LogoutButton handler={() => logout()} name={undefined} />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

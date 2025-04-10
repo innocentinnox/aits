@@ -32,7 +32,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Read the secret key from the environment
 SECRET_KEY = os.environ.get("SECRET_KEY")
-DEBUG = int(os.environ.get("DEBUG", default=0))     # SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = int(os.environ.get("DEBUG", default=1))     # SECURITY WARNING: don't run with debug turned on in production!
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 
@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # My apps
     'accounts',
     'issues',
+    'server_root_page',
 ]
 
 MIDDLEWARE = [
@@ -71,7 +72,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [base_dir := BASE_DIR / 'templates', base_dir],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,6 +129,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+    { 
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', 
     },
 ]
 
@@ -188,6 +192,7 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^http://127\.0\.0\.1:\d+$",
 ]
 
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'mail.msg.ocunex.com')  # Default in case env is missing
 EMAIL_PORT = 465
@@ -198,3 +203,7 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 
 # Ensure DEFAULT_FROM_EMAIL is set
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+APP_NAME = "AITS"
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+

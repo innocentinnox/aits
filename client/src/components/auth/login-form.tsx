@@ -21,51 +21,58 @@ import { PasswordInput } from "../ui/password-input";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/auth";
+import { User } from "@/context/auth-context";
+import { DASHBOARD_ROUTES } from "@/routes";
 const formSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(4).max(20)
+  password: z.string().min(4).max(20),
 });
 
 export const LoginForm = ({ className }: { className?: string }) => {
   const navigate = useNavigate();
   const { next, constructPath } = useUrlParams();
   const { login } = useAuth();
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-          email: "",
-          password: ""
-        },
-      })
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-      const { isPending: loading, mutate: onSubmit } = useMutation({
-        mutationFn: (values:  z.infer<typeof formSchema>) => login(values),
-        onSuccess: (res: any) => {
-          toast.success(res?.message);
-          navigate("/")
-        },
-        onError: (res: any) => {
-          toast.error(res?.message)
-        }
-      })
+  const { isPending: loading, mutate: onSubmit } = useMutation({
+    mutationFn: (values: z.infer<typeof formSchema>) => login(values),
+    onSuccess: (res) => {
+      const user: User = res?.user;
+      toast.success(res?.message);
+      console.log("userrrrrrrrrrrrrrrr", user);
+      console.log("DASHBOARD_ROUTES[user.role]", DASHBOARD_ROUTES[user.role]);
+      navigate(DASHBOARD_ROUTES[user.role] || "/")
+    },
+    onError: (res: any) => {
+      toast.error(res?.message);
+    },
+  });
 
-    return (
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit((values) => onSubmit(values))} className={cn("space-y-6")}>
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="jane.doe@example.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit((values) => onSubmit(values))}
+        className={cn("space-y-6")}
+      >
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="jane.doe@example.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}

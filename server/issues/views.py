@@ -9,6 +9,9 @@ from accounts.utils import send_notification, log_audit
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.db.models import Q
 
+from accounts.serializers import EmailSerializer
+from accounts.utils import mailer
+
 User = get_user_model()
 
 # Categories of issues
@@ -17,7 +20,6 @@ class IssueCategoryView(generics.ListCreateAPIView):
     serializer_class = IssueCategorySerializer
     permission_classes = [AllowAny]
 
-# Issue view: --> Only for students
 class IssueCreateView(generics.CreateAPIView):
     serializer_class = IssueSerializer
     permission_classes = [IsAuthenticated]
@@ -28,6 +30,7 @@ class IssueCreateView(generics.CreateAPIView):
         if user.role != 'student':
             raise PermissionDenied("Only students can create issues.")
         
+        # Getting registrar and the college she belongs to
         registrar = User.objects.filter(role='registrar', college=user.college).first()
         issue = serializer.save(created_by=user, assigned_to=registrar)
         log_audit(user, "Issue Created", f"Issue '{issue.title}' with token {issue.token} created.")
@@ -36,19 +39,21 @@ class IssueCreateView(generics.CreateAPIView):
         for file in self.request.FILES.getlist('attachments'):
             IssueAttachment.objects.create(issue=issue, file=file)
         
-        # Email notifications...
-        send_notification(
-            recipient=user,
-            subject="Issue Submitted Successfully",
-            message=f"Your issue '{issue.title}' has been submitted with token {issue.token}. Details: {issue.description}"
+        # Email notifications are now handled by the post_save signal
+        return issue
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            {"message": "Issue created successfully and notifications sent."}, 
+            status=status.HTTP_201_CREATED, 
+            headers=headers
         )
-        if registrar:
-            send_notification(
-                recipient=registrar,
-                subject="New Issue Assigned",
-                message=f"New issue submitted by {user.username}.\nToken: {issue.token}\nTitle: {issue.title}"
-            )
 
+        
 # Retrieve issue by token (for tracking)
 class IssueDetailView(generics.RetrieveAPIView):
     serializer_class = IssueSerializer
@@ -56,8 +61,7 @@ class IssueDetailView(generics.RetrieveAPIView):
     queryset = Issue.objects.all()
     permission_classes = [IsAuthenticated]
 
-
-# Update Issue view: --> for registrar or lecturer to update issue status
+# This will be used for resolving and forwarding issues
 class IssueUpdateView(generics.UpdateAPIView):
     serializer_class = IssueSerializer
     queryset = Issue.objects.all()
@@ -74,51 +78,50 @@ class IssueUpdateView(generics.UpdateAPIView):
             if action == 'resolve':
                 # Registrar resolves the issue
                 request.data['status'] = 'resolved'
-                msg = f"Issue '{issue.title}' has been resolved by the registrar."
-                # Notify student
-                send_notification(
-                    recipient=issue.created_by,
-                    subject="Issue Resolved",
-                    message=msg
-                )
+                # Email will be sent via signal
+                response = super().patch(request, *args, **kwargs)
+                if response.status_code == 200:
+                    return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
+                return response
+                
             elif action == 'forward':
                 # Registrar forwards the issue to a lecturer; expect 'forwarded_to' field in request data
                 lecturer_id = request.data.get('forwarded_to')
                 if not lecturer_id:
                     return Response({"error": "Lecturer id is required for forwarding."}, status=status.HTTP_400_BAD_REQUEST)
-                request.data['status'] = 'forwarded'
-                # Notify lecturer
+                
                 lecturer = User.objects.filter(id=lecturer_id, role='lecturer').first()
-                if lecturer:
-                    send_notification(
-                        recipient=lecturer,
-                        subject="Issue Forwarded to You",
-                        message=f"Issue '{issue.title}' (Token: {issue.token}) has been forwarded to you by the registrar."
-                    )
+                if not lecturer:
+                    return Response({"error": "Lecturer not found."}, status=status.HTTP_400_BAD_REQUEST)
+                
+                request.data['status'] = 'forwarded'
+                # Email will be sent via signal
+                response = super().patch(request, *args, **kwargs)
+                if response.status_code == 200:
                     # Audit log for forwarding
                     log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.")
-                else:
-                    return Response({"error": "Lecturer not found."}, status=status.HTTP_400_BAD_REQUEST)
+                    return Response({"message": "Issue forwarded and notification sent."}, status=status.HTTP_200_OK)
+                return response
+                
             else:
                 return Response({"error": "Invalid action."}, status=status.HTTP_400_BAD_REQUEST)
+            
             log_audit(user, "Issue Updated", f"Registrar {user.username} updated issue '{issue.title}' with action {action}.")
-            return super().patch(request, *args, **kwargs)
-        
+            
         # Lecturer actions: if issue is forwarded to them, they can mark it resolved by adding resolution details.
         elif user.role == 'lecturer' and issue.forwarded_to == user:
             request.data['status'] = 'resolved'
             log_audit(user, "Issue Resolved", f"Lecturer {user.username} resolved issue '{issue.title}'.")
-            # Notify student upon resolution.
-            send_notification(
-                recipient=issue.created_by,
-                subject="Issue Resolved by Lecturer",
-                message=f"Your issue '{issue.title}' (Token: {issue.token}) has been resolved."
-            )
-            return super().patch(request, *args, **kwargs)
-        
+            
+            # Email will be sent via signal
+            response = super().patch(request, *args, **kwargs)
+            if response.status_code == 200:
+                return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
+            return response
+            
         else:
             return Response({"error": "Not authorized to update this issue."}, status=status.HTTP_403_FORBIDDEN)
-        
+
 
 class IssueListView(generics.ListAPIView):
     """
@@ -179,10 +182,11 @@ class IssueListView(generics.ListAPIView):
         if course_unit:
             qs = qs.filter(course_unit__id=course_unit)
 
-        # Filter by status
-        status_param = self.request.query_params.get("status")
+        # Filter by status with comma-separated values
+        status_param = self.request.query_params.get("statuses")
         if status_param:
-            qs = qs.filter(status__iexact=status_param)
+            statuses = [s.strip() for s in status_param.split(",") if s.strip()]
+            qs = qs.filter(status__in=statuses)
 
         # Filter by year_of_study
         year = self.request.query_params.get("year")

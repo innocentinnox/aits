@@ -1,15 +1,17 @@
-"use client"
-import { authService } from '@/services';
-import { ReactNode } from 'react';
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { DEFAULT_LOGOUT_REDIRECT } from '@/routes';
-import FullWindowLoader from '@/components/loaders/full-window-loader';
+"use client";
+import { authService } from "@/services";
+import { ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { DEFAULT_LOGOUT_REDIRECT } from "@/routes";
+import FullWindowLoader from "@/components/loaders/full-window-loader";
+import { toast } from "sonner";
 
+export type Role = "student" | "lecturer" | "department_head" | "registrar";
 export interface User {
   id: number;
   username: string;
   email: string;
-  role: "student" | "lecturer" | "department_head" | "registrar";
+  role: Role;
   college: { id: number; name: string; code: string } | null;
   school: { id: number; name: string; code: string } | null;
   department: { id: number; name: string; code: string } | null;
@@ -23,17 +25,19 @@ export interface User {
 interface AuthContextProps {
   user: User | null;
   checkAuthStatus: () => Promise<void>;
-  login: (credentials: any) => Promise<{ user: any; message: any; access_tokens: any; refresh_token: any; }>;
+  login: (
+    credentials: any
+  ) => Promise<Awaited<ReturnType<typeof authService.login>>>;
   logout: (redirect?: string) => Promise<void>;
   loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export const AuthProvider = ({ children } :{ children: ReactNode }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const navigate = (path: string) => window.location.href = path;
+  const navigate = (path: string) => (window.location.href = path);
   console.log("user: ", user);
   const checkAuthStatus = async () => {
     setLoading(true);
@@ -54,20 +58,23 @@ export const AuthProvider = ({ children } :{ children: ReactNode }) => {
   const login = async (credentials: any) => {
     try {
       const data = await authService.login(credentials);
-      if(data.user?.id){ await checkAuthStatus() } 
-      return { ...data }
-    } catch(error:any){
+      if (data.user?.id) {
+        await checkAuthStatus();
+      }
+      return data;
+    } catch (error: any) {
       throw new Error(error?.message || "Something went wrong");
     }
   };
 
   const logout = async (redirect?: string) => {
     try {
-      setUser(null);
       await authService.logout();
-      navigate(redirect || DEFAULT_LOGOUT_REDIRECT)
-    } catch(error:any){
-      navigate(redirect || DEFAULT_LOGOUT_REDIRECT)
+      setUser(null);
+      toast.success("Logged out successfully");
+      navigate(redirect || DEFAULT_LOGOUT_REDIRECT);
+    } catch (error: any) {
+      toast.error(error?.message || "Something went wrong");
     }
   };
 
@@ -76,12 +83,10 @@ export const AuthProvider = ({ children } :{ children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, checkAuthStatus, login, logout, loading }}>
-      { loading ? <FullWindowLoader /> : 
-      <>
-          {children} 
-      </>
-      }
+    <AuthContext.Provider
+      value={{ user, checkAuthStatus, login, logout, loading }}
+    >
+      {loading ? <FullWindowLoader /> : <>{children}</>}
     </AuthContext.Provider>
   );
 };

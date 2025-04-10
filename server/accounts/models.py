@@ -1,8 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 # Role choices, email hosts, and names
-# This dictionary contains the role names and their corresponding email hosts.
+# This dictionary contains the role names and their corresponding email hosts
+import uuid
+from django.db import models
+from django.utils import timezone
+from datetime import timedelta
+
+TOKEN_TYPE_CHOICES = (
+    ('email_verification', 'Email Verification'),
+    ('password_reset', 'Password Reset'), 
+)
+
+# Role choices
 ROLES_DATA = {
     "student": {
         "email_hosts": ["students.mak.ac.ug"],
@@ -62,9 +74,9 @@ class Department(models.Model):
 class Course(models.Model):
     code = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=255)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='courses')
+    school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='courses')
+    department = models.ForeignKey(Department, on_delete=models.DO_NOTHING, related_name='courses')
     years = models.IntegerField(default=3)
-
     description = models.TextField(blank=True, null=True)
     
     def __str__(self):
@@ -75,8 +87,18 @@ from django.db import models
 # This class represents a course unit within a course.
 # Each course unit is associated with a course and can have multiple lecturers.
 class CourseUnit(models.Model):
-    YEAR_CHOICES = [(1, "Year 1"), (2, "Year 2"), (3, "Year 3"), (4, "Year 4"), (5, "Year 5")]
-    SEMESTER_CHOICES = [ (1, "Semester 1"), (2, "Semester 2") ]
+    YEAR_CHOICES = [
+        (1, "Year 1"), 
+        (2, "Year 2"), 
+        (3, "Year 3"), 
+        (4, "Year 4"), 
+        (5, "Year 5")
+    ]
+
+    SEMESTER_CHOICES = [
+        (1, "Semester 1"), 
+        (2, "Semester 2") 
+    ]
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="units")
     code = models.CharField(max_length=20)
@@ -125,20 +147,18 @@ class CustomUser(AbstractUser):
     # Additional fields
     profile_image = models.ImageField(upload_to="profiles/", null=True, blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
+    email_verified = models.DateField(blank=True, null=True)
     student_number = models.CharField(max_length=50, blank=True, null=True)
     registration_number = models.CharField(max_length=50, blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        """Auto-assign role based on email domain dynamically."""
-        email_domain = self.email.split("@")[-1]  # Extract domain from email
-
-        for role, data in ROLES_DATA.items():
-            if email_domain in data["email_hosts"]:
-                self.role = role
-                break
-        else:
-            self.role = "student"  # Default role
-
+        # Only auto-assign if this is a new record and the role is still the default value.
+        if self.pk is None and self.role == "student":
+            email_domain = self.email.split("@")[-1]  # Extract domain from email
+            for role, data in ROLES_DATA.items():
+                if email_domain in data["email_hosts"]:
+                    self.role = role
+                    break
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -165,6 +185,22 @@ class AuditLog(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     user_agent = models.CharField(max_length=255, null=True, blank=True)
-   
+
     def __str__(self):
         return f"{self.timestamp} - {self.user}: {self.action}"
+
+class UnifiedToken(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    code = models.CharField(max_length=6)  # 6-digit numeric code
+    email = models.EmailField()
+    token_type = models.CharField(max_length=20, choices=TOKEN_TYPE_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.expires_at:
+            self.expires_at = timezone.now() + timedelta(hours=1)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.email} - {self.token_type} ({self.id})"

@@ -1,7 +1,10 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import College, Notification, School, Department, Course, CourseUnit
+from .models import College, Notification, School, Department, Course, CourseUnit, UnifiedToken
+from django.utils import timezone
+
+import random
 
 User = get_user_model()
 # The User model is the custom user model defined in the accounts app
@@ -35,6 +38,7 @@ class CourseUnitSerializer(serializers.ModelSerializer):
         model = CourseUnit
         fields = ['id', 'title', 'code']
 
+
 # Registration: Only username, email, and password are required.
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -52,7 +56,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
         return user
 # The RegisterSerializer class is a serializer for the User model
-# It defines how the User model should be serialized and deserialized
+# It defines how the User model should be serialized and deserialize
+
+
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
@@ -140,3 +146,53 @@ class EmailSerializer(serializers.Serializer):
     to = serializers.EmailField()
     subject = serializers.CharField(max_length=255)
     html = serializers.CharField()
+
+"""
+    This is used for email verifications and code verifications
+"""
+# This serializer is used to send a verification code to the user's email.
+class SignupSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+    
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'password', 'first_name', 'last_name']
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
+
+# This serializer is used to create a token for email verification.
+class UnifiedTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UnifiedToken
+        fields = '__all__'
+
+# This serializer is used to verify the token and code sent to the user.
+class VerifyTokenSerializer(serializers.Serializer):
+    token = serializers.UUIDField()
+    code = serializers.CharField(max_length=6)
+    new_password = serializers.CharField(required=False, write_only=True)
+
+    def validate(self, data):
+        try:
+            token_obj = UnifiedToken.objects.get(id=data['token'])
+        except UnifiedToken.DoesNotExist:
+            raise serializers.ValidationError("Token not found.")
+
+        if token_obj.expires_at < timezone.now():
+            raise serializers.ValidationError("Token has expired.")
+
+        if token_obj.is_used:
+            raise serializers.ValidationError("Token has already been used.")
+
+        if token_obj.code != data['code']:
+            raise serializers.ValidationError("Invalid code.")
+
+        data['token_obj'] = token_obj
+        return data

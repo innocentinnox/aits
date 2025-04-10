@@ -5,7 +5,6 @@ django-filter
 djangorestframework
 djangorestframework-jsonapi
 inflection
-psycopg2-binary
 python-dotenv
 pytz
 sqlparse
@@ -16,3 +15,4 @@ djangorestframework-simplejwt
 PyJWT
 psycopg2-binary
 gunicorn==21.2.0
+twilio
