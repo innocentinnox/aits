@@ -22,6 +22,8 @@ import AdminLayout from "./admin/AdminLayout";
 import Statistics from "./admin/stat/Statistics";
 import DashboardAdmin from "./admin/dashboard/DashboardAdmin";
 import StudentLayout from "./student/StudentLayout";
+import LecturerLayout from "./lecturer/LecturerLayout";
+import RoleNavigator from "./admin/AdminLayout";
 
 const router = createBrowserRouter([
   {
@@ -53,20 +55,28 @@ const router = createBrowserRouter([
               },
             ],
           },
-          // {
-          //   path: "/lecturer",
-          //   element: <AdminLayout />,
-          //   children: [
-          //     {
-          //       path: "",
-          //       element: <DashBoard />,
-          //     },
-          //     {
-          //       path: "notifications",
-          //       element: <Notifications />,
-          //     },
-          //   ],
-          // },
+          {
+            path: "/lecturer",
+            element: <LecturerLayout />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="dashboard" replace />,
+              },
+              {
+                path: "dashboard",
+                element: <DashboardAdmin />,
+              },
+              {
+                path: "",
+                element: <DashBoard />,
+              },
+              {
+                path: "notifications",
+                element: <Notifications />,
+              },
+            ],
+          },
           {
             path: "/admin",
             element: <AdminLayout />,

@@ -1,16 +1,15 @@
 import { useAuth } from "@/auth";
 import { rolenavigator } from "@/icons/Svg";
-import AppLayout from "@/layouts/AppLayout";
 import { Navigate, Outlet } from "react-router-dom";
 
-function AdminLayout() {
+function LecturerLayout() {
   const { user } = useAuth();
 
-  return user?.role === "registrar" ? (
+  return user?.role === "lecturer" ? (
     <Outlet />
   ) : (
     <Navigate to={`/${rolenavigator(user?.role)}`} />
   );
 }
 
-export default AdminLayout;
+export default LecturerLayout;
