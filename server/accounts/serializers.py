@@ -4,27 +4,32 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import College, Notification, School, Department, Course, CourseUnit
 
 User = get_user_model()
-
+# The User model is the custom user model defined in the accounts app
+# The College model represents a college in the system
 class CollegeSerializer(serializers.ModelSerializer):
     class Meta:
         model = College
         fields = ['id', 'name']
-
+# The CollegeSerializer class is a serializer for the College model
+# It defines how the College model should be serialized and deserialized
 class SchoolSerializer(serializers.ModelSerializer):
     class Meta:
         model = School
         fields = ['id', 'name']
-
+# The SchoolSerializer class is a serializer for the School model
+# It defines how the School model should be serialized and deserialized
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
         fields = ['id', 'name']
-
+# The DepartmentSerializer class is a serializer for the Department model
+# It defines how the Department model should be serialized and deserialized
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ['id', 'name']
-
+# The CourseSerializer class is a serializer for the Course model
+# It defines how the Course model should be serialized and deserialized
 class CourseUnitSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseUnit
@@ -46,7 +51,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
-
+# The RegisterSerializer class is a serializer for the User model
+# It defines how the User model should be serialized and deserialized
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
@@ -97,7 +103,8 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         required=False,
         allow_null=True
     )
-    
+   # The ProfileUpdateSerializer class is a serializer for the User model
+    # It defines how the User model should be serialized and deserialized for profile updates 
     class Meta:
         model = User
         fields = [
@@ -110,7 +117,8 @@ class UserSerializer(serializers.ModelSerializer):
     department_name = serializers.ReadOnlyField(source='department.name')
     course_name = serializers.ReadOnlyField(source='course.name')
     school_name = serializers.ReadOnlyField(source='school.name')
-    
+    # The UserSerializer class is a serializer for the User model
+    # It defines how the User model should be serialized and deserialized
     class Meta:
         model = User
         fields = (
@@ -121,7 +129,8 @@ class UserSerializer(serializers.ModelSerializer):
             'profile_image'
         )
         read_only_fields = ('id',)
-
+# The UserSerializer class is a serializer for the User model
+# It defines how the User model should be serialized and deserialized
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
