@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
+# Role choices, email hosts, and names
+# This dictionary contains the role names and their corresponding email hosts
 import uuid
 from django.db import models
 from django.utils import timezone
@@ -33,14 +36,14 @@ ROLES_DATA = {
 
 def user_profile_image_path(instance, filename):
     return f"profile_images/user_{instance.id}/{filename}"
-
+# This function generates a path for the user profile image based on the user's ID.
 class College(models.Model):
     name = models.CharField(max_length=255, unique=True)
     code = models.CharField(max_length=20, blank=True, null=True)
    
     def __str__(self):
         return self.name
-
+# This class represents a college in the university system.
 class School(models.Model):
     name = models.CharField(max_length=255)
     code = models.CharField(max_length=20, unique=True)
@@ -48,7 +51,8 @@ class School(models.Model):
    
     def __str__(self):
         return self.name
-
+# This class represents a school within a college.
+# Each school is associated with a college.
 class Department(models.Model):
     name = models.CharField(max_length=255)
     code = models.CharField(max_length=20, unique=True)
@@ -65,7 +69,8 @@ class Department(models.Model):
    
     def __str__(self):
         return self.name
-
+# This class represents a department within a school.
+# Each department is associated with a school.
 class Course(models.Model):
     code = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=255)
@@ -79,6 +84,8 @@ class Course(models.Model):
 
 from django.db import models
 
+# This class represents a course unit within a course.
+# Each course unit is associated with a course and can have multiple lecturers.
 class CourseUnit(models.Model):
     YEAR_CHOICES = [
         (1, "Year 1"), 
@@ -114,14 +121,15 @@ class CourseUnit(models.Model):
         # Ensure that at least one lecturer is assigned.
         if self.pk and self.lecturers.count() < 1:
             raise ValidationError("At least one lecturer must be assigned to a course unit.")
-        
+# This method is called before saving the instance to validate the data.
+# It checks if at least one lecturer is assigned to the course unit.        
 class Class(models.Model):
     name = models.CharField(max_length=255)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='classes')
     
     def __str__(self):
         return f"{self.course.code} - {self.name}"
-
+#
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     role = models.CharField(
@@ -129,7 +137,7 @@ class CustomUser(AbstractUser):
         choices=[(key, value["name"]) for key, value in ROLES_DATA.items()],  # Extract choices from ROLES
         default="student",
     )
-
+#
     # Foreign keys
     college = models.ForeignKey("College", on_delete=models.SET_NULL, null=True, blank=True)
     school = models.ForeignKey("School", on_delete=models.SET_NULL, null=True, blank=True)
@@ -156,7 +164,8 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return f"{self.email} ({self.role})"
     
-# Notification model for browser popup alerts
+# Notification model for browser popup alerts, email alerts, and SMS alerts
+# This model is used to store notifications for users.
 class Notification(models.Model):
     recipient = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='notifications')
     title = models.CharField(max_length=255)
@@ -167,7 +176,8 @@ class Notification(models.Model):
     def __str__(self):
         return f"Notification for {self.recipient.email}: {self.message[:20]}"
 
-# Audit log model to track activities
+# Audit log model to track activities, changes, and actions performed by users
+# This model is used to store audit logs for user actions.
 class AuditLog(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
     action = models.CharField(max_length=255)
