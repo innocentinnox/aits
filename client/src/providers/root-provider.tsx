@@ -8,20 +8,26 @@ import { Toaster } from "@/components/ui/sonner";
 // import { AuthProvider } from "./auth/auth-provider";
 
 function RootProvider({ children }: { children: ReactNode }) {
-  const [queryClient] = React.useState(() => new QueryClient({}));
+  const [queryClient] = React.useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 0,
+          },
+        },
+      })
+  );
   return (
     // <AuthProvider>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider
-            defaultTheme="light"
-            storageKey="vite-ui-theme"
-          >
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         {/* <TooltipProvider> */}
-          {children}
-          <Toaster />
+        {children}
+        <Toaster />
         {/* </TooltipProvider> */}
-        </ThemeProvider>
-      </QueryClientProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
     // </AuthProvider>
   );
 }
