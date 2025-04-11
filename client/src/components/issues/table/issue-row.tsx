@@ -1,19 +1,19 @@
-import { Check, MessageSquare } from "lucide-react"
-import { TableCell, TableRow } from "@/components/ui/table"
-import { formatDate } from "@/lib/utils" // Move the formatDate function to utils
-import PriorityBadge from "./priority-badge"
+import { Check, MessageSquare } from "lucide-react";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { formatDate } from "@/lib/utils"; // Move the formatDate function to utils
+import PriorityBadge from "./priority-badge";
 
 interface IssueRowProps {
   issue: {
-    id: string | number
-    title: string
-    priority: number
-    status: string
-    created_at: string
-    created_by: string
-    assigned_to: string | null
-    comments_count: number
-  }
+    id: string | number;
+    title: string;
+    priority: number;
+    status: string;
+    created_at: string;
+    created_by: string;
+    assigned_to: string | null;
+    comments_count: number;
+  };
 }
 
 export default function IssueRow({ issue }: IssueRowProps) {
@@ -27,8 +27,9 @@ export default function IssueRow({ issue }: IssueRowProps) {
       <TableCell>
         <div className="font-medium">{issue.title}</div>
         <div className="text-sm text-muted-foreground">
-          #{issue.id} • {issue.status === "closed" ? "closed" : "opened"} {formatDate(issue.created_at)} by{" "}
-          {issue.created_by}
+          #{issue.id} • {issue.status === "closed" ? "closed" : "opened"}{" "}
+          {/* {formatDate(issue.created_at)} by {issue.created_by} */}
+          {formatDate(issue.created_at)}
         </div>
       </TableCell>
       <TableCell>
@@ -37,8 +38,8 @@ export default function IssueRow({ issue }: IssueRowProps) {
       <TableCell>
         {issue.assigned_to ? (
           <div className="flex items-center gap-2">
-            <div className="h-6 w-6 rounded-full bg-primary/10" />
-            <span className="text-sm">{issue.assigned_to.split("@")[0]}</span>
+            <div className="h-6w-6rounded-full bg-primary/10" />
+            <span className="text-sm capitalize">{issue.assigned_to.role}</span>
           </div>
         ) : (
           <span className="text-sm text-muted-foreground">Unassigned</span>
@@ -51,5 +52,5 @@ export default function IssueRow({ issue }: IssueRowProps) {
         </div>
       </TableCell>
     </TableRow>
-  )
+  );
 }

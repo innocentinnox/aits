@@ -15,7 +15,7 @@ export default function DashBoard() {
   const { user } = useAuth();
   return (
     <>
-      {user?.role === "student" && <CardGrid />}
+      <CardGrid />
 
       <div className=" py-10 w-[100%] px-4">
         <div className="flex justify-between items-center mb-8">
