@@ -17,7 +17,6 @@ interface IssueRowProps {
 }
 
 export default function IssueRow({ issue }: IssueRowProps) {
-  const {} = issue;
   return (
     <TableRow>
       <TableCell>
