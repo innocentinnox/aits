@@ -7,7 +7,8 @@ from .utils import mailer, send_verification_email
 from issues.models import Issue
 
 import logging
-
+# This logger is used to log messages related to the signals
+# It is configured to log messages with a level of WARNING or higher
 logger = logging.getLogger(__name__)
 
 User = get_user_model()
@@ -51,7 +52,7 @@ def issue_status_changed(sender, instance, created, **kwargs):
                     """
             )
         return
-    
+    #
     # Check if status is resolved by registrar
     if instance.status == 'resolved' and instance.assigned_to and instance.assigned_to.role == 'registrar':
         # Notify student when registrar resolves the issue
