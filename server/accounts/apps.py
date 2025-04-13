@@ -7,3 +7,6 @@ class AccountsConfig(AppConfig):
 
     def ready(self):
         import accounts.signals
+
+# This method is called when the application is ready. It imports the signals module to ensure that the signals are registered when the application starts.
+# The signals module contains the logic for handling user-related events, such as creating a user profile when a new user is created.
