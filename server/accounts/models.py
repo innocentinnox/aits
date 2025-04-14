@@ -175,6 +175,22 @@ class AuditLog(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     user_agent = models.CharField(max_length=255, null=True, blank=True)
+    
+    @classmethod
+    def log_action(cls, user, action, description='', request=None):
+        ip_address = None
+        user_agent = None
+        if request:
+            ip_address = request.META.get('REMOTE_ADDR') or request.META.get('HTTP_X_FORWARDED_FOR')
+            user_agent = request.META.get('HTTP_USER_AGENT')
+        
+        return cls.objects.create(
+            user=user,
+            action=action,
+            description=description,
+            ip_address=ip_address,
+            user_agent=user_agent
+        )
 
     def __str__(self):
         return f"{self.timestamp} - {self.user}: {self.action}"
