@@ -271,6 +271,9 @@ class SignupAPIView(APIView):
                 # Create user
                 user = serializer.save()
                 
+                # Add audit log for user creation
+                log_audit(user, "User Registration", f"New user {user.email} registered")
+                
                 # Generate verification token
                 token_instance = UnifiedToken.objects.create(
                     code=generate_6_digit_code(),
@@ -280,6 +283,9 @@ class SignupAPIView(APIView):
                 
                 # Send verification email
                 send_verification_email(user.email, token_instance)
+                
+                # Add audit log for verification email sent
+                log_audit(user, "Verification Email", f"Verification email sent to {user.email}")
                 
                 # Prepare response
                 token_data = UnifiedTokenSerializer(token_instance).data
@@ -326,6 +332,11 @@ class PasswordResetRequestAPIView(APIView):
             token_type="password_reset"
         )
         send_verification_email(email, token_instance)
+        
+        # Add log audit for password reset request
+        log_audit(user, "Password Reset Request", f"User {email} requested password reset")
+        
+        # Prepare response
         token_data = UnifiedTokenSerializer(token_instance).data
         return Response({"token_id": token_data["id"]}, status=status.HTTP_200_OK)
 
@@ -350,6 +361,9 @@ class VerifyTokenAPIView(APIView):
                     user.email_verified = timezone.now()
                     user.save()
                     token_obj.delete()  # Delete the token after use
+
+                    # Add log audit for email verification
+                    log_audit(user, "Email Verification", f"User {user.email} verified their email address")
                     return Response({"next": "/auth/login", "message": "Email verified"}, status=status.HTTP_200_OK)
                 except User.DoesNotExist:
                     return Response({"error": "User not found."}, status=status.HTTP_400_BAD_REQUEST)
@@ -363,6 +377,10 @@ class VerifyTokenAPIView(APIView):
                     user = User.objects.get(email=token_obj.email)
                     user.set_password(new_password)
                     user.save()
+                    token_obj.delete()  # Delete the token after use
+                    
+                    # Add log audit for password reset
+                    log_audit(user, "Password Reset", f"User {user.email} reset their password")
                     return Response({"next": "/auth/login"}, status=status.HTTP_200_OK)
                 except User.DoesNotExist:
                     return Response({"error": "User not found."}, status=status.HTTP_400_BAD_REQUEST)
