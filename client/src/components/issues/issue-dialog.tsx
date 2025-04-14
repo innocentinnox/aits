@@ -73,6 +73,7 @@ export function NewIssueDialog({
         {category ? (
           <CreateIssueForm
             category={category}
+            onSuccess={onSuccess}
             onCancel={() => {
               setCategory(null);
             }}

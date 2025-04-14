@@ -13,6 +13,9 @@ import { useAuth } from "@/auth";
 export default function DashBoard() {
   const [showIssueDialog, setShowIssueDialog] = useState(false);
   const { user } = useAuth();
+  function handleSuccess() {
+    setShowIssueDialog(false);
+  }
   return (
     <>
       <CardGrid />
@@ -26,6 +29,7 @@ export default function DashBoard() {
               open={showIssueDialog}
               onOpenChange={setShowIssueDialog}
               showTrigger={false}
+              onSuccess={handleSuccess}
             />
             <Button
               onClick={() => setShowIssueDialog(true)}
