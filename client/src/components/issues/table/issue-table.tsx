@@ -51,7 +51,7 @@ export default function IssueTable() {
   }, [searchParams])
 
   const { data: issuesData, isLoading: isLoadingIssues } = useQuery({
-    queryFn: () => axiosInstance.get("/issues/list/", { params: { ...params, statuses: params.statuses?.join(",") } }),
+    queryFn: () => axiosInstance.get("/issues/registrar-view/", { params: { ...params, statuses: params.statuses?.join(",") } }),
     queryKey: ["issues", searchParams.toString()],
   })
   console.log(issuesData)
