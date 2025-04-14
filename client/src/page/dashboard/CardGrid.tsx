@@ -4,6 +4,8 @@ import { formatCurrency } from "@/utilities/helper";
 import { useAuth } from "@/auth";
 import axiosInstance from "@/lib/axios-instance";
 import { useQuery } from "@tanstack/react-query";
+import { useIssues } from "@/context/useIssues";
+import LoaderMini from "@/components/ui/LoaderMini";
 const CARDS = ["submitted", "in progress", "resolved"];
 const SVGS = [<Send />, <Loader />, <SquareCheckBig />];
 export default function CardGrid() {
@@ -13,10 +15,7 @@ export default function CardGrid() {
   const isStud = user?.role === "student";
 
   // presentation
-  const { data: issuesData, isLoading: isLoadingIssues } = useQuery({
-    queryFn: () => axiosInstance.get("/issues/list/"),
-    queryKey: ["issues"],
-  });
+  const { isLoadingIssues, issuesData } = useIssues();
   // present
 
   const tempStudentIssues = issuesData?.data.issues;
@@ -33,13 +32,24 @@ export default function CardGrid() {
     pending?.length,
     resolved?.length,
   ];
+
   return (
     <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-around  p-4 pt-0 items-center">
       {CARDS.map((card, index) => (
         <CardItem
           title={!isStud ? adminTitle[index] : card}
           icon={SVGS[index]}
-          value={isStud ? student[index] : admin[index]}
+          value={
+            isStud ? (
+              isLoadingIssues ? (
+                <LoaderMini />
+              ) : (
+                student[index]
+              )
+            ) : (
+              admin[index]
+            )
+          }
           key={card}
         />
       ))}
