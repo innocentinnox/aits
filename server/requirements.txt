@@ -14,5 +14,5 @@ django-cors-headers
 djangorestframework-simplejwt
 PyJWT
 psycopg2-binary
-gunicorn==21.2.0
+gunicorn==23.0.0
 twilio
