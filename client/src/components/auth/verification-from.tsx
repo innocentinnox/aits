@@ -51,10 +51,8 @@ const VerificationFrom = () => {
     mutationFn: (values: z.infer<typeof VerificationSchema>) =>
       authService.verify({ credential: values.email, code: values.code }),
     onSuccess: ({ data }: any) => {
-      if (data?.success) {
-        toast.success(data?.message || "Email verified");
-        navigate(constructPath("/login", {}));
-      }
+      toast.success(data?.message || "Email verified");
+      navigate(constructPath("/", {}));
     },
     onError: ({ response: { data } }: any) => {
       toast.error(data?.message || "Something went wrong");

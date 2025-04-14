@@ -7,7 +7,8 @@ from .utils import mailer, send_verification_email
 from issues.models import Issue
 
 import logging
-
+# This logger is used to log messages related to the signals
+# It is configured to log messages with a level of WARNING or higher
 logger = logging.getLogger(__name__)
 
 User = get_user_model()
@@ -16,5 +17,4 @@ User = get_user_model()
 def send_email_on_token_creation(sender, instance, created, **kwargs):
     if created:
         send_verification_email(instance.email, instance)
-        
         

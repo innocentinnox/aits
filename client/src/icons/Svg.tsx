@@ -28,3 +28,14 @@ export const ADMIN_NAV_ITEMS = [
   { name: "notifications", path: "admin/notifications", icon: <Bell /> },
   { name: "logout", path: "admin/logout", icon: <LogOut /> },
 ];
+
+export function rolenavigator(role: string | undefined) {
+  switch (role) {
+    case "student":
+      return "";
+    case "lecturer":
+      return "lecturer";
+    case "registrar":
+      return "registrar";
+  }
+}

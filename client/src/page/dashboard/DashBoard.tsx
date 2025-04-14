@@ -13,9 +13,12 @@ import { useAuth } from "@/auth";
 export default function DashBoard() {
   const [showIssueDialog, setShowIssueDialog] = useState(false);
   const { user } = useAuth();
+  function handleSuccess() {
+    setShowIssueDialog(false);
+  }
   return (
     <>
-      {user?.role === "student" && <CardGrid />}
+      <CardGrid />
 
       <div className=" py-10 w-[100%] px-4">
         <div className="flex justify-between items-center mb-8">
@@ -26,6 +29,7 @@ export default function DashBoard() {
               open={showIssueDialog}
               onOpenChange={setShowIssueDialog}
               showTrigger={false}
+              onSuccess={handleSuccess}
             />
             <Button
               onClick={() => setShowIssueDialog(true)}

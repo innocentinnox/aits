@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 
+
+
 from pathlib import Path
 from dotenv import load_dotenv
 from datetime import timedelta
@@ -190,6 +192,9 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^http://127\.0\.0\.1:\d+$",
 ]
 
+# Ensure DEFAULT_FROM_EMAIL is set
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 APP_NAME = "AITS"
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
