@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
 
-from accounts.signals import issue_status_changed
+from .signals import issue_status_changed  # Updated import from local signals
 from .models import Issue, IssueCategory, IssueAttachment
 from .serializers import IssueSerializer, IssueCategorySerializer
 from accounts.utils import send_notification, log_audit

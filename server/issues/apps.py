@@ -7,4 +7,4 @@ class IssuesConfig(AppConfig):
     
     def ready(self):
         # Import and register signals
-        import accounts.signals
+        import issues.signals

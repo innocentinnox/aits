@@ -62,6 +62,7 @@ class Issue(models.Model):
 
     # Automatically or manually assigned issue (for example, to the department head or Lecturer).
     assigned_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_issues')
+    forwarded_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='forwarded_issues')
     closed_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='closed_issues')
 
     # Issue priority; default is inherited from the category if not specified.
