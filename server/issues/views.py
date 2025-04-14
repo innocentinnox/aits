@@ -3,6 +3,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
+
+from accounts.signals import issue_status_changed
 from .models import Issue, IssueCategory, IssueAttachment
 from .serializers import IssueSerializer, IssueCategorySerializer
 from accounts.utils import send_notification, log_audit
@@ -40,6 +42,7 @@ class IssueCreateView(generics.CreateAPIView):
             IssueAttachment.objects.create(issue=issue, file=file)
         
         # Email notifications are now handled by the post_save signal
+        issue_status_changed(sender=Issue, instance=issue, created=True)
         return issue
     
     def create(self, request, *args, **kwargs):
@@ -78,7 +81,13 @@ class IssueUpdateView(generics.UpdateAPIView):
             if action == 'resolve':
                 # Registrar resolves the issue
                 request.data['status'] = 'resolved'
+
                 # Email will be sent via signal
+                issue_status_changed(sender=Issue, instance=issue, created=False)
+
+                # Log the action
+                log_audit(user, "Issue Resolved", f"Issue '{issue.title}' with token {issue.token} resolved by registrar.")
+
                 response = super().patch(request, *args, **kwargs)
                 if response.status_code == 200:
                     return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
@@ -95,7 +104,11 @@ class IssueUpdateView(generics.UpdateAPIView):
                     return Response({"error": "Lecturer not found."}, status=status.HTTP_400_BAD_REQUEST)
                 
                 request.data['status'] = 'forwarded'
+
                 # Email will be sent via signal
+                issue_status_changed(sender=Issue, instance=issue, created=False)
+
+
                 response = super().patch(request, *args, **kwargs)
                 if response.status_code == 200:
                     # Audit log for forwarding
@@ -114,6 +127,8 @@ class IssueUpdateView(generics.UpdateAPIView):
             log_audit(user, "Issue Resolved", f"Lecturer {user.username} resolved issue '{issue.title}'.")
             
             # Email will be sent via signal
+            issue_status_changed(sender=Issue, instance=issue, created=False)
+
             response = super().patch(request, *args, **kwargs)
             if response.status_code == 200:
                 return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
