@@ -20,9 +20,11 @@ export default function CardGrid() {
   // present
 
   const tempStudentIssues = issuesData?.data.issues;
-  const pending = tempStudentIssues?.filter((iss) => iss.status === "pending");
+  const pending = tempStudentIssues?.filter(
+    (iss: any) => iss.status === "pending"
+  );
   const resolved = tempStudentIssues?.filter(
-    (iss) => iss.status === "resolved"
+    (iss: any) => iss.status === "resolved"
   );
 
   console.log(pending, "cards");

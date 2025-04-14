@@ -24,7 +24,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useCurrentUser } from "@/auth";
 import axiosInstance from "@/lib/axios-instance";
 import { issueService } from "@/services";
@@ -60,13 +65,13 @@ interface CreateIssueFormProps {
   onCancel?: () => void;
   onSuccess?: () => void;
 }
-
 export const CreateIssueForm = ({
   className,
   category,
   onCancel,
   onSuccess,
 }: CreateIssueFormProps) => {
+  console.log("category", category);
   const user = useCurrentUser();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -75,7 +80,7 @@ export const CreateIssueForm = ({
       course: user?.course?.id,
       college: user?.college?.id,
 
-      title: "",
+      title: category.name,
       description: "",
       course_unit: "",
       // attachments: "",
@@ -100,7 +105,8 @@ export const CreateIssueForm = ({
     },
     enabled: !!yearTaken,
   });
-
+  //
+  const queryClient = useQueryClient();
   // Form submission
   const { mutate: onSubmit, isPending: submittingIssue } = useMutation({
     mutationFn: async (values: FormValues) => issueService.create(values),
@@ -110,13 +116,18 @@ export const CreateIssueForm = ({
     onSuccess: (data) => {
       console.log(data);
       toast.success(data.message || "Issue submitted successfully");
+      queryClient.invalidateQueries({
+        queryKey: ["issues"],
+      });
+      onSuccess?.();
+      onCancel?.();
     },
   });
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit((values) => onSubmit(values))}
         className={cn("space-y-3 md:space-y-5 px-6 !pb-4", className)}
       >
         <FormField
@@ -130,6 +141,7 @@ export const CreateIssueForm = ({
                   placeholder="Missing Marks for CAT 1"
                   className="placeholder:text-sm"
                   {...field}
+                  disabled={true}
                 />
               </FormControl>
               <FormMessage />
