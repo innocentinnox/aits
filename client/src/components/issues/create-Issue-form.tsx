@@ -247,7 +247,7 @@ export const CreateIssueForm = ({
             type="button"
             onClick={onCancel}
             variant="outline"
-            disabled={loading}
+            disabled={submittingIssue}
           >
             Cancel
           </Button>

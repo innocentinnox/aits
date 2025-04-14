@@ -174,31 +174,31 @@ export default function IssueTable() {
         />
 
         <div className="flex flex-wrap gap-2">
-          <FilterDropdown
+          {/* <FilterDropdown
             title="Priority"
             options={priorityOptions}
             currentValue={params.priority}
             onChange={(value) => updateParams({ priority: value })}
-          />
+          /> */}
 
-          <FilterDropdown
+          {/* <FilterDropdown
             title="Status"
             options={statusOptions}
             currentValue={
               params.statuses?.length == 1 ? params.statuses[0] : ""
             }
             onChange={(value) => updateParams({ statuses: [value] })}
-          />
+          /> */}
 
-          <FilterDropdown
+          {/* <FilterDropdown
             title="Assignee"
             options={assigneeOptions}
             currentValue={params.assigned_to}
             onChange={(value) => updateParams({ assigned_to: value })}
             groupOptions={true}
             width="w-56"
-          />
-
+          /> */}
+          {/* 
           <Select
             value={params.ordering}
             onValueChange={(value) => updateParams({ ordering: value })}
@@ -214,7 +214,7 @@ export default function IssueTable() {
               <SelectItem value="title">Title (A-Z)</SelectItem>
               <SelectItem value="-title">Title (Z-A)</SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
 
           {(params.search ||
             params.priority ||
@@ -233,11 +233,11 @@ export default function IssueTable() {
       </div>
 
       {/* Status tabs */}
-      <StatusTabs
+      {/* <StatusTabs
         currentStatuses={params.statuses || []}
         onStatusChange={(statuses) => updateParams({ statuses })}
         openCount={total}
-      />
+      /> */}
 
       {/* Issues table */}
       <div className="rounded-md border">
@@ -246,7 +246,7 @@ export default function IssueTable() {
             <TableRow>
               <TableHead className="w-[50px]"></TableHead>
               <TableHead>Issue</TableHead>
-              <TableHead className="w-[100px]">Priority</TableHead>
+              <TableHead className="w-[100px]">Status</TableHead>
               <TableHead className="w-[150px]">Assignee</TableHead>
               <TableHead className="w-[100px] text-right">Comments</TableHead>
             </TableRow>

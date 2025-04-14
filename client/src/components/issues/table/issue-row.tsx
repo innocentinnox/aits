@@ -27,13 +27,12 @@ export default function IssueRow({ issue }: IssueRowProps) {
       <TableCell>
         <div className="font-medium">{issue.title}</div>
         <div className="text-sm text-muted-foreground">
-          #{issue.id} • {issue.status === "closed" ? "closed" : "opened"}{" "}
+          #{issue.id} • {"Issued"} {formatDate(issue.created_at)}
           {/* {formatDate(issue.created_at)} by {issue.created_by} */}
-          {formatDate(issue.created_at)}
         </div>
       </TableCell>
       <TableCell>
-        <PriorityBadge priority={issue.priority} />
+        <PriorityBadge status={issue.status} />
       </TableCell>
       <TableCell>
         {issue.assigned_to ? (
