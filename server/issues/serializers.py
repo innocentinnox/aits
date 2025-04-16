@@ -26,7 +26,7 @@ class IssueSerializer(serializers.ModelSerializer):
         model = Issue
         fields = '__all__'
         read_only_fields = (
-            'id', 'token', 'created_by', 'assigned_to', 'status', 
+            'id', 'token', 'created_by', 'assigned_to', 'statuses', 
             'created_at', 'updated_at', 'resolved_at'
         )
     
