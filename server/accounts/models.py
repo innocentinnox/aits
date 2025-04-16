@@ -24,14 +24,15 @@ ROLES_DATA = {
         "email_hosts": ["cit.ac.ug", "chuss.mak.ac.ug", "cocis.mak.ac.ug", "cedat.mak.ac.ug"],
         "name": "Lecturer",
     },
-    "department_head": {
-        "email_hosts": ["mak.ac.ug", "cit.ac.ug", "chuss.mak.ac.ug", "cocis.mak.ac.ug", "cedat.mak.ac.ug"],
-        "name": "Department Head",
-    },
     "registrar": {
         "email_hosts": ["mak.ac.ug", "cit.ac.ug", "chuss.mak.ac.ug", "cocis.mak.ac.ug", "cedat.mak.ac.ug"],
         "name": "Registrar",
     },
+
+    #"department_head": {
+        #"email_hosts": ["mak.ac.ug", "cit.ac.ug", "chuss.mak.ac.ug", "cocis.mak.ac.ug", "cedat.mak.ac.ug"],
+       # "name": "Department Head",
+    #},
 }
 
 def user_profile_image_path(instance, filename):
