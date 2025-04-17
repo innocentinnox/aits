@@ -1,12 +1,16 @@
 import styles from "./CardItem.module.css";
+import LoaderMini from "@/components/ui/LoaderMini";
+
 export default function Card({
   title,
   value,
   icon,
+  isLoading,
 }: {
   title: string;
-  value: string | number;
+  value: any;
   icon: any;
+  isLoading?: boolean;
 }) {
   return (
     <div className={`${styles.card} bg-white w-[100%] sm:w-[32%] shadow-lg`}>
@@ -14,7 +18,9 @@ export default function Card({
         <div className={`${styles.card_title} text-mainwhite`}>{title}</div>
         <div className={`${styles.card_icon}`}>{icon}</div>
       </div>
-      <div className={`${styles.card_content} text-mainwhite`}>{value}</div>
+      <div className={`${styles.card_content} text-mainwhite`}>
+        {isLoading ? <LoaderMini /> : value}
+      </div>
     </div>
   );
 }
