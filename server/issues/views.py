@@ -213,7 +213,7 @@ class IssueUpdateView(generics.UpdateAPIView):
                 # Log the action
                 log_audit(user, "Issue Resolved", f"Issue '{issue.title}' with token {issue.token} resolved by registrar.")
 
-                response = super().patch(data, *args, **kwargs)
+                response = super().patch(request=data, *args, **kwargs)
                 if response.status_code == 200:
                     return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
                 return response
