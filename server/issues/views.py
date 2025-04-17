@@ -207,16 +207,24 @@ class IssueUpdateView(generics.UpdateAPIView):
                 # Registrar resolves the issue
                 data['status'] = 'resolved'
 
+
+                # First update the database
+                serializer = self.get_serializer(issue, data=data, partial=True)
+                serializer.is_valid(raise_exception=True)
+                self.perform_update(serializer)
+
+                    
+                # Refresh the issue from the database to ensure we have the updated state
+                issue.refresh_from_db()
+
+
                 # Email will be sent via signal
                 issue_status_changed(sender=Issue, instance=issue, created=False)
 
                 # Log the action
                 log_audit(user, "Issue Resolved", f"Issue '{issue.title}' with token {issue.token} resolved by registrar.")
 
-                # Fix: Use proper serializer pattern instead of passing data as request
-                serializer = self.get_serializer(issue, data=data, partial=True)
-                serializer.is_valid(raise_exception=True)
-                self.perform_update(serializer)
+               
                 
                 return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
                 
