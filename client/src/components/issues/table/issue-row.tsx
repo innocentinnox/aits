@@ -1,7 +1,10 @@
-import { Check, MessageSquare } from "lucide-react";
+import { Check, ClipboardCheck, Forward, MessageSquare } from "lucide-react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { formatDate } from "@/lib/utils"; // Move the formatDate function to utils
 import PriorityBadge from "./priority-badge";
+import { useMutation } from "@tanstack/react-query";
+import { issueService } from "@/services";
+import { toast } from "sonner";
 
 interface IssueRowProps {
   issue: {
@@ -13,10 +16,21 @@ interface IssueRowProps {
     created_by: string;
     assigned_to: string | null;
     comments_count: number;
+    token: string;
   };
 }
 
 export default function IssueRow({ issue }: IssueRowProps) {
+  const { mutate: onResolve, isPending: submittingIssue } = useMutation({
+    mutationFn: (token: string) => issueService.resolve(token),
+    onError: (error) => {
+      toast.error(error.message || "Failed to resolve issue");
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      toast.success(data.message || "Issue resolved successfully");
+    },
+  });
   return (
     <TableRow>
       <TableCell>
@@ -45,9 +59,10 @@ export default function IssueRow({ issue }: IssueRowProps) {
         )}
       </TableCell>
       <TableCell className="text-right">
-        <div className="flex items-center justify-end">
-          <MessageSquare className="mr-1 h-3.5 w-3.5 text-muted-foreground" />
-          <span>{issue.comments_count}</span>
+        <div className="flex items-center justify-end"></div>
+        <div className="flex gap-2 cursor-pointer">
+          <Forward color="#333" />
+          <ClipboardCheck color="#333" onClick={() => onResolve(issue.token)} />
         </div>
       </TableCell>
     </TableRow>

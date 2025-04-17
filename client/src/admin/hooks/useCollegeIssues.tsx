@@ -7,7 +7,7 @@ function useCollegeIssues() {
     queryKey: ["admin-issues"],
   });
   const issuesData = issues?.data.issues;
-
+  console.log("coleges", issuesData);
   return { issuesData, isLoadingIssues };
 }
 
