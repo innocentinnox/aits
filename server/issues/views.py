@@ -197,12 +197,15 @@ class IssueUpdateView(generics.UpdateAPIView):
         issue = self.get_object()
         user = request.user
         
+         # Make a mutable copy of request.data
+        data = request.data.copy()
+
         # Registrar actions: can resolve or forward an issue
         if user.role == 'registrar' and issue.assigned_to.email == user.email:
-            action = request.data.get('action')
+            action = data.get('action')
             if action == 'resolve':
                 # Registrar resolves the issue
-                request.data['status'] = 'resolved'
+                data['status'] = 'resolved'
 
                 # Email will be sent via signal
                 issue_status_changed(sender=Issue, instance=issue, created=False)
@@ -217,7 +220,7 @@ class IssueUpdateView(generics.UpdateAPIView):
                 
             elif action == 'forward':
                 # Registrar forwards the issue to a lecturer; expect 'forwarded_to' field in request data
-                lecturer_id = request.data.get('forwarded_to')
+                lecturer_id = data.get('forwarded_to')
                 if not lecturer_id:
                     return Response({"error": "Lecturer id is required for forwarding."}, status=status.HTTP_400_BAD_REQUEST)
                 
@@ -225,7 +228,7 @@ class IssueUpdateView(generics.UpdateAPIView):
                 if not lecturer:
                     return Response({"error": "Lecturer not found."}, status=status.HTTP_400_BAD_REQUEST)
                 
-                request.data['status'] = 'forwarded'
+                data['status'] = 'forwarded'
 
                 # Email will be sent via signal
                 issue_status_changed(sender=Issue, instance=issue, created=False)
@@ -245,7 +248,7 @@ class IssueUpdateView(generics.UpdateAPIView):
             
         # Lecturer actions: if issue is forwarded to them, they can mark it resolved by adding resolution details.
         elif user.role == 'lecturer' and issue.forwarded_to == user:
-            request.data['status'] = 'resolved'
+            data['status'] = 'resolved'
             log_audit(user, "Issue Resolved", f"Lecturer {user.username} resolved issue '{issue.title}'.")
             
             # Email will be sent via signal
