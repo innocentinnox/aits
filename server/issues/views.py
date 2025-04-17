@@ -226,7 +226,7 @@ class IssueUpdateView(generics.UpdateAPIView):
 
                
                 
-                return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
+                return Response({"message": "Issue resolved and notification sent." ,"issue":issue}, status=status.HTTP_200_OK)
                 
             elif action == 'forward':
                 # Registrar forwards the issue to a lecturer; expect 'forwarded_to' field in request data
