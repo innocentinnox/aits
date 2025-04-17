@@ -198,7 +198,7 @@ class IssueUpdateView(generics.UpdateAPIView):
         user = request.user
         
         # Registrar actions: can resolve or forward an issue
-        if user.role == 'registrar' and issue.assigned_to == user:
+        if user.role == 'registrar' and issue.assigned_to.email == user.email:
             action = request.data.get('action')
             if action == 'resolve':
                 # Registrar resolves the issue
