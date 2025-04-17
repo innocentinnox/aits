@@ -234,7 +234,16 @@ class IssueUpdateView(generics.UpdateAPIView):
                 issue_status_changed(sender=Issue, instance=issue, created=False)
 
 
-                response = super().patch(data, *args, **kwargs)
+                # response = super().patch(data, *args, **kwargs)
+                #olld
+
+                #ROBERT
+                serializer = self.get_serializer(issue, data=data, partial=True)
+                serializer.is_valid(raise_exception=True)
+                self.perform_update(serializer)
+
+
+
                 if response.status_code == 200:
                     # Audit log for forwarding
                     log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.")
