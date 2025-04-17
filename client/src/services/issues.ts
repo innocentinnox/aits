@@ -51,7 +51,9 @@ class IssueService {
   }
   async resolve(token: string) {
     try {
-      const res = await axiosInstance.patch(`/issues/update/${token}/`);
+      const res = await axiosInstance.patch(`/issues/update/${token}/`, {
+        action: "resolve",
+      });
       console.log("resoleved", res);
       return res.data as { id: number; name: string; description: string }[];
     } catch (error: any) {
