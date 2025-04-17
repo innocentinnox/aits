@@ -1,14 +1,13 @@
 import Heading from "@/components/ui/Heading";
 import StatGrid from "./StatGrid";
 import CardGrid from "../../page/dashboard/CardGrid";
+import useCollegeIssues from "../hooks/useCollegeIssues";
 
 function Statistics() {
+  const { isLoadingIssues, issuesData } = useCollegeIssues();
   return (
     <>
-      <Heading as="h3" className="text-center">
-        Issues Statistics
-      </Heading>
-      <CardGrid />
+      <CardGrid issuesValues={issuesData} isLoadingIssues={isLoadingIssues} />
       <StatGrid />
     </>
   );
