@@ -197,40 +197,32 @@ class IssueUpdateView(generics.UpdateAPIView):
         issue = self.get_object()
         user = request.user
         
-        # Make a mutable copy of request.data
-        data = request.data.copy()
-
         # Registrar actions: can resolve or forward an issue
         if user.role == 'registrar' and issue.assigned_to.email == user.email:
-            action = data.get('action')
+            action = request.data.get('action')
             if action == 'resolve':
-                # Registrar resolves the issue
+              
+
+                data = request.data.copy()
                 data['status'] = 'resolved'
 
-
-                # First update the database
                 serializer = self.get_serializer(issue, data=data, partial=True)
                 serializer.is_valid(raise_exception=True)
                 self.perform_update(serializer)
-
-                    
-                # Refresh the issue from the database to ensure we have the updated state
-                issue.refresh_from_db()
-
-
                 # Email will be sent via signal
                 issue_status_changed(sender=Issue, instance=issue, created=False)
 
                 # Log the action
                 log_audit(user, "Issue Resolved", f"Issue '{issue.title}' with token {issue.token} resolved by registrar.")
 
-               
-                
-                return Response({"message": "Issue resolved and notification sent." ,"issue":issue}, status=status.HTTP_200_OK)
+                ##response = super().patch(request, *args, **kwargs)
+                ##if response.status_code == 200:
+                return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
+                ##return response
                 
             elif action == 'forward':
                 # Registrar forwards the issue to a lecturer; expect 'forwarded_to' field in request data
-                lecturer_id = data.get('forwarded_to')
+                lecturer_id = request.data.get('forwarded_to')
                 if not lecturer_id:
                     return Response({"error": "Lecturer id is required for forwarding."}, status=status.HTTP_400_BAD_REQUEST)
                 
@@ -238,42 +230,40 @@ class IssueUpdateView(generics.UpdateAPIView):
                 if not lecturer:
                     return Response({"error": "Lecturer not found."}, status=status.HTTP_400_BAD_REQUEST)
                 
-                data['status'] = 'forwarded'
+                request.data['status'] = 'forwarded'
 
                 # Email will be sent via signal
                 issue_status_changed(sender=Issue, instance=issue, created=False)
 
-                # Fix: Use serializer pattern
-                serializer = self.get_serializer(issue, data=data, partial=True)
-                serializer.is_valid(raise_exception=True)
-                self.perform_update(serializer)
 
-                # Audit log for forwarding
-                log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.")
-                return Response({"message": "Issue forwarded and notification sent."}, status=status.HTTP_200_OK)
+                response = super().patch(request, *args, **kwargs)
+                if response.status_code == 200:
+                    # Audit log for forwarding
+                    log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.")
+                    return Response({"message": "Issue forwarded and notification sent."}, status=status.HTTP_200_OK)
+                return response
                 
             else:
                 return Response({"error": "Invalid action."}, status=status.HTTP_400_BAD_REQUEST)
             
-            log_audit(user, "Issue Updated", f"Registrar {user.username} updated issue '{issue.title}' with action {action}.")
+            #log_audit(user, "Issue Updated", f"Registrar {user.username} updated issue '{issue.title}' with action {action}.")
             
         # Lecturer actions: if issue is forwarded to them, they can mark it resolved by adding resolution details.
         elif user.role == 'lecturer' and issue.forwarded_to == user:
-            data['status'] = 'resolved'
+            request.data['status'] = 'resolved'
             log_audit(user, "Issue Resolved", f"Lecturer {user.username} resolved issue '{issue.title}'.")
             
             # Email will be sent via signal
             issue_status_changed(sender=Issue, instance=issue, created=False)
 
-            # Fix: Use proper serializer pattern
-            serializer = self.get_serializer(issue, data=data, partial=True)
-            serializer.is_valid(raise_exception=True)
-            self.perform_update(serializer)
-            
-            return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
+            response = super().patch(request, *args, **kwargs)
+            if response.status_code == 200:
+                return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
+            return response
             
         else:
             return Response({"error": "Not authorized to update this issue."}, status=status.HTTP_403_FORBIDDEN)
+
 
 class IssueListView(generics.ListAPIView):
     """
