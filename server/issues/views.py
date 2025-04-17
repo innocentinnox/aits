@@ -234,7 +234,7 @@ class IssueUpdateView(generics.UpdateAPIView):
                 issue_status_changed(sender=Issue, instance=issue, created=False)
 
 
-                response = super().patch(request, *args, **kwargs)
+                response = super().patch(data, *args, **kwargs)
                 if response.status_code == 200:
                     # Audit log for forwarding
                     log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.")
