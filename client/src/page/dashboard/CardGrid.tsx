@@ -1,10 +1,8 @@
 import { Loader, Send, SquareCheckBig } from "lucide-react";
 import CardItem from "./CardItem";
-import { formatCurrency } from "@/utilities/helper";
 import { useAuth } from "@/auth";
-import axiosInstance from "@/lib/axios-instance";
 import { useQuery } from "@tanstack/react-query";
-import { useIssues } from "@/context/useIssues";
+import { useIssues } from "@/hooks/useIssues";
 import LoaderMini from "@/components/ui/LoaderMini";
 const CARDS = ["submitted", "in progress", "resolved"];
 const SVGS = [<Send />, <Loader />, <SquareCheckBig />];

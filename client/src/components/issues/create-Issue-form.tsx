@@ -71,7 +71,6 @@ export const CreateIssueForm = ({
   onCancel,
   onSuccess,
 }: CreateIssueFormProps) => {
-  console.log("category", category);
   const user = useCurrentUser();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -88,8 +87,6 @@ export const CreateIssueForm = ({
       year: "",
     },
   });
-
-  const loading = false;
 
   // Fetch schools when a college is selected
   const yearTaken = form.watch("year");
@@ -127,7 +124,15 @@ export const CreateIssueForm = ({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((values) => onSubmit(values))}
+        onSubmit={form.handleSubmit(
+          (values) => {
+            console.log(values);
+            onSubmit(values);
+          },
+          (err) => {
+            console.log(err);
+          }
+        )}
         className={cn("space-y-3 md:space-y-5 px-6 !pb-4", className)}
       >
         <FormField
@@ -254,10 +259,7 @@ export const CreateIssueForm = ({
           <Button
             type="submit"
             disabled={
-              fetchingcourse_units ||
-              submittingIssue ||
-              !user?.course?.id ||
-              !user?.college?.id
+              fetchingcourse_units || submittingIssue || !user?.college?.id
             }
           >
             Submit
