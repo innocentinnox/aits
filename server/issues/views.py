@@ -197,7 +197,7 @@ class IssueUpdateView(generics.UpdateAPIView):
         issue = self.get_object()
         user = request.user
         
-         # Make a mutable copy of request.data
+        # Make a mutable copy of request.data
         data = request.data.copy()
 
         # Registrar actions: can resolve or forward an issue
@@ -213,10 +213,12 @@ class IssueUpdateView(generics.UpdateAPIView):
                 # Log the action
                 log_audit(user, "Issue Resolved", f"Issue '{issue.title}' with token {issue.token} resolved by registrar.")
 
-                response = super().patch(request=data, *args, **kwargs)
-                if response.status_code == 200:
-                    return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
-                return response
+                # Fix: Use proper serializer pattern instead of passing data as request
+                serializer = self.get_serializer(issue, data=data, partial=True)
+                serializer.is_valid(raise_exception=True)
+                self.perform_update(serializer)
+                
+                return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
                 
             elif action == 'forward':
                 # Registrar forwards the issue to a lecturer; expect 'forwarded_to' field in request data
@@ -233,22 +235,14 @@ class IssueUpdateView(generics.UpdateAPIView):
                 # Email will be sent via signal
                 issue_status_changed(sender=Issue, instance=issue, created=False)
 
-
-                # response = super().patch(data, *args, **kwargs)
-                #olld
-
-                #ROBERT
+                # Fix: Use serializer pattern
                 serializer = self.get_serializer(issue, data=data, partial=True)
                 serializer.is_valid(raise_exception=True)
                 self.perform_update(serializer)
 
-
-
-                if response.status_code == 200:
-                    # Audit log for forwarding
-                    log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.")
-                    return Response({"message": "Issue forwarded and notification sent."}, status=status.HTTP_200_OK)
-                return response
+                # Audit log for forwarding
+                log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.")
+                return Response({"message": "Issue forwarded and notification sent."}, status=status.HTTP_200_OK)
                 
             else:
                 return Response({"error": "Invalid action."}, status=status.HTTP_400_BAD_REQUEST)
@@ -263,14 +257,15 @@ class IssueUpdateView(generics.UpdateAPIView):
             # Email will be sent via signal
             issue_status_changed(sender=Issue, instance=issue, created=False)
 
-            response = super().patch(request, *args, **kwargs)
-            if response.status_code == 200:
-                return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
-            return response
+            # Fix: Use proper serializer pattern
+            serializer = self.get_serializer(issue, data=data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            self.perform_update(serializer)
+            
+            return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
             
         else:
             return Response({"error": "Not authorized to update this issue."}, status=status.HTTP_403_FORBIDDEN)
-
 
 class IssueListView(generics.ListAPIView):
     """
