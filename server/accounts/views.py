@@ -137,7 +137,7 @@ class ProfileUpdateView(generics.UpdateAPIView):
     
     def perform_update(self, serializer):
         user = serializer.save()
-        log_audit(user, "Profile Updated", f"User {user.email} updated their profile.")
+        log_audit(user, "Profile Updated", f"User {user.email} updated their profile.", self.request)
 
 # Logout API
 class LogoutView(APIView):
@@ -146,7 +146,7 @@ class LogoutView(APIView):
     def post(self, request):
         user = request.user if request.user.is_authenticated else None
         if user:
-            log_audit(user, "User Logged Out", f"User {user.email} logged out.")
+            log_audit(user, "User Logged Out", f"User {user.email} logged out.", request)
         
         response = Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
         response.delete_cookie("access_token")
@@ -272,7 +272,7 @@ class SignupAPIView(APIView):
                 user = serializer.save()
                 
                 # Add audit log for user creation
-                log_audit(user, "User Registration", f"New user {user.email} registered")
+                log_audit(user, "User Registration", f"New user {user.email} registered", request)
                 
                 # Generate verification token
                 token_instance = UnifiedToken.objects.create(
@@ -285,7 +285,7 @@ class SignupAPIView(APIView):
                 send_verification_email(user.email, token_instance)
                 
                 # Add audit log for verification email sent
-                log_audit(user, "Verification Email", f"Verification email sent to {user.email}")
+                log_audit(user, "Verification Email", f"Verification email sent to {user.email}", request)
                 
                 # Prepare response
                 token_data = UnifiedTokenSerializer(token_instance).data
@@ -334,7 +334,7 @@ class PasswordResetRequestAPIView(APIView):
         send_verification_email(email, token_instance)
         
         # Add log audit for password reset request
-        log_audit(user, "Password Reset Request", f"User {email} requested password reset")
+        log_audit(user, "Password Reset Request", f"User {email} requested password reset", request)
         
         # Prepare response
         token_data = UnifiedTokenSerializer(token_instance).data
@@ -363,7 +363,7 @@ class VerifyTokenAPIView(APIView):
                     token_obj.delete()  # Delete the token after use
 
                     # Add log audit for email verification
-                    log_audit(user, "Email Verification", f"User {user.email} verified their email address")
+                    log_audit(user, "Email Verification", f"User {user.email} verified their email address", request)
                     return Response({"next": "/auth/login", "message": "Email verified"}, status=status.HTTP_200_OK)
                 except User.DoesNotExist:
                     return Response({"error": "User not found."}, status=status.HTTP_400_BAD_REQUEST)
@@ -380,7 +380,7 @@ class VerifyTokenAPIView(APIView):
                     token_obj.delete()  # Delete the token after use
                     
                     # Add log audit for password reset
-                    log_audit(user, "Password Reset", f"User {user.email} reset their password")
+                    log_audit(user, "Password Reset", f"User {user.email} reset their password", request)
                     return Response({"next": "/auth/login"}, status=status.HTTP_200_OK)
                 except User.DoesNotExist:
                     return Response({"error": "User not found."}, status=status.HTTP_400_BAD_REQUEST)

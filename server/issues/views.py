@@ -35,7 +35,7 @@ class IssueCreateView(generics.CreateAPIView):
         # Getting registrar and the college she belongs to
         registrar = User.objects.filter(role='registrar', college=user.college).first()
         issue = serializer.save(created_by=user, assigned_to=registrar)
-        log_audit(user, "Issue Created", f"Issue '{issue.title}' with token {issue.token} created.")
+        log_audit(user, "Issue Created", f"Issue '{issue.title}' with token {issue.token} created.", self.request)
         
         # Process file attachments if any
         for file in self.request.FILES.getlist('attachments'):
@@ -170,7 +170,7 @@ class RegistrarIssuesListView(generics.ListAPIView):
         serializer = self.get_serializer(qs_paginated, many=True)
         
         # Log the action
-        log_audit(request.user, "View Issues List", f"Registrar viewed list of {total} issues")
+        log_audit(request.user, "View Issues List", f"Registrar viewed list of {total} issues", request)
         
         return Response({
             "total": total,
@@ -201,8 +201,6 @@ class IssueUpdateView(generics.UpdateAPIView):
         if user.role == 'registrar' and issue.assigned_to.email == user.email:
             action = request.data.get('action')
             if action == 'resolve':
-              
-
                 data = request.data.copy()
                 data['status'] = 'resolved'
 
@@ -213,11 +211,12 @@ class IssueUpdateView(generics.UpdateAPIView):
                 issue_status_changed(sender=Issue, instance=issue, created=False)
 
                 # Log the action
-                log_audit(user, "Issue Resolved", f"Issue '{issue.title}' with token {issue.token} resolved by registrar.")
+                log_audit(user, "Issue Resolved", f"Issue '{issue.title}' with token {issue.token} Resolved by registrar {user.username} with action {action}.", request)
+                
 
                 # Reload the issue to ensure we have the updated data
                 issue.refresh_from_db()
-                
+
                 return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
                 
             elif action == 'forward':
@@ -235,23 +234,22 @@ class IssueUpdateView(generics.UpdateAPIView):
                 # Email will be sent via signal
                 issue_status_changed(sender=Issue, instance=issue, created=False)
 
-
                 response = super().patch(request, *args, **kwargs)
                 if response.status_code == 200:
                     # Audit log for forwarding
-                    log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.")
+                    log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.", request)
                     return Response({"message": "Issue forwarded and notification sent."}, status=status.HTTP_200_OK)
                 return response
                 
             else:
                 return Response({"error": "Invalid action."}, status=status.HTTP_400_BAD_REQUEST)
+                
             
-            #log_audit(user, "Issue Updated", f"Registrar {user.username} updated issue '{issue.title}' with action {action}.")
             
         # Lecturer actions: if issue is forwarded to them, they can mark it resolved by adding resolution details.
         elif user.role == 'lecturer' and issue.forwarded_to == user:
             request.data['status'] = 'resolved'
-            log_audit(user, "Issue Resolved", f"Lecturer {user.username} resolved issue '{issue.title}'.")
+            log_audit(user, "Issue Resolved", f"Lecturer {user.username} resolved issue '{issue.title}'.", request)
             
             # Email will be sent via signal
             issue_status_changed(sender=Issue, instance=issue, created=False)
