@@ -212,8 +212,12 @@ class IssueUpdateView(generics.UpdateAPIView):
                 data = request.data.copy()
                 data['status'] = 'resolved'
 
+                # Store the old status before updating
+                old_status = issue.status
+
                 # Update the database
                 serializer = self.get_serializer(issue, data=data, partial=True)
+                serializer.is_valid(raise_exception=True)
                 self.perform_update(serializer)
 
                 # Send notification with registrar as the sender
@@ -228,6 +232,14 @@ class IssueUpdateView(generics.UpdateAPIView):
 
                 # Reload the issue to ensure we have the updated data
                 issue.refresh_from_db()
+                
+                # Signal that the issue status has changed
+                issue_status_changed.send(
+                    sender=self.__class__,
+                    issue=issue,
+                    old_status=old_status,  # Use the stored old status
+                    new_status='resolved'
+                )
 
                 return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
                 
@@ -241,41 +253,80 @@ class IssueUpdateView(generics.UpdateAPIView):
                 if not lecturer:
                     return Response({"error": "Lecturer not found."}, status=status.HTTP_400_BAD_REQUEST)
                 
-                request.data['status'] = 'forwarded'
+                # Store the old status before updating
+                old_status = issue.status
+                
+                # Create a copy of the data to avoid modifying the original
+                data = request.data.copy()
+                data['status'] = 'forwarded'
+                data['forwarded_to'] = lecturer.id
 
-                response = super().patch(request, *args, **kwargs)
-                if response.status_code == 200:
-                    # Send notification with registrar as the sender
-                    issue_notification_signal.send(
-                        sender=user,  # Registrar as the sender
-                        instance=issue,
-                        created=False
-                    )
+                # Update the database with complete data
+                serializer = self.get_serializer(issue, data=data, partial=True)
+                serializer.is_valid(raise_exception=True)
+                self.perform_update(serializer)
+                
+                # Reload the issue to ensure we have the updated data
+                issue.refresh_from_db()
+                
+                # Send notification with registrar as the sender
+                issue_notification_signal.send(
+                    sender=user,  # Registrar as the sender
+                    instance=issue,
+                    created=False
+                )
 
-                    # Audit log for forwarding
-                    log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.", request)
-                    return Response({"message": "Issue forwarded and notification sent."}, status=status.HTTP_200_OK)
-                return response
+                # Signal that the issue status has changed
+                issue_status_changed.send(
+                    sender=self.__class__,
+                    issue=issue,
+                    old_status=old_status,
+                    new_status='forwarded'
+                )
+
+                # Audit log for forwarding
+                log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.", request)
+                return Response({"message": "Issue forwarded and notification sent."}, status=status.HTTP_200_OK)
                 
             else:
                 return Response({"error": "Invalid action."}, status=status.HTTP_400_BAD_REQUEST)
             
         # Lecturer actions: if issue is forwarded to them, they can mark it resolved by adding resolution details.
         elif user.role == 'lecturer' and issue.forwarded_to == user:
-            request.data['status'] = 'resolved'
+            # Store the old status before updating
+            old_status = issue.status
+            
+            # Create a copy of the data to avoid modifying the original
+            data = request.data.copy()
+            data['status'] = 'resolved'
+            
+            # Update the database
+            serializer = self.get_serializer(issue, data=data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            self.perform_update(serializer)
+            
+            # Reload the issue to ensure we have the updated data
+            issue.refresh_from_db()
+            
+            # Send notification with lecturer as the sender
+            issue_notification_signal.send(
+                sender=user,  # Lecturer as the sender
+                instance=issue,
+                created=False
+            )
+            
+            # Signal that the issue status has changed
+            issue_status_changed.send(
+                sender=self.__class__,
+                issue=issue,
+                old_status=old_status,
+                new_status='resolved'
+            )
+            
+            # Log the action
             log_audit(user, "Issue Resolved", f"Lecturer {user.username} resolved issue '{issue.title}'.", request)
             
-            response = super().patch(request, *args, **kwargs)
-            if response.status_code == 200:
-                # Send notification with lecturer as the sender
-                issue_notification_signal.send(
-                    sender=user,  # Lecturer as the sender
-                    instance=issue,
-                    created=False
-                )
-                return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
-            return response
-            
+            return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
         else:
             return Response({"error": "Not authorized to update this issue."}, status=status.HTTP_403_FORBIDDEN)
 
