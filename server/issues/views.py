@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
+from django.dispatch import Signal
 
 from .signals import issue_status_changed  # Updated import from local signals
 from .models import Issue, IssueCategory, IssueAttachment
@@ -15,6 +16,9 @@ from accounts.serializers import EmailSerializer
 from accounts.utils import mailer
 
 User = get_user_model()
+
+# Create custom signal that can accept any sender
+issue_notification_signal = Signal()
 
 # Categories of issues
 class IssueCategoryView(generics.ListCreateAPIView):
@@ -35,14 +39,18 @@ class IssueCreateView(generics.CreateAPIView):
         # Getting registrar and the college she belongs to
         registrar = User.objects.filter(role='registrar', college=user.college).first()
         issue = serializer.save(created_by=user, assigned_to=registrar)
-        log_audit(user, "Issue Created", f"Issue '{issue.title}' with token {issue.token} created.")
+        log_audit(user, "Issue Created", f"Issue '{issue.title}' with token {issue.token} created.", self.request)
         
         # Process file attachments if any
         for file in self.request.FILES.getlist('attachments'):
             IssueAttachment.objects.create(issue=issue, file=file)
         
-        # Email notifications are now handled by the post_save signal
-        issue_status_changed(sender=Issue, instance=issue, created=True)
+        # Send notification with student as the sender
+        issue_notification_signal.send(
+            sender=user,  # Student as the sender
+            instance=issue,
+            created=True
+        )
         return issue
     
     def create(self, request, *args, **kwargs):
@@ -201,24 +209,27 @@ class IssueUpdateView(generics.UpdateAPIView):
         if user.role == 'registrar' and issue.assigned_to.email == user.email:
             action = request.data.get('action')
             if action == 'resolve':
-              
-
                 data = request.data.copy()
                 data['status'] = 'resolved'
 
+                # Update the database
                 serializer = self.get_serializer(issue, data=data, partial=True)
-                serializer.is_valid(raise_exception=True)
                 self.perform_update(serializer)
-                # Email will be sent via signal
-                issue_status_changed(sender=Issue, instance=issue, created=False)
+
+                # Send notification with registrar as the sender
+                issue_notification_signal.send(
+                    sender=user,  # Registrar as the sender
+                    instance=issue,
+                    created=False
+                )
 
                 # Log the action
-                log_audit(user, "Issue Resolved", f"Issue '{issue.title}' with token {issue.token} resolved by registrar.")
+                log_audit(user, "Issue Resolved", f"Issue '{issue.title}' with token {issue.token} resolved by registrar.", request)
 
-                ##response = super().patch(request, *args, **kwargs)
-                ##if response.status_code == 200:
+                # Reload the issue to ensure we have the updated data
+                issue.refresh_from_db()
+
                 return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
-                ##return response
                 
             elif action == 'forward':
                 # Registrar forwards the issue to a lecturer; expect 'forwarded_to' field in request data
@@ -232,32 +243,36 @@ class IssueUpdateView(generics.UpdateAPIView):
                 
                 request.data['status'] = 'forwarded'
 
-                # Email will be sent via signal
-                issue_status_changed(sender=Issue, instance=issue, created=False)
-
-
                 response = super().patch(request, *args, **kwargs)
                 if response.status_code == 200:
+                    # Send notification with registrar as the sender
+                    issue_notification_signal.send(
+                        sender=user,  # Registrar as the sender
+                        instance=issue,
+                        created=False
+                    )
+
                     # Audit log for forwarding
-                    log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.")
+                    log_audit(user, "Issue Forwarded", f"Issue '{issue.title}' with token {issue.token} forwarded to lecturer {lecturer.username}.", request)
                     return Response({"message": "Issue forwarded and notification sent."}, status=status.HTTP_200_OK)
                 return response
                 
             else:
                 return Response({"error": "Invalid action."}, status=status.HTTP_400_BAD_REQUEST)
             
-            #log_audit(user, "Issue Updated", f"Registrar {user.username} updated issue '{issue.title}' with action {action}.")
-            
         # Lecturer actions: if issue is forwarded to them, they can mark it resolved by adding resolution details.
         elif user.role == 'lecturer' and issue.forwarded_to == user:
             request.data['status'] = 'resolved'
-            log_audit(user, "Issue Resolved", f"Lecturer {user.username} resolved issue '{issue.title}'.")
+            log_audit(user, "Issue Resolved", f"Lecturer {user.username} resolved issue '{issue.title}'.", request)
             
-            # Email will be sent via signal
-            issue_status_changed(sender=Issue, instance=issue, created=False)
-
             response = super().patch(request, *args, **kwargs)
             if response.status_code == 200:
+                # Send notification with lecturer as the sender
+                issue_notification_signal.send(
+                    sender=user,  # Lecturer as the sender
+                    instance=issue,
+                    created=False
+                )
                 return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
             return response
             
