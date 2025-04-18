@@ -209,17 +209,26 @@ class IssueUpdateView(generics.UpdateAPIView):
         if user.role == 'registrar' and issue.assigned_to.email == user.email:
             action = request.data.get('action')
             if action == 'resolve':
+                # Check if resolution_details is provided
+                if 'resolution_details' not in request.data or not request.data.get('resolution_details'):
+                    return Response({"error": "Resolution details are required."}, status=status.HTTP_400_BAD_REQUEST)
+        
+                # Create a copy of the data to avoid modifying the original
                 data = request.data.copy()
                 data['status'] = 'resolved'
-
+    
                 # Store the old status before updating
                 old_status = issue.status
-
+    
                 # Update the database
                 serializer = self.get_serializer(issue, data=data, partial=True)
                 serializer.is_valid(raise_exception=True)
                 self.perform_update(serializer)
-
+    
+                # Set closed_by field when resolving
+                issue.closed_by = user
+                issue.save(update_fields=['closed_by'])
+    
                 # Send notification with registrar as the sender
                 issue_notification_signal.send(
                     sender=user,  # Registrar as the sender
@@ -256,10 +265,12 @@ class IssueUpdateView(generics.UpdateAPIView):
                 # Store the old status before updating
                 old_status = issue.status
                 
-                # Create a copy of the data to avoid modifying the original
-                data = request.data.copy()
-                data['status'] = 'forwarded'
-                data['forwarded_to'] = lecturer.id
+                # Update the issue directly instead of through serializer for specific fields
+                issue.status = 'forwarded'
+                issue.forwarded_to = lecturer
+                issue.modified_by = user  # Track who modified the issue
+                issue.save(update_fields=['status', 'forwarded_to', 'modified_by', 'updated_at'])
+    
 
                 # Update the database with complete data
                 serializer = self.get_serializer(issue, data=data, partial=True)
@@ -293,6 +304,11 @@ class IssueUpdateView(generics.UpdateAPIView):
             
         # Lecturer actions: if issue is forwarded to them, they can mark it resolved by adding resolution details.
         elif user.role == 'lecturer' and issue.forwarded_to == user:
+            # Check if resolution_details is provided
+            if 'resolution_details' not in request.data or not request.data.get('resolution_details'):
+                return Response({"error": "Resolution details are required."}, status=status.HTTP_400_BAD_REQUEST)
+    
+
             # Store the old status before updating
             old_status = issue.status
             
@@ -304,6 +320,10 @@ class IssueUpdateView(generics.UpdateAPIView):
             serializer = self.get_serializer(issue, data=data, partial=True)
             serializer.is_valid(raise_exception=True)
             self.perform_update(serializer)
+    
+            # Update the closed_by field
+            issue.closed_by = user
+            issue.save(update_fields=['closed_by'])
             
             # Reload the issue to ensure we have the updated data
             issue.refresh_from_db()
