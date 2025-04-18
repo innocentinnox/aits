@@ -110,7 +110,7 @@ def handle_issue_notification(sender, instance, created, **kwargs):
         created: Boolean indicating if this is a new issue
     """
     # Pass the notification to the main handler
-    issue_status_changed(sender=Issue, instance=instance, created=created)
+    issue_status_changed(sender=sender, instance=instance, created=created)
     
     # Add additional user-specific logic here if needed
     # For example, you could log which user triggered the notification
