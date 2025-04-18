@@ -215,10 +215,10 @@ class IssueUpdateView(generics.UpdateAPIView):
                 # Log the action
                 log_audit(user, "Issue Resolved", f"Issue '{issue.title}' with token {issue.token} resolved by registrar.")
 
-                ##response = super().patch(request, *args, **kwargs)
-                ##if response.status_code == 200:
+                # Reload the issue to ensure we have the updated data
+                issue.refresh_from_db()
+                
                 return Response({"message": "Issue resolved and notification sent."}, status=status.HTTP_200_OK)
-                ##return response
                 
             elif action == 'forward':
                 # Registrar forwards the issue to a lecturer; expect 'forwarded_to' field in request data
