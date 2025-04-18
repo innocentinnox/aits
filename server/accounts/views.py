@@ -116,14 +116,14 @@ class LoginView(generics.GenericAPIView):
             key="access_token",
             value=user_data["access"],
             httponly=True,
-            secure=False,  # Set to True in production (requires HTTPS)
+            secure=True,  # Set to True in production (requires HTTPS)
             samesite="Lax",
         )
         response.set_cookie(
             key="refresh_token",
             value=user_data["refresh"],
             httponly=True,
-            secure=False,
+            secure=True,
             samesite="Lax",
         )
         return response
@@ -180,7 +180,7 @@ class TokenRefreshCookieView(APIView):
             key="access_token",
             value=new_access_token,
             httponly=True,
-            secure=False,
+            secure=True,
             samesite="Lax"
         )
         return response
@@ -262,51 +262,34 @@ class SignupAPIView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = SignupSerializer(data=request.data)
         
-        if not serializer.is_valid():
+        if  serializer.is_valid():
+            user = serializer.save()
+
+            # Add audit log for user creation
+            log_audit(user, "User Registration", f"New user {user.email} registered", request)
+                
+            # Generate verification token
+            token_instance = UnifiedToken.objects.create(
+                code=generate_6_digit_code(),
+                email=user.email,
+                token_type="email_verification"
+            )
+                
+            # Send verification email
+            send_verification_email(user.email, token_instance)
+                
+            # Add audit log for verification email sent
+            log_audit(user, "Verification Email", f"Verification email sent to {user.email}", request)
+                
+            # Prepare response
+            token_data = UnifiedTokenSerializer(token_instance).data
+            response_data = serializer.data
+            response_data.update({"token_id": token_data["id"]})
+            
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        try:
-            # Wrap everything in a transaction
-            with transaction.atomic():
-                # Create user
-                user = serializer.save()
-                
-                # Add audit log for user creation
-                log_audit(user, "User Registration", f"New user {user.email} registered", request)
-                
-                # Generate verification token
-                token_instance = UnifiedToken.objects.create(
-                    code=generate_6_digit_code(),
-                    email=user.email,
-                    token_type="email_verification"
-                )
-                
-                # Send verification email
-                send_verification_email(user.email, token_instance)
-                
-                # Add audit log for verification email sent
-                log_audit(user, "Verification Email", f"Verification email sent to {user.email}", request)
-                
-                # Prepare response
-                token_data = UnifiedTokenSerializer(token_instance).data
-                response_data = serializer.data
-                response_data.update({"token_id": token_data["id"]})
-                
-                return Response(response_data, status=status.HTTP_201_CREATED)
-                
-        except Exception as e:
-            logger.error(f"Registration failed for {request.data.get('email', 'unknown email')}: {str(e)}")
-            # More specific error handling to help diagnose the issue
-            if 'duplicate key' in str(e).lower():
-                return Response(
-                    {"error": "A user with this email already exists."},
-                    status=status.HTTP_409_CONFLICT
-                )
-            return Response(
-                {"error": "Registration failed. Please try again later.", "detail": str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
 # This will be used for email verification and password reset
 class PasswordResetRequestAPIView(APIView):
     """

@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from .models import Issue
 from accounts.utils import mailer
 import logging
+from .views import issue_notification_signal  # Import the new custom signal
 
 logger = logging.getLogger(__name__)
 
@@ -94,3 +95,24 @@ def issue_status_changed(sender, instance, created, **kwargs):
             logger.info(f"Email sent to {instance.created_by.email} about issue {instance.token} resolved by lecturer")
         except Exception as e:
             logger.error(f"Failed to send email notification: {str(e)}")
+
+# Connect our custom signal to the issue_status_changed handler
+# This allows us to specify the sender as the user (student, registrar, lecturer)
+@receiver(issue_notification_signal)
+def handle_issue_notification(sender, instance, created, **kwargs):
+    """
+    Handler for the custom issue_notification_signal.
+    This allows sending notifications with the user as the sender.
+    
+    Args:
+        sender: The user who triggered the notification (student, registrar, or lecturer)
+        instance: The Issue instance being created/updated
+        created: Boolean indicating if this is a new issue
+    """
+    # Pass the notification to the main handler
+    issue_status_changed(sender=sender, instance=instance, created=created)
+    
+    # Add additional user-specific logic here if needed
+    # For example, you could log which user triggered the notification
+    user_role = sender.role if hasattr(sender, 'role') else 'unknown'
+    logger.info(f"Issue notification triggered by {user_role} user {sender.username if hasattr(sender, 'username') else 'unknown'}")
