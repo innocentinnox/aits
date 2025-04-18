@@ -213,8 +213,7 @@ class IssueUpdateView(generics.UpdateAPIView):
                 data['status'] = 'resolved'
 
                 # Update the database
-                serializer = self.get_serializer(issue, data=request.data, partial=True)
-                serializer.is_valid(raise_exception=True)
+                serializer = self.get_serializer(issue, data=data, partial=True)
                 self.perform_update(serializer)
 
                 # Send notification with registrar as the sender
