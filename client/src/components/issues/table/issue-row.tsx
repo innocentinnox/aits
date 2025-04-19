@@ -9,7 +9,9 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/auth";
 import Modal from "@/components/ui/Modal";
 import IssueDetailsForm from "../IssueDetailsForm";
+import IssueResolveForm from "../IssueResolveForm";
 import { useResolveForward } from "@/admin/hooks/useResolveForward";
+import { useState } from "react";
 
 interface User {
   id: number;
@@ -47,7 +49,13 @@ interface IssueRowProps {
 
 export default function IssueRow({ issue }: IssueRowProps) {
   const { user } = useAuth();
-  const { onResolve, isSubmittingIssue } = useResolveForward();
+  const { isSubmittingIssue } = useResolveForward();
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <TableRow>
       <TableCell>
@@ -94,13 +102,19 @@ export default function IssueRow({ issue }: IssueRowProps) {
         <TableCell className="text-right">
           <div className="flex items-center justify-end"></div>
           <div className="flex gap-2 cursor-pointer">
-            <Button
-              size="sm"
-              disabled={isSubmittingIssue}
-              onClick={() => onResolve(issue.token)}
-            >
-              Resolve
-            </Button>
+            <Modal>
+              <Modal.Open opens="resolve-issue">
+                <Button
+                  size="sm"
+                  disabled={isSubmittingIssue}
+                >
+                  Resolve
+                </Button>
+              </Modal.Open>
+              <Modal.Window name="resolve-issue">
+                <IssueResolveForm issue={issue} onCloseModal={handleCloseModal} />
+              </Modal.Window>
+            </Modal>
           </div>
         </TableCell>
       )}
