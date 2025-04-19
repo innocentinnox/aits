@@ -57,7 +57,7 @@ export default function AreaChartComp() {
   return (
     <div>
       <div className="text-center">Issuses</div>
-      <ResponsiveContainer width={"100%"} height={300}>
+      <ResponsiveContainer width={"100%"} height={200}>
         <AreaChart
           data={data}
           margin={{
