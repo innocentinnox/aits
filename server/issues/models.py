@@ -93,6 +93,10 @@ class Issue(models.Model):
         pass
 
     def save(self, *args, **kwargs):
+        # Flag to track if we need to update the resolved_at field
+        update_resolved_at = False
+        
+        # Handle first-time token generation
         if not self.token:
             # Ensure that category and created_by are set.
             if self.category_id and self.created_by_id:
@@ -100,12 +104,14 @@ class Issue(models.Model):
             else:
                 # Fallback if for some reason they aren't set.
                 self.token = generate_issue_token(0, 0)
-            super().save(*args, **kwargs)
-
+        
         # Set resolved_at when status changes to resolved (and it's not already set).
         if self.status == 'resolved' and not self.resolved_at:
             self.resolved_at = timezone.now()
-            super().save(update_fields=['resolved_at'])
+            update_resolved_at = True
+            
+        # Always call the parent save method with all fields
+        super().save(*args, **kwargs)
 
     def attachment_list(self):
             return self.attachments.all()
