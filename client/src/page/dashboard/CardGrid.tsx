@@ -13,9 +13,7 @@ export default function CardGrid({
   isLoadingIssues?: boolean;
 }) {
   const { user } = useAuth();
-  const RESOLVED = issuesValues?.filter(
-    (iss: any) => iss.status === "resolved"
-  ).length;
+  const RESOLVED = issuesValues?.filter((iss: any) => iss.resolved_at).length;
 
   // Student
   if (user?.role == "student") {

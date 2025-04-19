@@ -31,6 +31,7 @@ import SearchBar from "./search-bar";
 import StatusTabs from "./status-tabs";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@/lib/axios-instance";
+import { useAuth } from "@/auth";
 
 export default function IssueTable() {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ export default function IssueTable() {
     assigned_to: "",
     ordering: "",
   });
-
+  const { user } = useAuth();
   // Get current params from URL
   useEffect(() => {
     const currentParams: IssueParams = {
@@ -247,15 +248,17 @@ export default function IssueTable() {
               <TableHead className="w-[50px]"></TableHead>
               <TableHead>Issue</TableHead>
               <TableHead className="w-[100px]">Status</TableHead>
-              <TableHead className="w-[150px]">Assignee</TableHead>
-              <TableHead className="w-[100px] text-right">Comments</TableHead>
+              <TableHead className="w-[150px]"></TableHead>
+              {!(user?.role === "student") && (
+                <TableHead className="w-[100px] text-right">Comments</TableHead>
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoadingIssues ? (
               <TableSkeleton rowCount={params.take} />
             ) : TEMP_ISSUES.length > 0 ? (
-              TEMP_ISSUES.map((issue, index) => (
+              TEMP_ISSUES.map((issue: any, index: any) => (
                 <IssueRow key={index} issue={issue} />
               ))
             ) : (

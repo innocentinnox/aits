@@ -6,10 +6,12 @@ const rotate = keyframes`
     transform: rotate(1turn)
   }
 `;
-const LoaderMini = styled(LoaderCircle)`
-  width: 2rem;
-  height: 2rem;
+const Loader = styled(LoaderCircle)`
+  width: 1.5rem;
+  height: 1.5rem;
   animation: ${rotate} 1.5s infinite linear;
 `;
 
-export default LoaderMini;
+export default function LoaderMini({ color }: { color: string }) {
+  return <Loader color={color} />;
+}

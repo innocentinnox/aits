@@ -164,6 +164,7 @@ export const CreateIssueForm = ({
                   className="placeholder:text-sm"
                   placeholder="Please provide more information about the issue."
                   {...field}
+                  disabled={submittingIssue}
                 />
               </FormControl>
               <FormMessage />

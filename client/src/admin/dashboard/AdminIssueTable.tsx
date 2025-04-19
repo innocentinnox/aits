@@ -241,15 +241,15 @@ export default function AdminIssueTable() {
               <TableHead className="w-[50px]"></TableHead>
               <TableHead>Issue</TableHead>
               <TableHead className="w-[100px]">Status</TableHead>
-              <TableHead className="w-[150px]">Assignee</TableHead>
-              <TableHead className="w-[100px] text-right">Comments</TableHead>
+              <TableHead className="w-[150px]"></TableHead>
+              <TableHead className="w-[100px] text-right"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoadingIssues ? (
               <TableSkeleton rowCount={params.take} />
             ) : TEMP_ISSUES.length > 0 ? (
-              TEMP_ISSUES.map((issue, index) => (
+              TEMP_ISSUES.map((issue: any, index: any) => (
                 <IssueRow key={index} issue={issue} />
               ))
             ) : (
