@@ -49,6 +49,7 @@ class IssueService {
       );
     }
   }
+
   async resolve(token: string) {
     try {
       const res = await axiosInstance.patch(`/issues/update/${token}/`, {
@@ -58,6 +59,21 @@ class IssueService {
       return res.data as { id: number; name: string; description: string }[];
     } catch (error: any) {
       console.error(error);
+      throw new Error(error?.response?.data?.message || "Failed to resolve issue");
+    }
+  }
+
+  async resolveWithDetails(token: string, resolution_details: string) {
+    try {
+      const res = await axiosInstance.patch(`/issues/update/${token}/`, {
+        action: "resolve",
+        resolution_details
+      });
+
+      return res.data;
+    } catch (error: any) {
+      console.error("Error resolving issue:", error);
+      throw new Error(error?.response?.data?.message || "Failed to resolve issue");
     }
   }
 }

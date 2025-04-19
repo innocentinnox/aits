@@ -5,7 +5,10 @@ from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
 from django.dispatch import Signal
 
-from .signals import issue_status_changed  # Updated import from local signals
+#from .signals import issue_status_changed  # Updated import from local signals
+
+# Change this line in views.py
+from .signal_definitions import issue_notification_signal, issue_status_changed
 from .models import Issue, IssueCategory, IssueAttachment
 from .serializers import IssueSerializer, IssueCategorySerializer
 from accounts.utils import send_notification, log_audit
