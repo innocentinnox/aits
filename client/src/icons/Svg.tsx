@@ -36,6 +36,6 @@ export function rolenavigator(role: string | undefined) {
     case "lecturer":
       return "lecturer";
     case "registrar":
-      return "registrar";
+      return "admin";
   }
 }

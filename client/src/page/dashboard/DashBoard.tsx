@@ -9,13 +9,19 @@ import AreaChartComp from "../../admin/stat/AreaChartComp";
 import StatGrid from "../../admin/stat/StatGrid";
 import Heading from "@/components/ui/Heading";
 import { useAuth } from "@/auth";
+import { useIssues } from "@/hooks/useIssues";
 
 export default function DashBoard() {
   const [showIssueDialog, setShowIssueDialog] = useState(false);
-  const { user } = useAuth();
+  const { issuesData, isLoadingIssues } = useIssues();
+  console.log(issuesData, "dash");
+
+  function handleSuccess() {
+    setShowIssueDialog(false);
+  }
   return (
     <>
-      {user?.role === "student" && <CardGrid />}
+      <CardGrid issuesValues={issuesData} isLoadingIssues={isLoadingIssues} />
 
       <div className=" py-10 w-[100%] px-4">
         <div className="flex justify-between items-center mb-8">
@@ -26,6 +32,7 @@ export default function DashBoard() {
               open={showIssueDialog}
               onOpenChange={setShowIssueDialog}
               showTrigger={false}
+              onSuccess={handleSuccess}
             />
             <Button
               onClick={() => setShowIssueDialog(true)}

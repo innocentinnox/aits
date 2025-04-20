@@ -1,12 +1,12 @@
 from rest_framework import serializers
 from .models import Issue, IssueCategory, IssueAttachment
 from accounts.serializers import UserSerializer
-
+# from courses.serializers import CourseSerializer
 class IssueCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = IssueCategory
         fields = '__all__'
-
+#        read_only_fields = ('id', 'created_at', 'updated_at')
 class IssueAttachmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = IssueAttachment
@@ -17,12 +17,16 @@ class IssueSerializer(serializers.ModelSerializer):
     assigned_to = UserSerializer(read_only=True)
     # Include attachments as a nested read-only list.
     attachments = IssueAttachmentSerializer(many=True, read_only=True)
+
+    # Include category as a nested serializer.
+
+
     
     class Meta:
         model = Issue
         fields = '__all__'
         read_only_fields = (
-            'id', 'token', 'created_by', 'assigned_to', 'status', 
+            'id', 'token', 'created_by', 'assigned_to', 'statuses', 
             'created_at', 'updated_at', 'resolved_at'
         )
     

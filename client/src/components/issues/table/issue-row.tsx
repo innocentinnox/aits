@@ -1,22 +1,61 @@
-import { Check, MessageSquare } from "lucide-react"
-import { TableCell, TableRow } from "@/components/ui/table"
-import { formatDate } from "@/lib/utils" // Move the formatDate function to utils
-import PriorityBadge from "./priority-badge"
+import { Check, ClipboardCheck, Forward, MessageSquare } from "lucide-react";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { formatDate } from "@/lib/utils"; // Move the formatDate function to utils
+import PriorityBadge from "./priority-badge";
+import { useMutation } from "@tanstack/react-query";
+import { issueService } from "@/services";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/auth";
+import Modal from "@/components/ui/Modal";
+import IssueDetailsForm from "../IssueDetailsForm";
+import IssueResolveForm from "../IssueResolveForm";
+import { useResolveForward } from "@/admin/hooks/useResolveForward";
+import { useState } from "react";
 
+interface User {
+  id: number;
+  username: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+}
 interface IssueRowProps {
   issue: {
-    id: string | number
-    title: string
-    priority: number
-    status: string
-    created_at: string
-    created_by: string
-    assigned_to: string | null
-    comments_count: number
-  }
+    id: number;
+    token: string;
+    title: string;
+    description: string;
+    status: string;
+    priority: number;
+    category: number;
+    college: number;
+    course: number;
+    course_unit: number;
+    semester: number;
+    year_of_study: number;
+    created_at: string;
+    updated_at: string;
+    resolved_at: string | null;
+    resolution_details: string | null;
+    created_by: User;
+    assigned_to: User;
+    modified_by: User | null;
+    closed_by: User | null;
+    forwarded_to: User | null;
+    attachments: any[];
+  };
 }
 
 export default function IssueRow({ issue }: IssueRowProps) {
+  const { user } = useAuth();
+  const { isSubmittingIssue } = useResolveForward();
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <TableRow>
       <TableCell>
@@ -27,29 +66,58 @@ export default function IssueRow({ issue }: IssueRowProps) {
       <TableCell>
         <div className="font-medium">{issue.title}</div>
         <div className="text-sm text-muted-foreground">
-          #{issue.id} • {issue.status === "closed" ? "closed" : "opened"} {formatDate(issue.created_at)} by{" "}
-          {issue.created_by}
+          {"Issued"} {formatDate(issue.created_at)}
+          {""}
+          {issue?.resolved_at
+            ? ` | Resolved ${formatDate(issue.created_at)}`
+            : null}
+          {/* {formatDate(issue.created_at)} by {issue.created_by} */}
         </div>
       </TableCell>
       <TableCell>
-        <PriorityBadge priority={issue.priority} />
+        <PriorityBadge status={issue.status} />
       </TableCell>
       <TableCell>
-        {issue.assigned_to ? (
+        {/* {issue.assigned_to ? (
           <div className="flex items-center gap-2">
-            <div className="h-6 w-6 rounded-full bg-primary/10" />
-            <span className="text-sm">{issue.assigned_to.split("@")[0]}</span>
+            <div className="h-6w-6rounded-full bg-primary/10" />
+            <span className="text-sm capitalize">{issue.assigned_to.role}</span>
           </div>
         ) : (
           <span className="text-sm text-muted-foreground">Unassigned</span>
-        )}
+        )} */}
+        <Modal>
+          <Modal.Open opens="issue-details">
+            <Button variant="outline" size="sm">
+              View
+            </Button>
+          </Modal.Open>
+          <Modal.Window name="issue-details">
+            <IssueDetailsForm issue={issue} />
+          </Modal.Window>
+        </Modal>
       </TableCell>
-      <TableCell className="text-right">
-        <div className="flex items-center justify-end">
-          <MessageSquare className="mr-1 h-3.5 w-3.5 text-muted-foreground" />
-          <span>{issue.comments_count}</span>
-        </div>
-      </TableCell>
+      {/* For Admin */}
+      {!(user?.role === "student") && !issue.resolved_at && (
+        <TableCell className="text-right">
+          <div className="flex items-center justify-end"></div>
+          <div className="flex gap-2 cursor-pointer">
+            <Modal>
+              <Modal.Open opens="resolve-issue">
+                <Button
+                  size="sm"
+                  disabled={isSubmittingIssue}
+                >
+                  Resolve
+                </Button>
+              </Modal.Open>
+              <Modal.Window name="resolve-issue">
+                <IssueResolveForm issue={issue} onCloseModal={handleCloseModal} />
+              </Modal.Window>
+            </Modal>
+          </div>
+        </TableCell>
+      )}
     </TableRow>
-  )
+  );
 }

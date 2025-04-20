@@ -150,7 +150,7 @@ class AuthService {
         message: response?.data?.message || "Logged in successfully",
         access_tokens,
         refresh_token,
-        token_id: String(response?.data?.token_id) || null, 
+        token_id: String(response?.data?.token_id) || null,
       };
     } catch (error: any) {
       console.log(error.response.data);
