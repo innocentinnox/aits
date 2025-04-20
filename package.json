@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/innocentinnox/aits#readme",
   "dependencies": {
-    "jsonfile": "^6.1.0"
+    "jsonfile": "^6.1.0",
+    "moment": "^2.30.1",
+    "simple-git": "^3.27.0"
   }
 }
