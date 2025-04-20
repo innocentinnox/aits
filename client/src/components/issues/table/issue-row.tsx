@@ -1,4 +1,4 @@
-import { Check, ClipboardCheck, Forward, MessageSquare } from "lucide-react";
+import { Check, ClipboardCheck, Forward, MessageSquare, Printer } from "lucide-react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { formatDate } from "@/lib/utils"; // Move the formatDate function to utils
 import PriorityBadge from "./priority-badge";
@@ -78,24 +78,18 @@ export default function IssueRow({ issue }: IssueRowProps) {
         <PriorityBadge status={issue.status} />
       </TableCell>
       <TableCell>
-        {/* {issue.assigned_to ? (
-          <div className="flex items-center gap-2">
-            <div className="h-6w-6rounded-full bg-primary/10" />
-            <span className="text-sm capitalize">{issue.assigned_to.role}</span>
-          </div>
-        ) : (
-          <span className="text-sm text-muted-foreground">Unassigned</span>
-        )} */}
-        <Modal>
-          <Modal.Open opens="issue-details">
-            <Button variant="outline" size="sm">
-              View
-            </Button>
-          </Modal.Open>
-          <Modal.Window name="issue-details">
-            <IssueDetailsForm issue={issue} />
-          </Modal.Window>
-        </Modal>
+        <div className="flex gap-2">
+          <Modal>
+            <Modal.Open opens="issue-details">
+              <Button variant="outline" size="sm">
+                View
+              </Button>
+            </Modal.Open>
+            <Modal.Window name="issue-details">
+              <IssueDetailsForm issue={issue} />
+            </Modal.Window>
+          </Modal>
+        </div>
       </TableCell>
       {/* For Admin */}
       {!(user?.role === "student") && !issue.resolved_at && (
