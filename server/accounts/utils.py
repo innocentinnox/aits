@@ -28,7 +28,6 @@ class Mail:
 
     def send(self, to, subject, html):
         try:
-            # Create the email message
             msg = MIMEMultipart()
             app_name = getattr(settings, 'APP_NAME', '')
             msg['From'] = f"{app_name} <{self.user}>"
@@ -67,8 +66,14 @@ def send_notification(recipient, subject, message):
     Notification.objects.create(recipient=recipient, subject=subject, message=message)
 
 
-def log_audit(user, action, description=""):
-    AuditLog.objects.create(user=user, action=action, description=description)
+def log_audit(user, action, description="", request=None):
+    # Use the class method that properly handles IP address extraction
+    return AuditLog.log_action(
+        user=user,
+        action=action,
+        description=description,
+        request=request
+    )
 
 def send_sms_notification(user, message):
     Client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)

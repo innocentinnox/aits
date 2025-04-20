@@ -1,18 +1,22 @@
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 
-interface PriorityBadgeProps {
-  priority: number
+interface StatusBadgeProps {
+  status: string;
 }
 
-export default function PriorityBadge({ priority }: PriorityBadgeProps) {
-  switch (priority) {
-    case 1:
-      return <Badge className="bg-destructive">High</Badge>
-    case 2:
-      return <Badge className="bg-warning text-warning-foreground">Medium</Badge>
-    case 3:
-      return <Badge className="bg-green-500">Low</Badge>
+export default function StatusBadge({ status }: StatusBadgeProps) {
+  switch (status) {
+    case "":
+      return <Badge className="bg-destructive">High</Badge>;
+    case "pending":
+      return (
+        <Badge className="bg-warning text-warning-foreground uppercase">
+          pending
+        </Badge>
+      );
+    case "resolved":
+      return <Badge className="bg-green-500 uppercase">resolved</Badge>;
     default:
-      return null
+      return null;
   }
 }

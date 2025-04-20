@@ -1,7 +1,7 @@
-import IssueTable from "@/components/issues/table/issue-table";
+import AdminIssueTable from "./AdminIssueTable";
 
 function DashboardAdmin() {
-  return <IssueTable />;
+  return <AdminIssueTable />;
 }
 
 export default DashboardAdmin;

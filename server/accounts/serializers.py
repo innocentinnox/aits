@@ -188,8 +188,6 @@ class VerifyTokenSerializer(serializers.Serializer):
         if token_obj.expires_at < timezone.now():
             raise serializers.ValidationError("Token has expired.")
 
-        if token_obj.is_used:
-            raise serializers.ValidationError("Token has already been used.")
 
         if token_obj.code != data['code']:
             raise serializers.ValidationError("Invalid code.")

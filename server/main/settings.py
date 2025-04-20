@@ -31,9 +31,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # Read the secret key from the environment
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-default-key-for-dev")
 DEBUG = int(os.environ.get("DEBUG", default=1))     # SECURITY WARNING: don't run with debug turned on in production!
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost 127.0.0.1").split(" ") # The hosts that are allowed to access the site
 
 
 # Application definition
