@@ -1,0 +1,26 @@
+{
+  "name": "githot",
+  "version": "1.0.0",
+  "description": "walkover",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/innocentinnox/aits.git"
+  },
+  "keywords": [
+    "ian",
+    "matsiko"
+  ],
+  "author": "Matsiko Ian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/innocentinnox/aits/issues"
+  },
+  "homepage": "https://github.com/innocentinnox/aits#readme",
+  "dependencies": {
+    "jsonfile": "^6.1.0"
+  }
+}
