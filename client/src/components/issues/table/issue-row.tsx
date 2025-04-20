@@ -12,6 +12,7 @@ import IssueDetailsForm from "../IssueDetailsForm";
 import IssueResolveForm from "../IssueResolveForm";
 import { useResolveForward } from "@/admin/hooks/useResolveForward";
 import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
 
 interface User {
   id: number;
@@ -65,7 +66,7 @@ export default function IssueRow({ issue }: IssueRowProps) {
       </TableCell>
       <TableCell>
         <div className="font-medium">{issue.title}</div>
-        <div className="text-sm text-muted-foreground">
+        <div className="text-[12px] text-muted-foreground">
           {"Issued"} {formatDate(issue.created_at)}
           {""}
           {issue?.resolved_at
@@ -75,7 +76,12 @@ export default function IssueRow({ issue }: IssueRowProps) {
         </div>
       </TableCell>
       <TableCell>
-        <PriorityBadge status={issue.status} />
+        <Badge
+          variant={issue.status === "pending" ? "outline" : `default`}
+          className="uppercase"
+        >
+          {issue.status}
+        </Badge>
       </TableCell>
       <TableCell>
         <div className="flex gap-2">
@@ -92,21 +98,21 @@ export default function IssueRow({ issue }: IssueRowProps) {
         </div>
       </TableCell>
       {/* For Admin */}
-      {!(user?.role === "student") && !issue.resolved_at && (
+      {!(user?.role === "student") && !(issue.status === "resolved") && (
         <TableCell className="text-right">
           <div className="flex items-center justify-end"></div>
           <div className="flex gap-2 cursor-pointer">
             <Modal>
               <Modal.Open opens="resolve-issue">
-                <Button
-                  size="sm"
-                  disabled={isSubmittingIssue}
-                >
+                <Button size="sm" disabled={isSubmittingIssue}>
                   Resolve
                 </Button>
               </Modal.Open>
               <Modal.Window name="resolve-issue">
-                <IssueResolveForm issue={issue} onCloseModal={handleCloseModal} />
+                <IssueResolveForm
+                  issue={issue}
+                  onCloseModal={handleCloseModal}
+                />
               </Modal.Window>
             </Modal>
           </div>
