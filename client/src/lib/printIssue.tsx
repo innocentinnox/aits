@@ -531,6 +531,6 @@ export const printIssue = async (issue: IssueDetails) => {
 
   // Write the HTML to the new window and print it
   printWindow.document.open();
+  printWindow.document.close();
   printWindow.document.body.innerHTML = html;
-  // printWindow.document.close();
 };
