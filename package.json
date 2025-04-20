@@ -1,0 +1,26 @@
+{
+  "name": "aits",
+  "version": "1.0.0",
+  "description": "- Python=>3.10",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/innocentinnox/aits.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/innocentinnox/aits/issues"
+  },
+  "homepage": "https://github.com/innocentinnox/aits#readme",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "jsonfile": "^6.1.0",
+    "moment": "^2.30.1",
+    "simple-git": "^3.27.0"
+  }
+}
