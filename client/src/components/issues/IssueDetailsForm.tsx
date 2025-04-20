@@ -92,6 +92,7 @@ const IssueDetailsForm: React.FC<{ issue: IssueDetails }> = ({ issue }) => {
                 {/* Show Print button for all users */}
                 <Button
                   size="sm"
+                  variant="outline"
                   onClick={handlePrint}
                   disabled={isPrinting}
                   className="flex items-center gap-1"
@@ -101,9 +102,7 @@ const IssueDetailsForm: React.FC<{ issue: IssueDetails }> = ({ issue }) => {
                 </Button>
 
                 {/* Show Forward button only for registrars */}
-                {user?.role !== "student" && (
-                  <Button size="sm">Forward</Button>
-                )}
+                {user?.role !== "student" && <Button size="sm">Forward</Button>}
               </div>
             </div>
           </div>
