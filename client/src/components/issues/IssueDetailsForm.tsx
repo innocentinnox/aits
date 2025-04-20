@@ -2,6 +2,11 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "../ui/button";
+import { useAuth } from "@/auth";
+import { useState } from "react";
+import { Printer } from "lucide-react";
+import { toast } from "sonner";
+import { printIssue } from "@/lib/printIssue";
 
 interface User {
   id: number;
@@ -53,6 +58,22 @@ const formatDate = (dateString: string) => {
 };
 
 const IssueDetailsForm: React.FC<{ issue: IssueDetails }> = ({ issue }) => {
+  const { user } = useAuth();
+  const [isPrinting, setIsPrinting] = useState(false);
+
+  // Handle print action
+  const handlePrint = async () => {
+    try {
+      setIsPrinting(true);
+      await printIssue(issue);
+    } catch (error) {
+      console.error("Error printing issue:", error);
+      toast.error("Failed to print the issue details. Please try again.");
+    } finally {
+      setIsPrinting(false);
+    }
+  };
+
   return (
     <ScrollArea className="h-[calc(100vh-2rem)] w-full">
       <Card className="max-w-4xl mx-auto p-6 my-4">
@@ -67,7 +88,23 @@ const IssueDetailsForm: React.FC<{ issue: IssueDetails }> = ({ issue }) => {
               <div className="mt-4 flex flex-wrap gap-3">
                 <Badge variant="secondary">{issue.status.toUpperCase()}</Badge>
               </div>
-              <Button size="sm">Forward</Button>
+              <div className="flex gap-2">
+                {/* Show Print button for all users */}
+                <Button
+                  size="sm"
+                  onClick={handlePrint}
+                  disabled={isPrinting}
+                  className="flex items-center gap-1"
+                >
+                  <Printer className="h-3.5 w-3.5" />
+                  <span>{isPrinting ? "Printing..." : "Print"}</span>
+                </Button>
+
+                {/* Show Forward button only for registrars */}
+                {user?.role !== "student" && (
+                  <Button size="sm">Forward</Button>
+                )}
+              </div>
             </div>
           </div>
 

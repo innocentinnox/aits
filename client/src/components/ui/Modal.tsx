@@ -6,11 +6,13 @@ import {
   ReactNode,
   ReactElement,
   MouseEventHandler,
+  CSSProperties,
 } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { X } from "lucide-react";
+import { useAuth } from "@/auth";
 
 // Styled components
 const StyledModal = styled.div`
@@ -21,20 +23,23 @@ const StyledModal = styled.div`
   background-color: var(--color-grey-0);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-lg);
-
   transition: all 0.5s;
+  z-index: 1001;
 `;
 
-const Overlay = styled.div`
+const Overlay = styled.div<{ $customStyles?: CSSProperties }>`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--backdrop-color);
+  background-color: var(--backdrop-color, rgba(0, 0, 0, 0.3));
   backdrop-filter: blur(4px);
   z-index: 1000;
   transition: all 0.5s;
+  
+  /* Apply custom styles if provided */
+  ${(props) => props.$customStyles && { ...props.$customStyles }}
 `;
 
 const Button = styled.button`
@@ -103,19 +108,33 @@ function Open({
 function Window({
   children,
   name,
+  overlayStyles,
 }: {
   children: ReactElement<{ onCloseModal: () => void }>;
   name: string;
+  overlayStyles?: CSSProperties;
 }) {
   const context = useContext(ModalContext);
   if (!context) throw new Error("Window must be used within a Modal");
   const { openName, close } = context;
   const ref = useOutsideClick(close);
+  const { user } = useAuth();
+
+  // Apply stronger blur for student dashboard
+  const studentBlurStyles: CSSProperties =
+    user?.role === "student"
+      ? { backdropFilter: "blur(8px)", backgroundColor: "rgba(0, 0, 0, 0.5)" }
+      : {};
+
+  // Combine custom styles with student-specific styles
+  const finalOverlayStyles = user?.role === "student"
+    ? { ...studentBlurStyles, ...overlayStyles }
+    : overlayStyles;
 
   if (name !== openName) return null;
 
   return createPortal(
-    <Overlay>
+    <Overlay $customStyles={finalOverlayStyles}>
       <StyledModal ref={ref}>
         {/* <Button onClick={close}>
           <X />
