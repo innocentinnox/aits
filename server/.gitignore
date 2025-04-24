@@ -1,6 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 # Byte-compiled / optimized / DLL files
 .idea
+.vscode/
 
 __pycache__/
 *.py[cod]
