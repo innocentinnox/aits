@@ -262,7 +262,7 @@ class SignupAPIView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = SignupSerializer(data=request.data)
         
-        if  serializer.is_valid():
+        if serializer.is_valid():
             user = serializer.save()
 
             # Add audit log for user creation
@@ -286,7 +286,7 @@ class SignupAPIView(APIView):
             response_data = serializer.data
             response_data.update({"token_id": token_data["id"]})
             
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(response_data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
