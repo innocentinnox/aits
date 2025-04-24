@@ -2,22 +2,26 @@ from rest_framework import serializers
 from .models import Issue, IssueCategory, IssueAttachment
 from accounts.serializers import UserSerializer
 
+# This serializer is used for creating and updating issues.
 class IssueCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = IssueCategory
         fields = '__all__'
 
+#     read_only_fields = ('id',)
 class IssueAttachmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = IssueAttachment
         fields = ['id', 'file', 'uploaded_at']
 
+
+# This serializer is used for creating and updating issues
 class IssueSerializer(serializers.ModelSerializer):
     created_by = UserSerializer(read_only=True)
     assigned_to = UserSerializer(read_only=True)
     # Include attachments as a nested read-only list.
     attachments = IssueAttachmentSerializer(many=True, read_only=True)
-    
+    # Include category details in the serializer.
     class Meta:
         model = Issue
         fields = '__all__'
@@ -25,7 +29,7 @@ class IssueSerializer(serializers.ModelSerializer):
             'id', 'token', 'created_by', 'assigned_to', 'status', 
             'created_at', 'updated_at', 'resolved_at'
         )
-    
+    #     def validate(self, attrs):
     def create(self, validated_data):
         # Additional custom logic can be added here if needed.
         return super().create(validated_data)
