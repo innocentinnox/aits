@@ -6,15 +6,15 @@ from datetime import timedelta
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
-# Generate a 5-character token (using 8 characters for uniqueness).
+# Generate a 5-character token (using 8 characters for uniqueness)
 def generate_issue_token(category_id, user_id):
-    # Generate a random number with 3 digits.
+    # Generate a random number with 3 digits
     random_part = random.randint(100, 999)
-    # Get the last 4 digits of the current epoch time.
+    # Get the last 4 digits of the current epoch time
     time_factor = int(time.time()) % 10000  
     return f"ISS-{category_id}-{user_id}-{random_part}-{time_factor}"
 
-# Priority choices for categories and issues
+# Priority choices for categories and issues, with default values.
 PRIORITY_CHOICES = [
     (1, "Low"),
     (2, "Medium"),
@@ -33,6 +33,7 @@ STATUS_CHOICES = [
 YEAR_CHOICES = [(1, "Year 1"), (2, "Year 2"), (3, "Year 3"), (4, "Year 4"), (5, "Year 5")]
 SEMESTER_CHOICES = [(1, "Semester 1"), (2, "Semester 2")]
 
+# issue categories for the system.
 class IssueCategory(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True, null=True)
@@ -40,7 +41,7 @@ class IssueCategory(models.Model):
     priority = models.PositiveSmallIntegerField(choices=PRIORITY_CHOICES, default=2)
     # Automatically assign issues of this category to a lecturer.
     auto_assign_to_lecturer = models.BooleanField(default=False)
-
+    # Automatically assign issues of this category to a department head.
     def __str__(self):
         desc = (self.description.strip()[:60] + '...') if self.description and len(self.description) > 60 else (self.description or '')
         return f"{self.name} - {desc}"
@@ -53,7 +54,7 @@ class Issue(models.Model):
 
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='issues')
     
-    # Student-specific details
+    # Student-specific details, if applicable. 
     course = models.ForeignKey('accounts.Course', on_delete=models.CASCADE)
     course_unit = models.ForeignKey('accounts.CourseUnit', on_delete=models.SET_NULL, null=True, blank=True)
     college = models.ForeignKey('accounts.College', on_delete=models.CASCADE) 
@@ -70,7 +71,7 @@ class Issue(models.Model):
 
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
 
-    # Additional fields
+    # Additional fields.
     resolution_details = models.TextField(blank=True, null=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
@@ -79,8 +80,10 @@ class Issue(models.Model):
     # Track who last modified the issue.
     modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_issues')
 
+
     class Meta:
         ordering = ['-created_at']
+
 
     def clean(self):
         # Example placeholder for status transition validations.
@@ -118,10 +121,11 @@ class Issue(models.Model):
     def __str__(self):
         return f"{self.title} - {self.token}"
 
+# This model represents an attachment to an issue.
 class IssueAttachment(models.Model):
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name='attachments')
     file = models.FileField(upload_to='attachments/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
-
+    
     def __str__(self):
         return f"Attachment for {self.issue.token} uploaded at {self.uploaded_at}"

@@ -7,24 +7,36 @@ from django.utils import timezone
 import random
 
 User = get_user_model()
+
+
+# serializer for the College model.
 # The User model is the custom user model defined in the accounts app
 # The College model represents a college in the system
+
 class CollegeSerializer(serializers.ModelSerializer):
     class Meta:
         model = College
         fields = ['id', 'name']
+
+
+# serializer for the School model.
 # The CollegeSerializer class is a serializer for the College model
 # It defines how the College model should be serialized and deserialized
 class SchoolSerializer(serializers.ModelSerializer):
     class Meta:
         model = School
         fields = ['id', 'name']
+
+# serializer for the Department model.
 # The SchoolSerializer class is a serializer for the School model
 # It defines how the School model should be serialized and deserialized
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
         fields = ['id', 'name']
+
+
+# serializer for the Course model.
 # The DepartmentSerializer class is a serializer for the Department model
 # It defines how the Department model should be serialized and deserialized
 class CourseSerializer(serializers.ModelSerializer):
