@@ -20,9 +20,18 @@ export default function DashBoard() {
   function handleSuccess() {
     setShowIssueDialog(false);
   }
-  // if (issuesData?.length == 0 && !isLoadingIssues)
-  //   return <NoIssues handler={() => setShowIssueDialog(true)} />;
-  return (
+
+  return issuesData?.length == 0 ? (
+    <>
+      <NewIssueDialog
+        open={showIssueDialog}
+        onOpenChange={setShowIssueDialog}
+        showTrigger={false}
+        onSuccess={handleSuccess}
+      />
+      <NoIssues handler={() => setShowIssueDialog(true)} />
+    </>
+  ) : (
     <>
       <CardGrid issuesValues={issuesData} isLoadingIssues={isLoadingIssues} />
 
