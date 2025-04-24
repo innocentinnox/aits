@@ -70,7 +70,7 @@ class Issue(models.Model):
 
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
 
-    # Additional fields
+    # Additional fields.
     resolution_details = models.TextField(blank=True, null=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
@@ -78,6 +78,7 @@ class Issue(models.Model):
     resolved_at = models.DateTimeField(null=True, blank=True)
     # Track who last modified the issue.
     modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='modified_issues')
+
 
     class Meta:
         ordering = ['-created_at']

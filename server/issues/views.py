@@ -14,12 +14,13 @@ from accounts.utils import mailer
 
 User = get_user_model()
 
-# Categories of issues
+# Categories of issues. This is used for creating and listing issue categories.
 class IssueCategoryView(generics.ListCreateAPIView):
     queryset = IssueCategory.objects.all()
     serializer_class = IssueCategorySerializer
     permission_classes = [AllowAny]
 
+# This view is used for creating issues. It handles file uploads and sends email notifications.
 class IssueCreateView(generics.CreateAPIView):
     serializer_class = IssueSerializer
     permission_classes = [IsAuthenticated]
@@ -122,7 +123,7 @@ class IssueUpdateView(generics.UpdateAPIView):
         else:
             return Response({"error": "Not authorized to update this issue."}, status=status.HTTP_403_FORBIDDEN)
 
-
+# This view is used for listing issues. 
 class IssueListView(generics.ListAPIView):
     """
     Returns a paginated list of issues for the current student.
@@ -211,7 +212,7 @@ class IssueListView(generics.ListAPIView):
         except ValueError:
             skip = 0
 
-        # Apply pagination manually.
+        # adding pagination
         qs_paginated = qs[skip:skip + take]
         serializer = self.get_serializer(qs_paginated, many=True)
         return Response({
