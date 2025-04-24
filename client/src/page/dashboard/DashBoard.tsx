@@ -10,6 +10,7 @@ import StatGrid from "../../admin/stat/StatGrid";
 import Heading from "@/components/ui/Heading";
 import { useAuth } from "@/auth";
 import { useIssues } from "@/hooks/useIssues";
+import NoIssues from "@/components/issues/NoIssues";
 
 export default function DashBoard() {
   const [showIssueDialog, setShowIssueDialog] = useState(false);
@@ -19,6 +20,8 @@ export default function DashBoard() {
   function handleSuccess() {
     setShowIssueDialog(false);
   }
+  if (issuesData?.length == 0 && !isLoadingIssues)
+    return <NoIssues handler={() => setShowIssueDialog(true)} />;
   return (
     <>
       <CardGrid issuesValues={issuesData} isLoadingIssues={isLoadingIssues} />
