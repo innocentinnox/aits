@@ -10,7 +10,7 @@ from django.core.exceptions import ValidationError
 def generate_issue_token(category_id, user_id):
     # Generate a random number with 3 digits
     random_part = random.randint(100, 999)
-    # Get the last 4 digits of the current epoch time.
+    # Get the last 4 digits of the current epoch time
     time_factor = int(time.time()) % 10000  
     return f"ISS-{category_id}-{user_id}-{random_part}-{time_factor}"
 
@@ -83,6 +83,7 @@ class Issue(models.Model):
     class Meta:
         ordering = ['-created_at']
 
+
     def clean(self):
         # Example placeholder for status transition validations.
         # You can check if the status is being set in a valid sequence.
@@ -113,10 +114,11 @@ class Issue(models.Model):
     def __str__(self):
         return f"{self.title} - {self.token}"
 
+# This model represents an attachment to an issue.
 class IssueAttachment(models.Model):
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE, related_name='attachments')
     file = models.FileField(upload_to='attachments/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
-
+    
     def __str__(self):
         return f"Attachment for {self.issue.token} uploaded at {self.uploaded_at}"

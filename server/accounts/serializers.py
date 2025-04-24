@@ -8,21 +8,25 @@ import random
 
 User = get_user_model()
 
+# serializer for the College model.
 class CollegeSerializer(serializers.ModelSerializer):
     class Meta:
         model = College
         fields = ['id', 'name']
 
+# serializer for the School model.
 class SchoolSerializer(serializers.ModelSerializer):
     class Meta:
         model = School
         fields = ['id', 'name']
 
+# serializer for the Department model.
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
         fields = ['id', 'name']
 
+# serializer for the Course model.
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
