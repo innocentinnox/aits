@@ -1,8 +1,16 @@
+import { useAuth } from "@/auth";
+import { rolenavigator } from "@/icons/Svg";
 import AppLayout from "@/layouts/AppLayout";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 function AdminLayout() {
-  return <Outlet />;
+  const { user } = useAuth();
+
+  return user?.role === "registrar" ? (
+    <Outlet />
+  ) : (
+    <Navigate to={`/${rolenavigator(user?.role)}`} />
+  );
 }
 
 export default AdminLayout;

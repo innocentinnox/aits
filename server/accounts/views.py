@@ -1,14 +1,16 @@
+from django.db import transaction
+from django.contrib.auth import get_user_model
+
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.exceptions import TokenError
 
 from .serializers import (
-    RegisterSerializer, ProfileUpdateSerializer, LoginSerializer, 
+    ProfileUpdateSerializer, LoginSerializer, 
     CollegeSerializer, NotificationSerializer, SchoolSerializer, 
     DepartmentSerializer, CourseSerializer, CourseUnitSerializer,
     EmailSerializer, UnifiedTokenSerializer, VerifyTokenSerializer,
@@ -21,6 +23,10 @@ from .models import College, UnifiedToken, Notification, School, Department, Cou
 from django.utils import timezone
 
 User = get_user_model()
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 # API to test if email can be sent
 class SendEmailAPIView(APIView):
@@ -110,14 +116,14 @@ class LoginView(generics.GenericAPIView):
             key="access_token",
             value=user_data["access"],
             httponly=True,
-            secure=False,  # Set to True in production (requires HTTPS)
+            secure=True,  # Set to True in production (requires HTTPS)
             samesite="Lax",
         )
         response.set_cookie(
             key="refresh_token",
             value=user_data["refresh"],
             httponly=True,
-            secure=False,
+            secure=True,
             samesite="Lax",
         )
         return response
@@ -131,7 +137,7 @@ class ProfileUpdateView(generics.UpdateAPIView):
     
     def perform_update(self, serializer):
         user = serializer.save()
-        log_audit(user, "Profile Updated", f"User {user.email} updated their profile.")
+        log_audit(user, "Profile Updated", f"User {user.email} updated their profile.", self.request)
 
 # Logout API
 class LogoutView(APIView):
@@ -140,7 +146,7 @@ class LogoutView(APIView):
     def post(self, request):
         user = request.user if request.user.is_authenticated else None
         if user:
-            log_audit(user, "User Logged Out", f"User {user.email} logged out.")
+            log_audit(user, "User Logged Out", f"User {user.email} logged out.", request)
         
         response = Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
         response.delete_cookie("access_token")
@@ -174,7 +180,7 @@ class TokenRefreshCookieView(APIView):
             key="access_token",
             value=new_access_token,
             httponly=True,
-            secure=False,
+            secure=True,
             samesite="Lax"
         )
         return response
@@ -249,24 +255,41 @@ class SignupAPIView(APIView):
       - Send an email with the 6-digit code
       - Return response with token_id
     """
+    queryset = User.objects.all()
+    serializer_class = SignupSerializer
     permission_classes = [AllowAny]
+    
     def post(self, request, *args, **kwargs):
         serializer = SignupSerializer(data=request.data)
-        if serializer.is_valid():
+        
+        if  serializer.is_valid():
             user = serializer.save()
+
+            # Add audit log for user creation
+            log_audit(user, "User Registration", f"New user {user.email} registered", request)
+                
+            # Generate verification token
             token_instance = UnifiedToken.objects.create(
                 code=generate_6_digit_code(),
                 email=user.email,
                 token_type="email_verification"
             )
+                
+            # Send verification email
             send_verification_email(user.email, token_instance)
+                
+            # Add audit log for verification email sent
+            log_audit(user, "Verification Email", f"Verification email sent to {user.email}", request)
+                
+            # Prepare response
             token_data = UnifiedTokenSerializer(token_instance).data
             response_data = serializer.data
             response_data.update({"token_id": token_data["id"]})
-            return Response(response_data, status=status.HTTP_201_CREATED)
+            
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+        
 # This will be used for email verification and password reset
 class PasswordResetRequestAPIView(APIView):
     """
@@ -292,6 +315,11 @@ class PasswordResetRequestAPIView(APIView):
             token_type="password_reset"
         )
         send_verification_email(email, token_instance)
+        
+        # Add log audit for password reset request
+        log_audit(user, "Password Reset Request", f"User {email} requested password reset", request)
+        
+        # Prepare response
         token_data = UnifiedTokenSerializer(token_instance).data
         return Response({"token_id": token_data["id"]}, status=status.HTTP_200_OK)
 
@@ -316,6 +344,9 @@ class VerifyTokenAPIView(APIView):
                     user.email_verified = timezone.now()
                     user.save()
                     token_obj.delete()  # Delete the token after use
+
+                    # Add log audit for email verification
+                    log_audit(user, "Email Verification", f"User {user.email} verified their email address", request)
                     return Response({"next": "/auth/login", "message": "Email verified"}, status=status.HTTP_200_OK)
                 except User.DoesNotExist:
                     return Response({"error": "User not found."}, status=status.HTTP_400_BAD_REQUEST)
@@ -329,6 +360,10 @@ class VerifyTokenAPIView(APIView):
                     user = User.objects.get(email=token_obj.email)
                     user.set_password(new_password)
                     user.save()
+                    token_obj.delete()  # Delete the token after use
+                    
+                    # Add log audit for password reset
+                    log_audit(user, "Password Reset", f"User {user.email} reset their password", request)
                     return Response({"next": "/auth/login"}, status=status.HTTP_200_OK)
                 except User.DoesNotExist:
                     return Response({"error": "User not found."}, status=status.HTTP_400_BAD_REQUEST)

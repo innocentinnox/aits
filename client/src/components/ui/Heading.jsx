@@ -29,8 +29,9 @@ const Heading = styled.h1`
       font-weight: 600;
       text-align: center;
     `}
-    
+    font-family:inherit;
   line-height: 1.4;
+  margin-bottom: 10px;
 `;
 
 export default Heading;

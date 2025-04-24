@@ -4,17 +4,26 @@ import IssueTable from "@/components/issues/table/issue-table";
 import { NewIssueDialog } from "@/components/issues/issue-dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import PieChartComp from "./stat/PieChartComp";
-import AreaChartComp from "./stat/AreaChartComp";
-import StatGrid from "./stat/StatGrid";
+import PieChartComp from "../../admin/stat/PieChartComp";
+import AreaChartComp from "../../admin/stat/AreaChartComp";
+import StatGrid from "../../admin/stat/StatGrid";
+import Heading from "@/components/ui/Heading";
+import { useAuth } from "@/auth";
+import { useIssues } from "@/hooks/useIssues";
 
 export default function DashBoard() {
   const [showIssueDialog, setShowIssueDialog] = useState(false);
+  const { issuesData, isLoadingIssues } = useIssues();
+  console.log(issuesData, "dash");
+
+  function handleSuccess() {
+    setShowIssueDialog(false);
+  }
   return (
     <>
-      <CardGrid />
-      <StatGrid />
-      <div className="container py-10 mx-auto px-4">
+      <CardGrid issuesValues={issuesData} isLoadingIssues={isLoadingIssues} />
+
+      <div className=" py-10 w-[100%] px-4">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Issues</h1>
           <div className="flex items-center gap-4">
@@ -23,6 +32,7 @@ export default function DashBoard() {
               open={showIssueDialog}
               onOpenChange={setShowIssueDialog}
               showTrigger={false}
+              onSuccess={handleSuccess}
             />
             <Button
               onClick={() => setShowIssueDialog(true)}

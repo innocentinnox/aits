@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 
+
+
 from pathlib import Path
 from dotenv import load_dotenv
 from datetime import timedelta
@@ -29,9 +31,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # Read the secret key from the environment
-SECRET_KEY = os.environ.get("SECRET_KEY")
-DEBUG = int(os.environ.get("DEBUG", default=0))     # SECURITY WARNING: don't run with debug turned on in production!
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-default-key-for-dev")
+DEBUG = int(os.environ.get("DEBUG", default=1))     # SECURITY WARNING: don't run with debug turned on in production!
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost 127.0.0.1").split(" ") # The hosts that are allowed to access the site
 
 
 # Application definition
@@ -51,6 +53,7 @@ INSTALLED_APPS = [
     # My apps
     'accounts',
     'issues',
+    'server_root_page',
 ]
 
 MIDDLEWARE = [
@@ -69,7 +72,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [base_dir := BASE_DIR / 'templates', base_dir],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -189,6 +192,9 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^http://127\.0\.0\.1:\d+$",
 ]
 
+# Ensure DEFAULT_FROM_EMAIL is set
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 APP_NAME = "AITS"
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+

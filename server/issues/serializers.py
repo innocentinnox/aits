@@ -3,12 +3,14 @@ from .models import Issue, IssueCategory, IssueAttachment
 from accounts.serializers import UserSerializer
 
 # This serializer is used for creating and updating issues.
+# from courses.serializers import CourseSerializer
 class IssueCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = IssueCategory
         fields = '__all__'
 
-#     read_only_fields = ('id',)
+#        read_only_fields = ('id', 'created_at', 'updated_at')
+
 class IssueAttachmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = IssueAttachment
@@ -21,15 +23,15 @@ class IssueSerializer(serializers.ModelSerializer):
     assigned_to = UserSerializer(read_only=True)
     # Include attachments as a nested read-only list.
     attachments = IssueAttachmentSerializer(many=True, read_only=True)
-    # Include category details in the serializer.
+
+    # Include category as a nested serializer.
     class Meta:
         model = Issue
         fields = '__all__'
         read_only_fields = (
-            'id', 'token', 'created_by', 'assigned_to', 'status', 
+            'id', 'token', 'created_by', 'assigned_to', 'statuses', 
             'created_at', 'updated_at', 'resolved_at'
         )
-    #     def validate(self, attrs):
     def create(self, validated_data):
         # Additional custom logic can be added here if needed.
         return super().create(validated_data)
@@ -43,7 +45,7 @@ class IssueListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Issue
         fields = (
-            'id', 'token', 'title', 'status', 'priority', 
+            'id', 'token', 'title', 'statuses', 'priority', 
             'created_by_name', 'category_name', 'course_code', 
             'created_at', 'resolved_at'
         )

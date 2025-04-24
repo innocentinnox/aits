@@ -1,22 +1,24 @@
+import { Role } from "./context/auth-context";
+
 /**
  * Public API routes that should not have the access token attached.
  *
  * React Router's matchPath supports a simplified pattern syntax:
  *
- * - **Exact Match:**  
- *   - `/accounts/login`  
+ * - **Exact Match:**
+ *   - `/accounts/login`
  *     Matches exactly `/accounts/login`.
  *
- * - **Wildcard (Splat) for Nested Routes:**  
- *   - `/accounts/login/*`  
+ * - **Wildcard (Splat) for Nested Routes:**
+ *   - `/accounts/login/*`
  *     Matches `/accounts/login` and any sub-route like `/accounts/login/success` or `/accounts/login/error`.
  *
- * - **Parameterized Routes:**  
- *   - `/accounts/verify/:token`  
+ * - **Parameterized Routes:**
+ *   - `/accounts/verify/:token`
  *     Matches routes like `/accounts/verify/abc123` where `:token` is a dynamic segment.
  *
- * - **Catch-All Wildcard:**  
- *   - `/*`  
+ * - **Catch-All Wildcard:**
+ *   - `/*`
  *     Matches any route.
  *
  * Additional examples:
@@ -43,36 +45,39 @@
  * @type {string[]}
  */
 export const PUBLIC_API_ROUTES = [
-  '/accounts/login', 
-  '/accounts/signup', 
-  '/accounts/verify', 
-  '/accounts/logout', 
-  '/accounts/token/refresh',
-  '/accounts/password-reset',
+  "/accounts/login",
+  "/accounts/signup",
+  "/accounts/verify",
+  "/accounts/logout",
+  "/accounts/token/refresh",
+  "/accounts/password-reset",
 ];
-  
-export const PUBLIC_ROUTES = [
-  '/auth/login', 
-  '/auth/signup',
-];
-  
 
-  /**
-   * The default redirect URL after a successful login.
-   * 
-   * @type {string}
-   * @example
-   * '/dashboard'
-   */
-  export const DEFAULT_LOGIN_REDIRECT = '/dashboard';
-  
-  /**
-   * The default redirect URL after logout.
-   * 
-   * @type {string}
-   * @example
-   * '/login'
-   */
-  
-  export const DEFAULT_LOGOUT_REDIRECT = '/';
-  
+export const PUBLIC_ROUTES = ["/auth/login", "/auth/signup", "/auth/verify", "/auth/reset-password"];
+
+export const DASHBOARD_ROUTES: Record<Role, string> = {
+  student: "/",
+  lecturer: "/lecturer",
+  registrar: "/admin",
+  department_head: "/department-head",
+};
+
+/**
+ * The default redirect URL after a successful login.
+ *
+ * @type {string}
+ * @example
+ * '/dashboard'
+ */
+export const DEFAULT_LOGIN_REDIRECT = "/dashboard";
+
+/**
+ * The default redirect URL after logout.
+ *
+ * @type {string}
+ * @example
+ * '/login'
+ */
+
+// export const DEFAULT_LOGOUT_REDIRECT = '/';  This causes a glitche when loging out
+export const DEFAULT_LOGOUT_REDIRECT = "/auth/login";
