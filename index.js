@@ -11,3 +11,5 @@ const data = {
 }
 
 jsonfile.writeFile(FILE_PATH, data);
+
+simpleGit().add([FILE_PATH]).commit
