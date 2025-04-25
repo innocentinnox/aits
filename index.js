@@ -4,7 +4,7 @@ const simpleGit = require('simple-git');
 
 const FILE_PATH = './data.json';
 
-const DATE = moment().format();
+const DATE = moment().subtract(30,'d').format();
 
 const data = {
     date: DATE 
