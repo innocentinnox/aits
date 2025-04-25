@@ -1,5 +1,6 @@
 const jsonfile = require('jsonfile')
 const moment = require('moment');
+const simpleGit = require('simple-git');
 
 const FILE_PATH = './data.json';
 
