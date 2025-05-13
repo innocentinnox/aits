@@ -1,0 +1,171 @@
+{
+    "department_code": "CS",
+    "department_name": "Department of Computer Science",
+    "school_code": "CIT",
+    "college_code": "COCIS",
+    "courses": [
+        {
+            "code": "BSC-CS",
+            "name": "Bachelor of Science in Computer Science",
+            "years": 3,
+            "description": "This program produces graduates with strong foundations in computer science, including algorithms, data structures, software design, and computational theory.",
+            "course_units": [
+                {
+                    "code": "CSC1101",
+                    "title": "Introduction to Computer Science",
+                    "description": "Fundamentals of computer systems, algorithms, and programming logic.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CSC1102",
+                    "title": "Programming Fundamentals",
+                    "description": "Introduction to structured programming using high-level languages.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CSC1103",
+                    "title": "Discrete Mathematics for Computer Science",
+                    "description": "Mathematical foundations for computer science including logic, sets, relations, and functions.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CSC1201",
+                    "title": "Data Structures and Algorithms",
+                    "description": "Implementation and analysis of fundamental data structures and algorithms.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CSC1202",
+                    "title": "Object-Oriented Programming",
+                    "description": "Principles and practice of object-oriented design and programming.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CSC1203",
+                    "title": "Computer Organization and Architecture",
+                    "description": "Introduction to computer hardware, memory systems, and low-level operations.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CSC2101",
+                    "title": "Database Systems",
+                    "description": "Concepts, design, and implementation of database management systems.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CSC2102",
+                    "title": "Operating Systems",
+                    "description": "Principles of operating systems design and implementation.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CSC2103",
+                    "title": "Software Engineering",
+                    "description": "Software development processes, requirements, design, and testing methodologies.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CSC2201",
+                    "title": "Computer Networks",
+                    "description": "Fundamentals of computer network architectures, protocols, and applications.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CSC2202",
+                    "title": "Web Programming",
+                    "description": "Technologies and practices for developing web applications.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CSC2203",
+                    "title": "Theory of Computation",
+                    "description": "Formal languages, automata theory, and computational complexity.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CSC3101",
+                    "title": "Artificial Intelligence",
+                    "description": "Principles and applications of artificial intelligence.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CSC3102",
+                    "title": "Computer Graphics",
+                    "description": "Principles and practice of interactive computer graphics.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CSC3103",
+                    "title": "Research Methods",
+                    "description": "Research methodologies and academic writing in computer science.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CSC3201",
+                    "title": "Final Year Project",
+                    "description": "Capstone project demonstrating comprehensive computer science skills.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "CSC3202",
+                    "title": "Machine Learning",
+                    "description": "Theory and application of machine learning algorithms.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "CSC3203",
+                    "title": "Information Security",
+                    "description": "Principles and practices of information security and cryptography.",
+                    "year_taken": 3,
+                    "semester": 2
+                }
+            ]
+        },
+        {
+            "code": "MSC-CS",
+            "name": "Master of Science in Computer Science",
+            "years": 2,
+            "description": "Advanced study in theoretical and applied computer science for specialized research and professional development.",
+            "course_units": [
+                {
+                    "code": "MCS5101",
+                    "title": "Advanced Algorithms",
+                    "description": "Advanced algorithm design, analysis, and optimization techniques.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "MCS5102",
+                    "title": "Advanced Database Systems",
+                    "description": "Advanced concepts in database management and distributed systems.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "MCS5103",
+                    "title": "Research Methods in Computing",
+                    "description": "Advanced research methodologies and statistical analysis for computer science.",
+                    "year_taken": 1,
+                    "semester": 1
+                }
+            ]
+        }
+    ]
+}

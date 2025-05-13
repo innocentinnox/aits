@@ -1,0 +1,142 @@
+{
+    "department_code": "AGNRE",
+    "department_name": "Agribusiness and Natural Resource Economics",
+    "school_code": "SAS",
+    "college_code": "CAES",
+    "courses": [
+        {
+            "code": "BSC-AGBIZ",
+            "name": "Bachelor of Science in Agribusiness Management",
+            "years": 3,
+            "description": "This program integrates agricultural science with business management principles to prepare students for careers in the agricultural business sector.",
+            "course_units": [
+                {
+                    "code": "AGNRE1101",
+                    "title": "Principles of Microeconomics",
+                    "description": "Basic concepts and principles of microeconomics applied to agriculture.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "AGNRE1102",
+                    "title": "Introduction to Agribusiness",
+                    "description": "Overview of the agribusiness sector and its components.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "AGNRE1103",
+                    "title": "Agricultural Mathematics",
+                    "description": "Mathematical applications in agricultural economics and business.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "AGNRE1201",
+                    "title": "Principles of Macroeconomics",
+                    "description": "Basic concepts and principles of macroeconomics applied to agriculture.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "AGNRE1202",
+                    "title": "Agricultural Marketing",
+                    "description": "Principles and practices of marketing agricultural products.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "AGNRE1203",
+                    "title": "Financial Accounting for Agribusiness",
+                    "description": "Accounting principles and practices for agribusiness enterprises.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "AGNRE2101",
+                    "title": "Agricultural Production Economics",
+                    "description": "Economic principles applied to agricultural production.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "AGNRE2102",
+                    "title": "Natural Resource Economics",
+                    "description": "Economic analysis of natural resource use and management.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "AGNRE2103",
+                    "title": "Agricultural Finance",
+                    "description": "Financial management of agricultural enterprises.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "AGNRE2201",
+                    "title": "Agricultural Policy",
+                    "description": "Analysis of agricultural policies and their impacts.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "AGNRE2202",
+                    "title": "Farm Management",
+                    "description": "Principles and practices of farm business management.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "AGNRE2203",
+                    "title": "Agricultural Price Analysis",
+                    "description": "Analysis of agricultural prices and price determination.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "AGNRE3101",
+                    "title": "Agribusiness Management",
+                    "description": "Management of agribusiness enterprises.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "AGNRE3102",
+                    "title": "Agricultural Value Chain Analysis",
+                    "description": "Analysis of agricultural value chains and their development.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "AGNRE3103",
+                    "title": "Research Methods in Agricultural Economics",
+                    "description": "Research methodologies for agricultural economics and agribusiness.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "AGNRE3201",
+                    "title": "Agribusiness Capstone Project",
+                    "description": "Independent research project in agribusiness.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "AGNRE3202",
+                    "title": "International Agricultural Trade",
+                    "description": "Principles and practices of international trade in agricultural products.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "AGNRE3203",
+                    "title": "Environmental Economics",
+                    "description": "Economic analysis of environmental issues related to agriculture.",
+                    "year_taken": 3,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

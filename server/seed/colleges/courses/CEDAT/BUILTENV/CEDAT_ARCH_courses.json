@@ -1,0 +1,514 @@
+{
+    "department_code": "ARCH",
+    "department_name": "Department of Architecture and Physical Planning",
+    "school_code": "BUILTENV",
+    "college_code": "CEDAT",
+    "courses": [
+        {
+            "code": "BARC",
+            "name": "Bachelor of Architecture",
+            "years": 5,
+            "description": "This program provides education in architectural design, theory, and practice to prepare students for professional careers in architecture.",
+            "course_units": [
+                {
+                    "code": "ARC1101",
+                    "title": "Architectural Design Studio I",
+                    "description": "Introduction to design principles and spatial concepts.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC1102",
+                    "title": "History of Architecture I",
+                    "description": "Survey of architectural history from ancient to medieval periods.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC1103",
+                    "title": "Building Materials and Construction I",
+                    "description": "Introduction to construction materials and basic construction methods.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC1104",
+                    "title": "Architectural Drawing",
+                    "description": "Techniques of architectural representation and drawing.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC1201",
+                    "title": "Architectural Design Studio II",
+                    "description": "Development of spatial concepts and design methodologies.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC1202",
+                    "title": "History of Architecture II",
+                    "description": "Architectural developments from Renaissance to modern era.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC1203",
+                    "title": "Building Materials and Construction II",
+                    "description": "Advanced construction materials and methods.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC1204",
+                    "title": "Computer Aided Design",
+                    "description": "Introduction to digital tools for architectural design.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC2101",
+                    "title": "Architectural Design Studio III",
+                    "description": "Intermediate design projects with emphasis on function and form.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC2102",
+                    "title": "Theory of Architecture I",
+                    "description": "Theoretical foundations of architectural design and criticism.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC2103",
+                    "title": "Structural Systems I",
+                    "description": "Basic principles of structural design in architecture.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC2104",
+                    "title": "Environmental Science in Architecture",
+                    "description": "Climate, comfort, and environmental considerations in building design.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC2201",
+                    "title": "Architectural Design Studio IV",
+                    "description": "Design projects focusing on context and site analysis.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC2202",
+                    "title": "Theory of Architecture II",
+                    "description": "Contemporary architectural theories and paradigms.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC2203",
+                    "title": "Structural Systems II",
+                    "description": "Advanced structural concepts and applications in architecture.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC2204",
+                    "title": "Building Services",
+                    "description": "Mechanical, electrical, and plumbing systems in buildings.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC3101",
+                    "title": "Architectural Design Studio V",
+                    "description": "Complex design problems integrating multiple design considerations.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC3102",
+                    "title": "Urban Design and Planning",
+                    "description": "Principles and practices of urban design and city planning.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC3103",
+                    "title": "Building Technology",
+                    "description": "Integration of structural, mechanical, and construction systems.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC3104",
+                    "title": "Sustainable Design",
+                    "description": "Ecological approaches to architectural design.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC3201",
+                    "title": "Architectural Design Studio VI",
+                    "description": "Integration of technical systems with design concepts.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC3202",
+                    "title": "Professional Practice I",
+                    "description": "Introduction to architectural office practices and management.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC3203",
+                    "title": "Construction Economics",
+                    "description": "Cost estimation and economic considerations in architecture.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC3204",
+                    "title": "Research Methods in Architecture",
+                    "description": "Research methodologies for architectural inquiry.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC4101",
+                    "title": "Architectural Design Studio VII",
+                    "description": "Advanced design projects with focus on urban context.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC4102",
+                    "title": "Housing and Settlement Studies",
+                    "description": "Housing typologies and settlement patterns in various contexts.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC4103",
+                    "title": "Building Systems Integration",
+                    "description": "Comprehensive integration of building systems in design.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC4104",
+                    "title": "Architectural Conservation",
+                    "description": "Principles and practices of historic preservation.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC4201",
+                    "title": "Architectural Design Studio VIII",
+                    "description": "Comprehensive design project with technical integration.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC4202",
+                    "title": "Professional Practice II",
+                    "description": "Legal and ethical aspects of architectural practice.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC4203",
+                    "title": "Building Regulations and Codes",
+                    "description": "Building codes, standards, and regulatory frameworks.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC4204",
+                    "title": "Digital Fabrication",
+                    "description": "Advanced digital tools and fabrication methods in architecture.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC5101",
+                    "title": "Architectural Thesis I",
+                    "description": "Research and preliminary design for final thesis project.",
+                    "year_taken": 5,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC5102",
+                    "title": "Advanced Architectural Theory",
+                    "description": "Critical theories and philosophical considerations in architecture.",
+                    "year_taken": 5,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC5103",
+                    "title": "Professional Internship",
+                    "description": "Supervised practical experience in architectural practice.",
+                    "year_taken": 5,
+                    "semester": 1
+                },
+                {
+                    "code": "ARC5201",
+                    "title": "Architectural Thesis II",
+                    "description": "Final thesis project demonstrating comprehensive architectural knowledge.",
+                    "year_taken": 5,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC5202",
+                    "title": "Project Management",
+                    "description": "Management of architectural projects from conception to completion.",
+                    "year_taken": 5,
+                    "semester": 2
+                },
+                {
+                    "code": "ARC5203",
+                    "title": "Contemporary Issues in Architecture",
+                    "description": "Current debates and emerging trends in architectural practice.",
+                    "year_taken": 5,
+                    "semester": 2
+                }
+            ]
+        },
+        {
+            "code": "BPPLN",
+            "name": "Bachelor of Physical Planning",
+            "years": 4,
+            "description": "This program focuses on urban and regional planning, land use management, and sustainable development practices.",
+            "course_units": [
+                {
+                    "code": "PPL1101",
+                    "title": "Introduction to Planning",
+                    "description": "Overview of physical planning theory and practice.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL1102",
+                    "title": "Planning History and Theory",
+                    "description": "Historical development of planning theories and approaches.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL1103",
+                    "title": "Planning Graphics and Communication",
+                    "description": "Visual communication techniques for planning proposals.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL1104",
+                    "title": "Introduction to GIS",
+                    "description": "Basic geographic information systems for planning applications.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL1201",
+                    "title": "Land Use Planning",
+                    "description": "Principles and practices of land use allocation and management.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL1202",
+                    "title": "Planning Methods and Techniques",
+                    "description": "Analytical methods for planning research and practice.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL1203",
+                    "title": "Social Aspects of Planning",
+                    "description": "Social factors and community considerations in planning.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL1204",
+                    "title": "Computer Applications in Planning",
+                    "description": "Digital tools and software for planning applications.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL2101",
+                    "title": "Urban Planning Studio I",
+                    "description": "Basic urban planning projects and design exercises.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL2102",
+                    "title": "Transportation Planning",
+                    "description": "Planning for transport systems and infrastructure.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL2103",
+                    "title": "Environmental Planning",
+                    "description": "Environmental considerations and impact assessment in planning.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL2104",
+                    "title": "Advanced GIS for Planning",
+                    "description": "Advanced spatial analysis techniques for planning applications.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL2201",
+                    "title": "Urban Planning Studio II",
+                    "description": "Intermediate urban planning projects with contextual analysis.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL2202",
+                    "title": "Housing and Settlement Planning",
+                    "description": "Planning for residential development and housing provision.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL2203",
+                    "title": "Planning Legislation and Governance",
+                    "description": "Legal frameworks and governance structures for planning.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL2204",
+                    "title": "Infrastructure Planning",
+                    "description": "Planning for urban services and utility systems.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL3101",
+                    "title": "Regional Planning Studio",
+                    "description": "Planning projects at regional and metropolitan scales.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL3102",
+                    "title": "Urban Economics",
+                    "description": "Economic principles and analysis in urban planning.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL3103",
+                    "title": "Sustainable Development",
+                    "description": "Planning for environmentally sustainable urban development.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL3104",
+                    "title": "Research Methods in Planning",
+                    "description": "Research design and methodologies for planning studies.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL3201",
+                    "title": "Detailed Planning Studio",
+                    "description": "Detailed site planning and urban design projects.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL3202",
+                    "title": "Urban Renewal and Regeneration",
+                    "description": "Planning for revitalization of existing urban areas.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL3203",
+                    "title": "Professional Practice in Planning",
+                    "description": "Professional ethics and practice in planning profession.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL3204",
+                    "title": "Planning in Developing Countries",
+                    "description": "Planning challenges and approaches in developing contexts.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL4101",
+                    "title": "Comprehensive Planning Studio",
+                    "description": "Integrated planning project addressing multiple systems.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL4102",
+                    "title": "Planning Theory Seminar",
+                    "description": "Advanced theories and contemporary debates in planning.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL4103",
+                    "title": "Climate Change and Planning",
+                    "description": "Planning responses to climate change challenges.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL4104",
+                    "title": "Research Proposal",
+                    "description": "Development of final year research proposal.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "PPL4201",
+                    "title": "Final Year Project",
+                    "description": "Independent research project in physical planning.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL4202",
+                    "title": "Professional Internship",
+                    "description": "Supervised practical experience in planning practice.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL4203",
+                    "title": "Smart Cities and Innovation",
+                    "description": "Digital technologies and innovation in urban planning.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "PPL4204",
+                    "title": "Planning Implementation Strategies",
+                    "description": "Approaches for implementing planning proposals.",
+                    "year_taken": 4,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

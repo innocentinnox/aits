@@ -1,0 +1,142 @@
+{
+    "department_code": "EI",
+    "department_name": "Extension & Innovations",
+    "school_code": "SAS",
+    "college_code": "CAES",
+    "courses": [
+        {
+            "code": "BSC-AEI",
+            "name": "Bachelor of Science in Agricultural Extension and Innovation",
+            "years": 3,
+            "description": "This program prepares students to facilitate knowledge transfer and innovation adoption in agricultural communities.",
+            "course_units": [
+                {
+                    "code": "EI1101",
+                    "title": "Introduction to Agricultural Extension",
+                    "description": "Overview of agricultural extension principles and practices.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "EI1102",
+                    "title": "Communication Skills for Extension",
+                    "description": "Effective communication strategies for agricultural extension.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "EI1103",
+                    "title": "Rural Sociology",
+                    "description": "Study of rural communities and social structures.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "EI1201",
+                    "title": "Extension Methods and Approaches",
+                    "description": "Various methods and approaches used in agricultural extension.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "EI1202",
+                    "title": "Agricultural Innovation Systems",
+                    "description": "Understanding and facilitating innovation in agricultural systems.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "EI1203",
+                    "title": "ICT in Agricultural Extension",
+                    "description": "Use of information and communication technologies in agricultural extension.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "EI2101",
+                    "title": "Program Planning in Extension",
+                    "description": "Planning and designing effective extension programs.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "EI2102",
+                    "title": "Participatory Rural Appraisal",
+                    "description": "Participatory methods for assessing rural needs and resources.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "EI2103",
+                    "title": "Extension Administration and Management",
+                    "description": "Management and administration of extension organizations and programs.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "EI2201",
+                    "title": "Group Dynamics in Extension",
+                    "description": "Understanding and facilitating group processes in extension work.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "EI2202",
+                    "title": "Agricultural Education",
+                    "description": "Principles and practices of education in agricultural settings.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "EI2203",
+                    "title": "Gender and Agricultural Development",
+                    "description": "Gender considerations in agricultural extension and development.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "EI3101",
+                    "title": "Extension Program Evaluation",
+                    "description": "Methods and approaches for evaluating extension programs.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "EI3102",
+                    "title": "Agricultural Knowledge Management",
+                    "description": "Management of knowledge in agricultural innovation systems.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "EI3103",
+                    "title": "Research Methods in Extension",
+                    "description": "Research methodologies for agricultural extension.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "EI3201",
+                    "title": "Extension Capstone Project",
+                    "description": "Independent research project in agricultural extension.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "EI3202",
+                    "title": "Agricultural Policy and Extension",
+                    "description": "Analysis of agricultural policies and their implications for extension.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "EI3203",
+                    "title": "Extension Internship",
+                    "description": "Practical experience in agricultural extension organizations.",
+                    "year_taken": 3,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

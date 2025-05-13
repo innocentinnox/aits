@@ -1,0 +1,184 @@
+{
+    "department_code": "AP",
+    "department_name": "Agricultural Production",
+    "school_code": "SAS",
+    "college_code": "CAES",
+    "courses": [
+        {
+            "code": "BSC-AGRIC",
+            "name": "Bachelor of Science in Agriculture",
+            "years": 4,
+            "description": "This program focuses on crop and animal production, agricultural economics, and sustainable farming practices.",
+            "course_units": [
+                {
+                    "code": "AP1101",
+                    "title": "Introduction to Agricultural Production",
+                    "description": "Overview of agricultural production systems and practices.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "AP1102",
+                    "title": "Agricultural Biochemistry",
+                    "description": "Biochemical processes in plants and animals relevant to agriculture.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "AP1103",
+                    "title": "Principles of Crop Production",
+                    "description": "Fundamental principles of crop production and management.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "AP1201",
+                    "title": "Principles of Animal Production",
+                    "description": "Fundamental principles of animal production and management.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "AP1202",
+                    "title": "Soil Science",
+                    "description": "Study of soil properties, classification, and management.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "AP1203",
+                    "title": "Agricultural Mathematics",
+                    "description": "Mathematical applications in agricultural systems.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "AP2101",
+                    "title": "Crop Physiology",
+                    "description": "Physiological processes in crops and their impact on growth and yield.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "AP2102",
+                    "title": "Animal Nutrition",
+                    "description": "Principles of animal nutrition and feed formulation.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "AP2103",
+                    "title": "Pest and Disease Management",
+                    "description": "Integrated pest and disease management in agricultural systems.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "AP2201",
+                    "title": "Animal Breeding",
+                    "description": "Principles and practices of animal breeding and genetics.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "AP2202",
+                    "title": "Crop Breeding",
+                    "description": "Principles and practices of crop breeding and improvement.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "AP2203",
+                    "title": "Agricultural Machinery",
+                    "description": "Operation and management of agricultural machinery and equipment.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "AP3101",
+                    "title": "Agroforestry Systems",
+                    "description": "Integration of trees with crops and livestock in agricultural systems.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "AP3102",
+                    "title": "Dairy Science and Technology",
+                    "description": "Production, processing, and management of dairy products.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "AP3103",
+                    "title": "Postharvest Technology",
+                    "description": "Handling, storage, and processing of agricultural products after harvest.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "AP3201",
+                    "title": "Crop Protection",
+                    "description": "Protection of crops from pests, diseases, and weeds.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "AP3202",
+                    "title": "Animal Health Management",
+                    "description": "Management of animal health and disease prevention.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "AP3203",
+                    "title": "Irrigation and Water Management",
+                    "description": "Principles and practices of agricultural water management and irrigation systems.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "AP4101",
+                    "title": "Sustainable Agriculture",
+                    "description": "Environmentally sound, socially responsible, and economically viable agricultural practices.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "AP4102",
+                    "title": "Agricultural Research Methods",
+                    "description": "Research methodologies in agricultural science.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "AP4103",
+                    "title": "Crop Production Systems",
+                    "description": "Advanced study of crop production systems and management.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "AP4201",
+                    "title": "Final Year Project",
+                    "description": "Independent research project in agricultural production.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "AP4202",
+                    "title": "Livestock Production Systems",
+                    "description": "Advanced study of livestock production systems and management.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "AP4203",
+                    "title": "Agricultural Biotechnology",
+                    "description": "Applications of biotechnology in agriculture.",
+                    "year_taken": 4,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

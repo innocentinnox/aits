@@ -1,0 +1,142 @@
+{
+    "department_code": "ETA",
+    "department_name": "Department of Economic Theory and Analysis",
+    "school_code": "ECON",
+    "college_code": "COBAMS",
+    "courses": [
+        {
+            "code": "BSC-ECON",
+            "name": "Bachelor of Science in Economics",
+            "years": 3,
+            "description": "This program provides a strong foundation in economic theory, quantitative methods, and applied economics for analyzing economic issues and policy.",
+            "course_units": [
+                {
+                    "code": "ETA1101",
+                    "title": "Principles of Microeconomics",
+                    "description": "Introduction to basic microeconomic concepts and principles.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ETA1102",
+                    "title": "Mathematics for Economists I",
+                    "description": "Mathematical tools and techniques used in economic analysis.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ETA1103",
+                    "title": "Introduction to Economic Statistics",
+                    "description": "Basic statistical concepts and methods for economic data analysis.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ETA1201",
+                    "title": "Principles of Macroeconomics",
+                    "description": "Introduction to basic macroeconomic concepts and principles.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ETA1202",
+                    "title": "Mathematics for Economists II",
+                    "description": "Advanced mathematical tools for economic analysis.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ETA1203",
+                    "title": "Economic History",
+                    "description": "Historical development of economic systems and thought.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ETA2101",
+                    "title": "Intermediate Microeconomics",
+                    "description": "Advanced analysis of consumer and producer behavior.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ETA2102",
+                    "title": "Econometrics I",
+                    "description": "Introduction to econometric methods and applications.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ETA2103",
+                    "title": "Public Economics",
+                    "description": "Economic analysis of government policies and public sector.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ETA2201",
+                    "title": "Intermediate Macroeconomics",
+                    "description": "Advanced analysis of aggregate economic activity.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ETA2202",
+                    "title": "Econometrics II",
+                    "description": "Advanced econometric techniques and applications.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ETA2203",
+                    "title": "Monetary Economics",
+                    "description": "Theory and practice of monetary policy and financial systems.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ETA3101",
+                    "title": "International Economics",
+                    "description": "Theory and policy of international trade and finance.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ETA3102",
+                    "title": "Economic Growth and Development",
+                    "description": "Theories and empirical evidence on economic development.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ETA3103",
+                    "title": "Research Methods in Economics",
+                    "description": "Research methodologies and empirical analysis in economics.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ETA3201",
+                    "title": "Economics Capstone Project",
+                    "description": "Independent research project in economics.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "ETA3202",
+                    "title": "Labor Economics",
+                    "description": "Economic analysis of labor markets and employment.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "ETA3203",
+                    "title": "Game Theory and Strategic Behavior",
+                    "description": "Analysis of strategic interaction and decision-making.",
+                    "year_taken": 3,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

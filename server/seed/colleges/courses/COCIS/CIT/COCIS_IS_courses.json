@@ -1,0 +1,142 @@
+{
+    "department_code": "IS",
+    "department_name": "Department of Information Systems",
+    "school_code": "CIT",
+    "college_code": "COCIS",
+    "courses": [
+        {
+            "code": "BSC-IS",
+            "name": "Bachelor of Science in Information Systems",
+            "years": 3,
+            "description": "This program bridges business and technology, focusing on how information systems support organizational operations and decision-making.",
+            "course_units": [
+                {
+                    "code": "INS1101",
+                    "title": "Introduction to Information Systems",
+                    "description": "Foundations of information systems in organizations.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "INS1102",
+                    "title": "Business Fundamentals for IS",
+                    "description": "Basic business concepts and practices for information systems professionals.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "INS1103",
+                    "title": "Programming for Business Applications",
+                    "description": "Introduction to programming with business applications focus.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "INS1201",
+                    "title": "Database Management Systems",
+                    "description": "Design and implementation of databases for business information systems.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "INS1202",
+                    "title": "Systems Analysis and Design",
+                    "description": "Methodologies for analyzing business needs and designing information systems.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "INS1203",
+                    "title": "Business Data Communications",
+                    "description": "Fundamentals of data communications in business environments.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "INS2101",
+                    "title": "Enterprise Systems",
+                    "description": "Integration and management of enterprise-wide information systems.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "INS2102",
+                    "title": "Business Process Management",
+                    "description": "Analysis, design, and improvement of business processes.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "INS2103",
+                    "title": "IS Project Management",
+                    "description": "Managing information systems projects in organizational contexts.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "INS2201",
+                    "title": "Decision Support Systems",
+                    "description": "Information systems for supporting decision-making processes.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "INS2202",
+                    "title": "Information Security and Governance",
+                    "description": "Security, privacy, and governance of information systems.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "INS2203",
+                    "title": "E-Business and E-Commerce",
+                    "description": "Electronic business models, strategies, and technologies.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "INS3101",
+                    "title": "Business Intelligence",
+                    "description": "Technologies and processes for business analytics and intelligence.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "INS3102",
+                    "title": "IS Strategy and Management",
+                    "description": "Strategic planning and management of information systems.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "INS3103",
+                    "title": "IS Research Methods",
+                    "description": "Research methodologies for information systems.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "INS3201",
+                    "title": "IS Capstone Project",
+                    "description": "Comprehensive project applying information systems concepts.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "INS3202",
+                    "title": "Enterprise Architecture",
+                    "description": "Frameworks and practices for enterprise architecture.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "INS3203",
+                    "title": "Digital Innovation and Transformation",
+                    "description": "Digital technologies for organizational innovation and transformation.",
+                    "year_taken": 3,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

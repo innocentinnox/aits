@@ -1,0 +1,142 @@
+{
+    "department_code": "PDE",
+    "department_name": "Department of Policy and Development Economics",
+    "school_code": "ECON",
+    "college_code": "COBAMS",
+    "courses": [
+        {
+            "code": "BSC-DEVECO",
+            "name": "Bachelor of Science in Development Economics",
+            "years": 3,
+            "description": "This program focuses on economic issues in developing countries, poverty reduction strategies, and sustainable development.",
+            "course_units": [
+                {
+                    "code": "PDE1101",
+                    "title": "Introduction to Development Economics",
+                    "description": "Overview of economic development challenges and approaches.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "PDE1102",
+                    "title": "Microeconomic Principles",
+                    "description": "Basic microeconomic concepts with development applications.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "PDE1103",
+                    "title": "Development Statistics",
+                    "description": "Statistical methods for development research and analysis.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "PDE1201",
+                    "title": "Macroeconomic Principles",
+                    "description": "Basic macroeconomic concepts with development applications.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "PDE1202",
+                    "title": "Political Economy of Development",
+                    "description": "Interaction of political and economic factors in development.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "PDE1203",
+                    "title": "Introduction to Policy Analysis",
+                    "description": "Basic concepts and tools for analyzing economic policies.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "PDE2101",
+                    "title": "Development Microeconomics",
+                    "description": "Microeconomic theory applied to development issues.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "PDE2102",
+                    "title": "Development Planning",
+                    "description": "Planning methods and strategies for economic development.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "PDE2103",
+                    "title": "Environmental Economics",
+                    "description": "Economic analysis of environmental issues in development.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "PDE2201",
+                    "title": "Development Macroeconomics",
+                    "description": "Macroeconomic theory applied to development issues.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "PDE2202",
+                    "title": "Applied Econometrics for Development",
+                    "description": "Econometric methods for development research.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "PDE2203",
+                    "title": "Poverty Analysis and Measurement",
+                    "description": "Concepts, measurement, and analysis of poverty.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "PDE3101",
+                    "title": "Agricultural Development Economics",
+                    "description": "Economic analysis of agricultural development issues.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "PDE3102",
+                    "title": "Health Economics in Developing Countries",
+                    "description": "Economic analysis of health systems and policies.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "PDE3103",
+                    "title": "Research Methods in Development Economics",
+                    "description": "Research methodologies for development economics.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "PDE3201",
+                    "title": "Development Economics Capstone Project",
+                    "description": "Independent research project in development economics.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "PDE3202",
+                    "title": "International Development Cooperation",
+                    "description": "Analysis of international aid, trade, and cooperation.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "PDE3203",
+                    "title": "Project Evaluation in Developing Countries",
+                    "description": "Methods and practices for evaluating development projects.",
+                    "year_taken": 3,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,276 @@
+{
+    "department_code": "GGCS",
+    "department_name": "Department of Geography, Geo Informatics and Climatic Sciences",
+    "school_code": "FEGS",
+    "college_code": "CAES",
+    "courses": [
+        {
+            "code": "BSC-GEOG",
+            "name": "Bachelor of Science in Geography",
+            "years": 3,
+            "description": "This program provides comprehensive knowledge of physical and human geography, spatial analysis, and geographical information systems.",
+            "course_units": [
+                {
+                    "code": "GGCS1101",
+                    "title": "Introduction to Geography",
+                    "description": "Fundamental concepts and principles of geography.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "GGCS1102",
+                    "title": "Physical Geography",
+                    "description": "Study of landforms, climate, soils, vegetation, and water bodies.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "GGCS1103",
+                    "title": "Map Reading and Interpretation",
+                    "description": "Basic cartographic concepts and map interpretation skills.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "GGCS1201",
+                    "title": "Human Geography",
+                    "description": "Study of population, settlements, and human activities on Earth.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "GGCS1202",
+                    "title": "Introduction to GIS",
+                    "description": "Basic concepts and applications of geographic information systems.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "GGCS1203",
+                    "title": "Field Methods in Geography",
+                    "description": "Techniques for collecting geographical data in the field.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "GGCS2101",
+                    "title": "Geomorphology",
+                    "description": "Study of landforms and the processes that shape them.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "GGCS2102",
+                    "title": "Spatial Analysis",
+                    "description": "Methods and techniques for analyzing spatial data.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "GGCS2103",
+                    "title": "Remote Sensing",
+                    "description": "Principles and applications of remote sensing technology.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "GGCS2201",
+                    "title": "Climatology",
+                    "description": "Study of climate systems and climate patterns.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "GGCS2202",
+                    "title": "Urban Geography",
+                    "description": "Spatial analysis of urban areas and urban processes.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "GGCS2203",
+                    "title": "Advanced GIS",
+                    "description": "Advanced techniques and applications in GIS.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "GGCS3101",
+                    "title": "Environmental Geography",
+                    "description": "Geographical aspects of environmental issues and management.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "GGCS3102",
+                    "title": "Geography of Development",
+                    "description": "Spatial aspects of development processes and patterns.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "GGCS3103",
+                    "title": "Research Methods in Geography",
+                    "description": "Research methodologies for geographical studies.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "GGCS3201",
+                    "title": "Geography Capstone Project",
+                    "description": "Independent research project in geography.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "GGCS3202",
+                    "title": "Geospatial Data Management",
+                    "description": "Management and analysis of geospatial data.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "GGCS3203",
+                    "title": "Applied Geography",
+                    "description": "Application of geographical concepts and methods to real-world problems.",
+                    "year_taken": 3,
+                    "semester": 2
+                }
+            ]
+        },
+        {
+            "code": "BSC-CLIMSCI",
+            "name": "Bachelor of Science in Climate Science",
+            "years": 3,
+            "description": "This program focuses on understanding climate systems, climate change, and its impacts on natural and human systems.",
+            "course_units": [
+                {
+                    "code": "CLIM1101",
+                    "title": "Introduction to Climate Science",
+                    "description": "Fundamental concepts and principles of climate science.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CLIM1102",
+                    "title": "Earth System Science",
+                    "description": "Study of interactions between Earth's atmosphere, hydrosphere, biosphere, and geosphere.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CLIM1103",
+                    "title": "Meteorological Measurements",
+                    "description": "Techniques for measuring meteorological parameters.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CLIM1201",
+                    "title": "Atmospheric Physics",
+                    "description": "Physical principles of atmospheric processes.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CLIM1202",
+                    "title": "Climate Data Analysis",
+                    "description": "Statistical methods for analyzing climate data.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CLIM1203",
+                    "title": "Introduction to Climate Modeling",
+                    "description": "Basic concepts of climate models and simulations.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CLIM2101",
+                    "title": "Global Climate Systems",
+                    "description": "Study of global climate systems and their interactions.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CLIM2102",
+                    "title": "Climate Change Science",
+                    "description": "Scientific basis of climate change and its evidence.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CLIM2103",
+                    "title": "Remote Sensing for Climate Studies",
+                    "description": "Application of remote sensing in climate research.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CLIM2201",
+                    "title": "Regional Climatology",
+                    "description": "Study of climate patterns and processes at regional scales.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CLIM2202",
+                    "title": "Climate and Society",
+                    "description": "Interactions between climate and human societies.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CLIM2203",
+                    "title": "GIS for Climate Studies",
+                    "description": "Application of geographic information systems in climate research.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CLIM3101",
+                    "title": "Climate Impacts and Vulnerability",
+                    "description": "Assessment of climate change impacts and vulnerability.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CLIM3102",
+                    "title": "Climate Adaptation and Mitigation",
+                    "description": "Strategies for adapting to and mitigating climate change.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CLIM3103",
+                    "title": "Research Methods in Climate Science",
+                    "description": "Research methodologies for climate studies.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CLIM3201",
+                    "title": "Climate Science Capstone Project",
+                    "description": "Independent research project in climate science.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "CLIM3202",
+                    "title": "Climate Policy and Governance",
+                    "description": "Policies and governance systems for addressing climate change.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "CLIM3203",
+                    "title": "Climate Services",
+                    "description": "Provision of climate information for decision-making.",
+                    "year_taken": 3,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

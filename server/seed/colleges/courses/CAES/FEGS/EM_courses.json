@@ -1,0 +1,184 @@
+{
+    "department_code": "EM",
+    "department_name": "Department of Environmental Management",
+    "school_code": "FEGS",
+    "college_code": "CAES",
+    "courses": [
+        {
+            "code": "BSC-ENVMGT",
+            "name": "Bachelor of Science in Environmental Management",
+            "years": 4,
+            "description": "This program prepares students to address environmental challenges through sustainable resource management, policy development, and environmental protection strategies.",
+            "course_units": [
+                {
+                    "code": "EM1101",
+                    "title": "Introduction to Environmental Management",
+                    "description": "Overview of environmental management principles and practices.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "EM1102",
+                    "title": "Environmental Chemistry",
+                    "description": "Chemical principles and processes in environmental systems.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "EM1103",
+                    "title": "Ecology and Ecosystems",
+                    "description": "Fundamentals of ecological principles and ecosystem functions.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "EM1201",
+                    "title": "Environmental Economics",
+                    "description": "Economic concepts applied to environmental issues and policy.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "EM1202",
+                    "title": "Earth Science",
+                    "description": "Geological and atmospheric processes relevant to environmental management.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "EM1203",
+                    "title": "Environmental Law and Policy",
+                    "description": "Legal frameworks and policies for environmental protection.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "EM2101",
+                    "title": "Water Resources Management",
+                    "description": "Principles and practices of managing water resources.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "EM2102",
+                    "title": "Solid Waste Management",
+                    "description": "Systems and technologies for managing solid waste.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "EM2103",
+                    "title": "Environmental Impact Assessment",
+                    "description": "Methods and procedures for assessing environmental impacts.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "EM2201",
+                    "title": "Soil and Land Management",
+                    "description": "Management of soil resources and land use planning.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "EM2202",
+                    "title": "Biodiversity and Conservation",
+                    "description": "Principles and strategies for biodiversity conservation.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "EM2203",
+                    "title": "Environmental Monitoring",
+                    "description": "Techniques for monitoring environmental quality.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "EM3101",
+                    "title": "Pollution Control",
+                    "description": "Technologies and strategies for controlling environmental pollution.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "EM3102",
+                    "title": "Natural Resource Management",
+                    "description": "Sustainable management of natural resources.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "EM3103",
+                    "title": "Environmental Governance",
+                    "description": "Governance systems and institutions for environmental management.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "EM3201",
+                    "title": "Climate Change and Adaptation",
+                    "description": "Understanding climate change impacts and adaptation strategies.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "EM3202",
+                    "title": "Environmental Health",
+                    "description": "Environmental factors affecting human health and well-being.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "EM3203",
+                    "title": "Sustainable Development",
+                    "description": "Principles and practices of sustainable development.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "EM4101",
+                    "title": "Environmental Risk Assessment",
+                    "description": "Methods for assessing and managing environmental risks.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "EM4102",
+                    "title": "Environmental Planning",
+                    "description": "Strategic planning for environmental management.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "EM4103",
+                    "title": "Research Methods in Environmental Management",
+                    "description": "Research methodologies for environmental studies.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "EM4201",
+                    "title": "Environmental Management Capstone Project",
+                    "description": "Independent research project in environmental management.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "EM4202",
+                    "title": "Environmental Conflict Resolution",
+                    "description": "Approaches to resolving environmental conflicts and disputes.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "EM4203",
+                    "title": "Professional Practice in Environmental Management",
+                    "description": "Professional and ethical aspects of environmental management practice.",
+                    "year_taken": 4,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}
