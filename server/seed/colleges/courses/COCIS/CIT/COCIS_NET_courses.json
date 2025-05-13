@@ -1,0 +1,142 @@
+{
+    "department_code": "NET",
+    "department_name": "Department of Networks",
+    "school_code": "CIT",
+    "college_code": "COCIS",
+    "courses": [
+        {
+            "code": "BSC-NET",
+            "name": "Bachelor of Science in Computer Networks",
+            "years": 3,
+            "description": "This program focuses on the design, implementation, and management of computer networks and telecommunications systems.",
+            "course_units": [
+                {
+                    "code": "NET1101",
+                    "title": "Introduction to Networking",
+                    "description": "Fundamentals of computer networks and telecommunications.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "NET1102",
+                    "title": "Network Programming",
+                    "description": "Programming concepts and techniques for network applications.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "NET1103",
+                    "title": "Computer Systems Architecture",
+                    "description": "Hardware and software architecture of computer systems.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "NET1201",
+                    "title": "Data Communications",
+                    "description": "Principles and practices of data communications.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "NET1202",
+                    "title": "Operating Systems for Networks",
+                    "description": "Operating system concepts relevant to networking.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "NET1203",
+                    "title": "Network Mathematics",
+                    "description": "Mathematical foundations for network design and analysis.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "NET2101",
+                    "title": "Network Protocols and Standards",
+                    "description": "Study of key networking protocols and industry standards.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "NET2102",
+                    "title": "Network Security",
+                    "description": "Security concepts and practices for computer networks.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "NET2103",
+                    "title": "Wireless Networks",
+                    "description": "Design and implementation of wireless networking technologies.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "NET2201",
+                    "title": "Network Administration",
+                    "description": "Management and administration of network systems.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "NET2202",
+                    "title": "Routing and Switching",
+                    "description": "Advanced routing and switching concepts and implementations.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "NET2203",
+                    "title": "Cloud Infrastructure",
+                    "description": "Cloud computing infrastructure and networking.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "NET3101",
+                    "title": "Network Design and Implementation",
+                    "description": "Comprehensive network planning, design, and deployment.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "NET3102",
+                    "title": "Network Performance and Optimization",
+                    "description": "Techniques for analyzing and optimizing network performance.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "NET3103",
+                    "title": "Network Research Methods",
+                    "description": "Research methodologies for networking technologies.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "NET3201",
+                    "title": "Network Capstone Project",
+                    "description": "Comprehensive project demonstrating integrated networking skills.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "NET3202",
+                    "title": "Software-Defined Networking",
+                    "description": "Principles and practices of software-defined networking.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "NET3203",
+                    "title": "Network Virtualization",
+                    "description": "Virtualization technologies for network systems.",
+                    "year_taken": 3,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

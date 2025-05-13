@@ -1,0 +1,360 @@
+{
+    "department_code": "ECE",
+    "department_name": "Department of Electrical and Computer Engineering",
+    "school_code": "ENGINEERING",
+    "college_code": "CEDAT",
+    "courses": [
+        {
+            "code": "BSC-ELECTRICAL",
+            "name": "Bachelor of Science in Electrical Engineering",
+            "years": 4,
+            "description": "This program prepares students to design, develop, and maintain electrical systems, power generation and distribution networks, and electronic devices.",
+            "course_units": [
+                {
+                    "code": "ECE1101",
+                    "title": "Introduction to Electrical Engineering",
+                    "description": "Overview of electrical engineering disciplines and practice.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ECE1102",
+                    "title": "Engineering Mathematics I",
+                    "description": "Mathematical tools and methods for engineering applications.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ECE1103",
+                    "title": "Physics for Electrical Engineers",
+                    "description": "Fundamental physics principles relevant to electrical engineering.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ECE1201",
+                    "title": "Circuit Theory",
+                    "description": "Analysis of electrical circuits and networks.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ECE1202",
+                    "title": "Digital Logic Design",
+                    "description": "Design and analysis of digital logic circuits.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ECE1203",
+                    "title": "Engineering Mathematics II",
+                    "description": "Advanced mathematical methods for engineering applications.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ECE2101",
+                    "title": "Electronics I",
+                    "description": "Fundamentals of electronic devices and circuits.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ECE2102",
+                    "title": "Signals and Systems",
+                    "description": "Analysis of continuous and discrete signals and systems.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ECE2103",
+                    "title": "Computer Programming for Engineers",
+                    "description": "Programming concepts and techniques for engineering applications.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ECE2201",
+                    "title": "Electronics II",
+                    "description": "Advanced electronic circuits and applications.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ECE2202",
+                    "title": "Electromagnetic Fields and Waves",
+                    "description": "Electromagnetic theory and applications.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ECE2203",
+                    "title": "Electrical Measurements and Instrumentation",
+                    "description": "Principles and methods of electrical measurements.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ECE3101",
+                    "title": "Power Systems Engineering",
+                    "description": "Generation, transmission, and distribution of electrical power.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ECE3102",
+                    "title": "Control Systems",
+                    "description": "Analysis and design of control systems.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ECE3103",
+                    "title": "Communication Systems",
+                    "description": "Principles of analog and digital communication systems.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ECE3201",
+                    "title": "Microprocessors and Microcontrollers",
+                    "description": "Architecture and programming of microprocessors and microcontrollers.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "ECE3202",
+                    "title": "Electrical Machines",
+                    "description": "Theory and operation of electrical machines and transformers.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "ECE3203",
+                    "title": "Digital Signal Processing",
+                    "description": "Processing and analysis of digital signals.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "ECE4101",
+                    "title": "Power Electronics",
+                    "description": "Electronic conversion and control of electrical power.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "ECE4102",
+                    "title": "Telecommunication Engineering",
+                    "description": "Advanced topics in telecommunications.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "ECE4103",
+                    "title": "Engineering Research Methods",
+                    "description": "Research methodologies in electrical engineering.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "ECE4201",
+                    "title": "Final Year Project",
+                    "description": "Comprehensive engineering project.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "ECE4202",
+                    "title": "Professional Practice and Ethics",
+                    "description": "Ethical and professional aspects of engineering practice.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "ECE4203",
+                    "title": "Renewable Energy Systems",
+                    "description": "Technologies and applications of renewable energy.",
+                    "year_taken": 4,
+                    "semester": 2
+                }
+            ]
+        },
+        {
+            "code": "BSC-COMPUTER",
+            "name": "Bachelor of Science in Computer Engineering",
+            "years": 4,
+            "description": "This program combines electrical engineering and computer science to develop hardware-software integrated systems and embedded devices.",
+            "course_units": [
+                {
+                    "code": "CPE1101",
+                    "title": "Introduction to Computer Engineering",
+                    "description": "Overview of computer engineering principles and applications.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CPE1102",
+                    "title": "Programming Fundamentals",
+                    "description": "Introduction to computer programming and problem solving.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CPE1103",
+                    "title": "Engineering Mathematics I",
+                    "description": "Mathematical tools and methods for engineering applications.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CPE1201",
+                    "title": "Digital Logic Design",
+                    "description": "Design and analysis of digital circuits.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CPE1202",
+                    "title": "Circuit Theory",
+                    "description": "Analysis of electrical circuits and networks.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CPE1203",
+                    "title": "Engineering Mathematics II",
+                    "description": "Advanced mathematical methods for engineering applications.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CPE2101",
+                    "title": "Data Structures and Algorithms",
+                    "description": "Implementation and analysis of fundamental data structures and algorithms.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CPE2102",
+                    "title": "Computer Architecture",
+                    "description": "Organization and design of computer systems.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CPE2103",
+                    "title": "Electronics for Computer Engineers",
+                    "description": "Electronic devices and circuits for computer applications.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CPE2201",
+                    "title": "Object-Oriented Programming",
+                    "description": "Principles and practice of object-oriented design and programming.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CPE2202",
+                    "title": "Microprocessors and Assembly Language",
+                    "description": "Architecture and programming of microprocessors.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CPE2203",
+                    "title": "Signals and Systems",
+                    "description": "Analysis of continuous and discrete signals and systems.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CPE3101",
+                    "title": "Operating Systems",
+                    "description": "Principles and design of operating systems.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CPE3102",
+                    "title": "Computer Networks",
+                    "description": "Principles and practice of computer networking.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CPE3103",
+                    "title": "Embedded Systems",
+                    "description": "Design and implementation of embedded computer systems.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CPE3201",
+                    "title": "Database Systems",
+                    "description": "Design and implementation of database systems.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "CPE3202",
+                    "title": "Digital Signal Processing",
+                    "description": "Processing and analysis of digital signals.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "CPE3203",
+                    "title": "Software Engineering",
+                    "description": "Principles and practices of software development.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "CPE4101",
+                    "title": "Computer Vision and Image Processing",
+                    "description": "Theory and applications of computer vision.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "CPE4102",
+                    "title": "Internet of Things",
+                    "description": "Design and implementation of IoT systems.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "CPE4103",
+                    "title": "Engineering Research Methods",
+                    "description": "Research methodologies in computer engineering.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "CPE4201",
+                    "title": "Final Year Project",
+                    "description": "Comprehensive engineering project.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "CPE4202",
+                    "title": "Professional Practice and Ethics",
+                    "description": "Ethical and professional aspects of engineering practice.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "CPE4203",
+                    "title": "Machine Learning for Engineers",
+                    "description": "Applications of machine learning in engineering.",
+                    "year_taken": 4,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,360 @@
+{
+    "department_code": "CEM",
+    "department_name": "Department of Construction Economics and Management",
+    "school_code": "BUILTENV",
+    "college_code": "CEDAT",
+    "courses": [
+        {
+            "code": "BSC-QUANSURV",
+            "name": "Bachelor of Science in Quantity Surveying",
+            "years": 4,
+            "description": "This program prepares students for cost planning, procurement, and contract administration in the construction industry.",
+            "course_units": [
+                {
+                    "code": "QSV1101",
+                    "title": "Introduction to Quantity Surveying",
+                    "description": "Overview of the quantity surveying profession and practices.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "QSV1102",
+                    "title": "Building Technology I",
+                    "description": "Fundamentals of building construction methods and materials.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "QSV1103",
+                    "title": "Construction Mathematics",
+                    "description": "Mathematical principles applied to construction and surveying.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "QSV1201",
+                    "title": "Construction Measurement I",
+                    "description": "Principles and practice of measuring building elements.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "QSV1202",
+                    "title": "Building Technology II",
+                    "description": "Advanced building construction techniques and systems.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "QSV1203",
+                    "title": "Construction Economics",
+                    "description": "Economic principles in the construction industry.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "QSV2101",
+                    "title": "Construction Measurement II",
+                    "description": "Advanced measurement techniques for complex structures.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "QSV2102",
+                    "title": "Construction Law",
+                    "description": "Legal frameworks governing construction projects.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "QSV2103",
+                    "title": "Building Services",
+                    "description": "Mechanical and electrical systems in buildings.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "QSV2201",
+                    "title": "Cost Estimating",
+                    "description": "Techniques for estimating construction costs.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "QSV2202",
+                    "title": "Construction Contracts",
+                    "description": "Contract types and administration in construction.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "QSV2203",
+                    "title": "Computer Applications in Quantity Surveying",
+                    "description": "Digital tools for quantity surveying practice.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "QSV3101",
+                    "title": "Construction Project Management",
+                    "description": "Planning and managing construction projects.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "QSV3102",
+                    "title": "Construction Financial Management",
+                    "description": "Financial aspects of construction projects.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "QSV3103",
+                    "title": "Advanced Measurement",
+                    "description": "Measurement of specialized construction works.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "QSV3201",
+                    "title": "Procurement Systems",
+                    "description": "Methods and strategies for construction procurement.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "QSV3202",
+                    "title": "Building Maintenance Management",
+                    "description": "Maintenance and facilities management principles.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "QSV3203",
+                    "title": "Professional Practice",
+                    "description": "Ethics and professional conduct in quantity surveying.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "QSV4101",
+                    "title": "Construction Risk Management",
+                    "description": "Identifying and managing risks in construction projects.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "QSV4102",
+                    "title": "Research Methods",
+                    "description": "Research methodologies for construction economics.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "QSV4103",
+                    "title": "Sustainable Construction",
+                    "description": "Environmentally sustainable building practices and economics.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "QSV4201",
+                    "title": "Final Year Project",
+                    "description": "Independent research project in quantity surveying.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "QSV4202",
+                    "title": "Professional Internship",
+                    "description": "Supervised practical experience in quantity surveying practice.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "QSV4203",
+                    "title": "Construction Innovation",
+                    "description": "Emerging technologies and practices in construction.",
+                    "year_taken": 4,
+                    "semester": 2
+                }
+            ]
+        },
+        {
+            "code": "BSC-CONSMAN",
+            "name": "Bachelor of Science in Construction Management",
+            "years": 4,
+            "description": "This program focuses on management of construction projects and processes, including planning, scheduling, and resource allocation.",
+            "course_units": [
+                {
+                    "code": "CMS1101",
+                    "title": "Introduction to Construction Management",
+                    "description": "Overview of construction management principles and practice.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CMS1102",
+                    "title": "Construction Materials",
+                    "description": "Properties and applications of construction materials.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CMS1103",
+                    "title": "Construction Mathematics",
+                    "description": "Mathematical applications in construction management.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CMS1201",
+                    "title": "Building Technology",
+                    "description": "Construction methods and building systems.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CMS1202",
+                    "title": "Construction Drawing and Interpretation",
+                    "description": "Reading and interpreting construction drawings.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CMS1203",
+                    "title": "Construction Economics",
+                    "description": "Economic principles in construction industry.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CMS2101",
+                    "title": "Construction Planning and Scheduling",
+                    "description": "Techniques for planning and scheduling construction projects.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CMS2102",
+                    "title": "Construction Equipment and Methods",
+                    "description": "Construction machinery and operational techniques.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CMS2103",
+                    "title": "Building Services",
+                    "description": "Mechanical, electrical, and plumbing systems in buildings.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CMS2201",
+                    "title": "Construction Estimating",
+                    "description": "Cost estimation methods for construction projects.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CMS2202",
+                    "title": "Construction Contract Administration",
+                    "description": "Contract types and administration in construction.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CMS2203",
+                    "title": "Computer Applications in Construction",
+                    "description": "Software applications for construction management.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CMS3101",
+                    "title": "Construction Project Management",
+                    "description": "Principles and practice of managing construction projects.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CMS3102",
+                    "title": "Construction Safety Management",
+                    "description": "Safety protocols and management in construction.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CMS3103",
+                    "title": "Construction Quality Management",
+                    "description": "Quality control and assurance in construction.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CMS3201",
+                    "title": "Construction Financial Management",
+                    "description": "Financial planning and control in construction projects.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "CMS3202",
+                    "title": "Construction Law",
+                    "description": "Legal issues related to construction industry.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "CMS3203",
+                    "title": "Building Information Modeling",
+                    "description": "BIM applications in construction management.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "CMS4101",
+                    "title": "Construction Risk Management",
+                    "description": "Identification and mitigation of construction risks.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "CMS4102",
+                    "title": "Research Methods",
+                    "description": "Research methodologies for construction management.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "CMS4103",
+                    "title": "Sustainable Construction Practices",
+                    "description": "Green building and sustainable construction principles.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "CMS4201",
+                    "title": "Final Year Project",
+                    "description": "Independent research project in construction management.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "CMS4202",
+                    "title": "Professional Internship",
+                    "description": "Supervised practical experience in construction management.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "CMS4203",
+                    "title": "Construction Business Management",
+                    "description": "Business aspects of construction companies.",
+                    "year_taken": 4,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

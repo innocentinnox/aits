@@ -1,0 +1,184 @@
+{
+    "department_code": "ABE",
+    "department_name": "Department of Agricultural & Bio systems Engineering",
+    "school_code": "FTNB",
+    "college_code": "CAES",
+    "courses": [
+        {
+            "code": "BSC-AGENG",
+            "name": "Bachelor of Science in Agricultural Engineering",
+            "years": 4,
+            "description": "This program focuses on engineering principles applied to agricultural production, processing, and management of natural resources.",
+            "course_units": [
+                {
+                    "code": "ABE1101",
+                    "title": "Introduction to Agricultural Engineering",
+                    "description": "Overview of agricultural engineering principles and applications.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ABE1102",
+                    "title": "Engineering Mathematics I",
+                    "description": "Mathematical concepts and methods for engineering applications.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ABE1103",
+                    "title": "Engineering Physics",
+                    "description": "Basic physics principles relevant to agricultural engineering.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ABE1201",
+                    "title": "Engineering Drawing",
+                    "description": "Principles and techniques of engineering drawing and design.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ABE1202",
+                    "title": "Engineering Mathematics II",
+                    "description": "Advanced mathematical methods for engineering applications.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ABE1203",
+                    "title": "Materials Science",
+                    "description": "Properties and behavior of engineering materials.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ABE2101",
+                    "title": "Soil Mechanics",
+                    "description": "Engineering properties of soils and soil behavior.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ABE2102",
+                    "title": "Thermodynamics",
+                    "description": "Principles of energy, heat transfer, and thermodynamic systems.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ABE2103",
+                    "title": "Fluid Mechanics",
+                    "description": "Behavior of fluids at rest and in motion.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ABE2201",
+                    "title": "Agricultural Machinery",
+                    "description": "Design and operation of agricultural machinery and equipment.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ABE2202",
+                    "title": "Irrigation and Drainage Engineering",
+                    "description": "Design and management of irrigation and drainage systems.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ABE2203",
+                    "title": "Structural Analysis",
+                    "description": "Analysis of agricultural structures and building components.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ABE3101",
+                    "title": "Power Systems in Agriculture",
+                    "description": "Power sources and transmission systems in agricultural operations.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ABE3102",
+                    "title": "Post-Harvest Engineering",
+                    "description": "Engineering aspects of post-harvest handling and processing.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ABE3103",
+                    "title": "Soil and Water Conservation Engineering",
+                    "description": "Engineering measures for soil and water conservation.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ABE3201",
+                    "title": "Food Process Engineering",
+                    "description": "Engineering principles applied to food processing operations.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "ABE3202",
+                    "title": "Renewable Energy Systems",
+                    "description": "Engineering of renewable energy systems for agriculture.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "ABE3203",
+                    "title": "Instrumentation and Control",
+                    "description": "Measurement and control systems in agricultural engineering.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "ABE4101",
+                    "title": "Engineering Design Project I",
+                    "description": "First part of a comprehensive engineering design project.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "ABE4102",
+                    "title": "Environmental Engineering",
+                    "description": "Engineering approaches to environmental issues in agriculture.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "ABE4103",
+                    "title": "GIS Applications in Agricultural Engineering",
+                    "description": "Application of geographic information systems in agricultural engineering.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "ABE4201",
+                    "title": "Engineering Design Project II",
+                    "description": "Continuation and completion of the engineering design project.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "ABE4202",
+                    "title": "Agricultural Engineering Economics",
+                    "description": "Economic aspects of agricultural engineering projects and systems.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "ABE4203",
+                    "title": "Professional Practice in Engineering",
+                    "description": "Professional and ethical aspects of engineering practice.",
+                    "year_taken": 4,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

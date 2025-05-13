@@ -1,329 +1,2180 @@
 {
-    "colleges": [
-      {
-        "name": "College of Agricultural and Environmental Sciences",
-        "code": "CAES",
-        "schools": [
-          {
-            "name": "The School of Agricultural Sciences",
-            "code": "SAS",
-            "departments": [
-              { "name": "Agricultural Production", "code": "AP" },
-              { "name": "Agribusiness and Natural Resource Economics", "code": "AGNRE" },
-              { "name": "Extension & Innovations", "code": "EI" }
-            ]
-          },
-          {
-            "name": "The School of Forestry, Environmental and Geographical Sciences",
-            "code": "FEGS",
-            "departments": [
-              { "name": "Department of Forestry, Bio-Diversity and Tourism", "code": "FBT" },
-              { "name": "Department of Environmental Management", "code": "EM" },
-              { "name": "Department of Geography, Geo Informatics and Climatic Sciences", "code": "GGCS" }
-            ]
-          },
-          {
-            "name": "The School of Food Technology, Nutrition and Bio-engineering",
-            "code": "FTNB",
-            "departments": [
-              { "name": "Department of Agricultural & Bio systems Engineering", "code": "ABE" },
-              { "name": "Department of Food Technology and Human Nutrition", "code": "FTHN" }
-            ]
-          }
-        ]
-      },
-      {
-        "name": "College of Business and Management Sciences",
-        "code": "COBAMS",
-        "schools": [
-          {
-            "name": "The School of Economics",
-            "code": "ECON",
-            "departments": [
-              { "name": "Department of Economic Theory and Analysis", "code": "ETA" },
-              { "name": "Department of Policy and Development Economics", "code": "PDE" }
-            ]
-          },
-          {
-            "name": "School of Business",
-            "code": "BUSINESS",
-            "departments": [
-              { "name": "Department of Marketing & Management", "code": "MM" },
-              { "name": "Department of Accounting and Finance", "code": "AF" }
-            ]
-          },
-          {
-            "name": "School of Statistics and Planning",
-            "code": "STATPLAN",
-            "departments": [
-              { "name": "Department of Planning and Applied Statistics", "code": "PAS" },
-              { "name": "Department of Population Studies", "code": "PS" },
-              { "name": "Department of Statistics and Actuarial Science", "code": "SAS" }
-            ]
-          }
-        ]
-      },
-      {
-        "name": "College of Computing and Information Sciences",
-        "code": "COCIS",
-        "schools": [
-          {
-            "name": "School of Computing and Informatics Technology (CIT)",
-            "code": "CIT",
-            "departments": [
-              { "name": "Department of Computer Science", "code": "CS" },
-              { "name": "Department of Information Technology", "code": "IT" },
-              { "name": "Department of Information Systems", "code": "IS" },
-              { "name": "Department of Networks", "code": "NET" }
-            ]
-          },
-          {
-            "name": "East African School of Library and Information Science (EASLIS)",
-            "code": "EASLIS",
-            "departments": [
-              { "name": "Department of Library and Information Sciences", "code": "LIS" },
-              { "name": "Department of Records and Archives Management", "code": "RAM" }
-            ]
-          }
-        ]
-      },
-      {
-        "name": "College of Education and External Studies",
-        "code": "CEES",
-        "schools": [
-          {
-            "name": "The School of Education (SoE)",
-            "code": "SOE",
-            "departments": [
-              { "name": "Department of Social Sciences & Arts Education", "code": "SSAE" },
-              { "name": "Department of Science, Technology & Vocational Education (DSTVE)", "code": "DSTVE" },
-              { "name": "Department of Foundations & Curriculum Studies (DFCS)", "code": "DFCS" }
-            ]
-          },
-          {
-            "name": "The School of Distance and Lifelong Learning (SoDLL)",
-            "code": "SODLL",
-            "departments": [
-              { "name": "Department of Adult & Community Education (DACE)", "code": "DACE" },
-              { "name": "Institute of Open Distance and eLearning", "code": "IODE" }
-            ]
-          },
-          {
-            "name": "The East African School of Higher Education Studies and Development (EASHESD)",
-            "code": "EASHESD",
-            "departments": []
-          }
-        ]
-      },
-      {
-        "name": "College of Engineering, Design, Art and Technology",
-        "code": "CEDAT",
-        "schools": [
-          {
-            "name": "School of Engineering",
-            "code": "ENGINEERING",
-            "departments": [
-              { "name": "Department of Civil and Environmental Engineering", "code": "CEE" },
-              { "name": "Department of Electrical and Computer Engineering", "code": "ECE" },
-              { "name": "Department of Mechanical Engineering", "code": "ME" }
-            ]
-          },
-          {
-            "name": "School of the Built Environment",
-            "code": "BUILTENV",
-            "departments": [
-              { "name": "Department of Architecture and Physical Planning", "code": "APP" },
-              { "name": "Department of Construction Economics and Management", "code": "CEM" },
-              { "name": "Department of Geomatics and Land Management", "code": "GLM" }
-            ]
-          },
-          {
-            "name": "The Margaret Trowell School of Industrial and Fine Art",
-            "code": "MTSIFA",
-            "departments": [
-              { "name": "Department of Fine Art", "code": "FA" },
-              { "name": "Department of Visual Communication Design and Multi-media", "code": "VCDMM" },
-              { "name": "Department of Industrial Art and Applied Design", "code": "IAAD" }
-            ]
-          }
-        ]
-      },
-      {
-        "name": "College of Health Sciences",
-        "code": "CHS",
-        "schools": [
-          {
-            "name": "The School of Medicine",
-            "code": "MEDICINE",
-            "departments": [
-              { "name": "Department of Internal Medicine", "code": "IM" },
-              { "name": "Department of Surgery", "code": "SURGERY" },
-              { "name": "Department Obstetrics & Gynaecology", "code": "OBGYN" },
-              { "name": "Department of Psychiatry", "code": "PSYCH" },
-              { "name": "Department of Family Medicine", "code": "FAMILYM" },
-              { "name": "Department of Anaesthesia", "code": "ANAESTHESIA" },
-              { "name": "Department of Ear Nose Throat", "code": "ENT" },
-              { "name": "Department of Ophthalmology", "code": "OPHTHO" },
-              { "name": "Department of Orthopaedics", "code": "ORTHO" },
-              { "name": "Department of Radiology & Radio Therapy", "code": "RADIOLOGY" },
-              { "name": "Medical Research Centre", "code": "MRC" },
-              { "name": "Reproductive Health Unit", "code": "RHU" },
-              { "name": "Department of Paediatrics & Child Health", "code": "PCH" }
-            ]
-          },
-          {
-            "name": "The School of Public Health",
-            "code": "PUBLICHEALTH",
-            "departments": [
-              { "name": "Department of Health Policy & Management", "code": "HPM" },
-              { "name": "Department of Epidemic & Biostatistics", "code": "EB" },
-              { "name": "Department of Community Health & Behavioral Sciences", "code": "CHBS" },
-              { "name": "Department of Disease Control & Environmental Health", "code": "DCEH" }
-            ]
-          },
-          {
-            "name": "The School of Biomedical Sciences",
-            "code": "BIOMEDSCI",
-            "departments": [
-              { "name": "Department of Human Anatomy", "code": "ANATOMY" },
-              { "name": "Department of Biochemistry", "code": "BIOCHEM" },
-              { "name": "Department of Microbiology", "code": "MICROBIO" },
-              { "name": "Department of Pathology", "code": "PATH" },
-              { "name": "Department of Physiology", "code": "PHYSIO" },
-              { "name": "Department of Pharmacology & Therapeutics", "code": "PHARM" },
-              { "name": "Department of Anatomy", "code": "ANATOMY2" },
-              { "name": "Department of Medical Illustration", "code": "MEDILLUS" }
-            ]
-          },
-          {
-            "name": "The School of Health Sciences",
-            "code": "HEALTHSCI",
-            "departments": [
-              { "name": "Department of Pharmacy", "code": "PHARMACY" },
-              { "name": "Department of Dentistry", "code": "DENTISTRY" },
-              { "name": "Department of Nursing", "code": "NURSING" },
-              { "name": "Department of Allied Health Sciences", "code": "ALLIEDHEALTH" }
-            ]
-          }
-        ]
-      },
-      {
-        "name": "College of Humanities and Social Sciences",
-        "code": "CHUSS",
-        "schools": [
-          {
-            "name": "The School of Liberal and Performing Arts",
-            "code": "LPA",
-            "departments": [
-              { "name": "Department of Philosophy", "code": "PHILOSOPHY" },
-              { "name": "Department of Development Studies", "code": "DEVSTUDIES" },
-              { "name": "Department of Religion and Peace Studies", "code": "RPS" },
-              { "name": "Department of Performing Arts & Film", "code": "PAF" },
-              { "name": "Department of History, Archaeology & Organizational Studies", "code": "HAOS" }
-            ]
-          },
-          {
-            "name": "The School of Women and Gender Studies",
-            "code": "SWGS",
-            "departments": []
-          },
-          {
-            "name": "The School of Languages, Literature and Communication",
-            "code": "LLC",
-            "departments": [
-              { "name": "Department of Literature", "code": "LITERATURE" },
-              { "name": "Department of Linguistics, English Language Studies & Communication Skills", "code": "LELCS" },
-              { "name": "Department of European and Oriental Languages", "code": "EOL" },
-              { "name": "Department of African Languages", "code": "AFRICANLANG" },
-              { "name": "Department of Journalism and Communication", "code": "JC" },
-              { "name": "Department of Journalism and Communication - Student Projects", "code": "JCSP" },
-              { "name": "Centre for Language and Communication Services", "code": "CLCS" },
-              { "name": "Confucius Institute", "code": "CI" }
-            ]
-          },
-          {
-            "name": "School of Psychology",
-            "code": "PSYCHOLOGY",
-            "departments": [
-              { "name": "Department of Mental Health and Community Psychology", "code": "MCP" },
-              { "name": "Department of Educational, Organizational and Social Psychology", "code": "EOSP" }
-            ]
-          },
-          {
-            "name": "The School of Social Sciences",
-            "code": "SOCIALSCI",
-            "departments": [
-              { "name": "Department of Sociology & Anthropology", "code": "SA" },
-              { "name": "Department of Social Work and Social Administration", "code": "SWSA" },
-              { "name": "Child Trafficking Project", "code": "CTP" },
-              { "name": "Department of Political Science and Public Administration", "code": "PSPA" }
-            ]
-          },
-          {
-            "name": "Makerere Institute of Social Research (MISR)",
-            "code": "MISR",
-            "departments": []
-          }
-        ]
-      },
-      {
-        "name": "College of Natural Sciences",
-        "code": "CONAS",
-        "schools": [
-          {
-            "name": "The School of Physical Sciences",
-            "code": "PHYSCI",
-            "departments": [
-              { "name": "Department of Physics", "code": "PHYSICS" },
-              { "name": "Department of Chemistry", "code": "CHEMISTRY" },
-              { "name": "Department of Geology and Petroleum Studies", "code": "GEOPETRO" },
-              { "name": "Department of Mathematics", "code": "MATH" }
-            ]
-          },
-          {
-            "name": "The School of Biosciences",
-            "code": "BIOSCI",
-            "departments": [
-              { "name": "Department of Plant Sciences, Microbiology and Biotechnology", "code": "PMB" },
-              { "name": "Department of Biochemistry and Sports Science", "code": "BSS" },
-              { "name": "Department of Zoology, Entomology and Fisheries Sciences", "code": "ZEF" }
-            ]
-          }
-        ]
-      },
-      {
-        "name": "College of Veterinary Medicine, Animal Resources & BIO-SECURITY",
-        "code": "COVAB",
-        "schools": [
-          {
-            "name": "The School of Bio-security, Biotechnical and Laboratory Sciences",
-            "code": "BIOSEC",
-            "departments": []
-          },
-          {
-            "name": "The School of Veterinary and Animal Resources",
-            "code": "VETAR",
-            "departments": []
-          }
-        ]
-      },
-      {
-        "name": "The School of Law",
-        "code": "LAW",
-        "schools": [
-          {
-            "name": "The School of Law",
-            "code": "LAW",
-            "departments": [
-              { "name": "Department of Law and Jurisprudence", "code": "LJ" },
-              { "name": "Department of Public Law", "code": "PL" },
-              { "name": "Department of Commercial Law", "code": "CL" },
-              { "name": "Department of Environmental Law", "code": "EL" },
-              { "name": "Department of Human Rights and Peace Centre", "code": "HRPC" }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-  
+  "colleges": [
+    {
+      "name": "College of Agricultural and Environmental Sciences",
+      "code": "CAES",
+      "schools": [
+        {
+          "name": "The School of Agricultural Sciences",
+          "code": "SAS",
+          "departments": [
+            {
+              "name": "Agricultural Production",
+              "code": "AP",
+              "courses": [
+                {
+                  "code": "BSC-AGRIC",
+                  "name": "Bachelor of Science in Agriculture",
+                  "years": 4,
+                  "description": "This program focuses on crop and animal production, agricultural economics, and sustainable farming practices.",
+                  "course_units": [
+                    {
+                      "code": "AP1101",
+                      "title": "Introduction to Agricultural Production",
+                      "description": "Overview of agricultural production systems and practices.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AP1102",
+                      "title": "Agricultural Biochemistry",
+                      "description": "Biochemical processes in plants and animals relevant to agriculture.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AP1103",
+                      "title": "Principles of Crop Production",
+                      "description": "Fundamental principles of crop production and management.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AP1201",
+                      "title": "Principles of Animal Production",
+                      "description": "Fundamental principles of animal production and management.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AP1202",
+                      "title": "Soil Science",
+                      "description": "Study of soil properties, classification, and management.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AP1203",
+                      "title": "Agricultural Mathematics",
+                      "description": "Mathematical applications in agricultural systems.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AP2101",
+                      "title": "Crop Physiology",
+                      "description": "Physiological processes in crops and their impact on growth and yield.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AP2102",
+                      "title": "Animal Nutrition",
+                      "description": "Principles of animal nutrition and feed formulation.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AP2103",
+                      "title": "Pest and Disease Management",
+                      "description": "Integrated pest and disease management in agricultural systems.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AP2201",
+                      "title": "Animal Breeding",
+                      "description": "Principles and practices of animal breeding and genetics.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AP2202",
+                      "title": "Crop Breeding",
+                      "description": "Principles and practices of crop breeding and improvement.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AP2203",
+                      "title": "Agricultural Machinery",
+                      "description": "Operation and management of agricultural machinery and equipment.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AP3101",
+                      "title": "Agroforestry Systems",
+                      "description": "Integration of trees with crops and livestock in agricultural systems.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AP3102",
+                      "title": "Dairy Science and Technology",
+                      "description": "Production, processing, and management of dairy products.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AP3103",
+                      "title": "Postharvest Technology",
+                      "description": "Handling, storage, and processing of agricultural products after harvest.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AP3201",
+                      "title": "Crop Protection",
+                      "description": "Protection of crops from pests, diseases, and weeds.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AP3202",
+                      "title": "Animal Health Management",
+                      "description": "Management of animal health and disease prevention.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AP3203",
+                      "title": "Irrigation and Water Management",
+                      "description": "Principles and practices of agricultural water management and irrigation systems.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AP4101",
+                      "title": "Sustainable Agriculture",
+                      "description": "Environmentally sound, socially responsible, and economically viable agricultural practices.",
+                      "year_taken": 4,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AP4102",
+                      "title": "Agricultural Research Methods",
+                      "description": "Research methodologies in agricultural science.",
+                      "year_taken": 4,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AP4103",
+                      "title": "Crop Production Systems",
+                      "description": "Advanced study of crop production systems and management.",
+                      "year_taken": 4,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AP4201",
+                      "title": "Final Year Project",
+                      "description": "Independent research project in agricultural production.",
+                      "year_taken": 4,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AP4202",
+                      "title": "Livestock Production Systems",
+                      "description": "Advanced study of livestock production systems and management.",
+                      "year_taken": 4,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AP4203",
+                      "title": "Agricultural Biotechnology",
+                      "description": "Applications of biotechnology in agriculture.",
+                      "year_taken": 4,
+                      "semester": 2
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Agribusiness and Natural Resource Economics",
+              "code": "AGNRE",
+              "courses": [
+                {
+                  "code": "BSC-AGBIZ",
+                  "name": "Bachelor of Science in Agribusiness Management",
+                  "years": 3,
+                  "description": "This program integrates agricultural science with business management principles to prepare students for careers in the agricultural business sector.",
+                  "course_units": [
+                    {
+                      "code": "AGNRE1101",
+                      "title": "Principles of Microeconomics",
+                      "description": "Basic concepts and principles of microeconomics applied to agriculture.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AGNRE1102",
+                      "title": "Introduction to Agribusiness",
+                      "description": "Overview of the agribusiness sector and its components.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AGNRE1103",
+                      "title": "Agricultural Mathematics",
+                      "description": "Mathematical applications in agricultural economics and business.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AGNRE1201",
+                      "title": "Principles of Macroeconomics",
+                      "description": "Basic concepts and principles of macroeconomics applied to agriculture.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AGNRE1202",
+                      "title": "Agricultural Marketing",
+                      "description": "Principles and practices of marketing agricultural products.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AGNRE1203",
+                      "title": "Financial Accounting for Agribusiness",
+                      "description": "Accounting principles and practices for agribusiness enterprises.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AGNRE2101",
+                      "title": "Agricultural Production Economics",
+                      "description": "Economic principles applied to agricultural production.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AGNRE2102",
+                      "title": "Natural Resource Economics",
+                      "description": "Economic analysis of natural resource use and management.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AGNRE2103",
+                      "title": "Agricultural Finance",
+                      "description": "Financial management of agricultural enterprises.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AGNRE2201",
+                      "title": "Agricultural Policy",
+                      "description": "Analysis of agricultural policies and their impacts.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AGNRE2202",
+                      "title": "Farm Management",
+                      "description": "Principles and practices of farm business management.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AGNRE2203",
+                      "title": "Agricultural Price Analysis",
+                      "description": "Analysis of agricultural prices and price determination.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AGNRE3101",
+                      "title": "Agribusiness Management",
+                      "description": "Management of agribusiness enterprises.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AGNRE3102",
+                      "title": "Agricultural Value Chain Analysis",
+                      "description": "Analysis of agricultural value chains and their development.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AGNRE3103",
+                      "title": "Research Methods in Agricultural Economics",
+                      "description": "Research methodologies for agricultural economics and agribusiness.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "AGNRE3201",
+                      "title": "Agribusiness Capstone Project",
+                      "description": "Independent research project in agribusiness.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AGNRE3202",
+                      "title": "International Agricultural Trade",
+                      "description": "Principles and practices of international trade in agricultural products.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "AGNRE3203",
+                      "title": "Environmental Economics",
+                      "description": "Economic analysis of environmental issues related to agriculture.",
+                      "year_taken": 3,
+                      "semester": 2
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Extension & Innovations",
+              "code": "EI",
+              "courses": [
+                {
+                  "code": "BSC-AEI",
+                  "name": "Bachelor of Science in Agricultural Extension and Innovation",
+                  "years": 3,
+                  "description": "This program prepares students to facilitate knowledge transfer and innovation adoption in agricultural communities.",
+                  "course_units": [
+                    {
+                      "code": "EI1101",
+                      "title": "Introduction to Agricultural Extension",
+                      "description": "Overview of agricultural extension principles and practices.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "EI1102",
+                      "title": "Communication Skills for Extension",
+                      "description": "Effective communication strategies for agricultural extension.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "EI1103",
+                      "title": "Rural Sociology",
+                      "description": "Study of rural communities and social structures.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "EI1201",
+                      "title": "Extension Methods and Approaches",
+                      "description": "Various methods and approaches used in agricultural extension.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "EI1202",
+                      "title": "Agricultural Innovation Systems",
+                      "description": "Understanding and facilitating innovation in agricultural systems.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "EI1203",
+                      "title": "ICT in Agricultural Extension",
+                      "description": "Use of information and communication technologies in agricultural extension.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "EI2101",
+                      "title": "Program Planning in Extension",
+                      "description": "Planning and designing effective extension programs.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "EI2102",
+                      "title": "Participatory Rural Appraisal",
+                      "description": "Participatory methods for assessing rural needs and resources.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "EI2103",
+                      "title": "Extension Administration and Management",
+                      "description": "Management and administration of extension organizations and programs.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "EI2201",
+                      "title": "Group Dynamics in Extension",
+                      "description": "Understanding and facilitating group processes in extension work.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "EI2202",
+                      "title": "Agricultural Education",
+                      "description": "Principles and practices of education in agricultural settings.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "EI2203",
+                      "title": "Gender and Agricultural Development",
+                      "description": "Gender considerations in agricultural extension and development.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "EI3101",
+                      "title": "Extension Program Evaluation",
+                      "description": "Methods and approaches for evaluating extension programs.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "EI3102",
+                      "title": "Agricultural Knowledge Management",
+                      "description": "Management of knowledge in agricultural innovation systems.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "EI3103",
+                      "title": "Research Methods in Extension",
+                      "description": "Research methodologies for agricultural extension.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "EI3201",
+                      "title": "Extension Capstone Project",
+                      "description": "Independent research project in agricultural extension.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "EI3202",
+                      "title": "Agricultural Policy and Extension",
+                      "description": "Analysis of agricultural policies and their implications for extension.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "EI3203",
+                      "title": "Extension Internship",
+                      "description": "Practical experience in agricultural extension organizations.",
+                      "year_taken": 3,
+                      "semester": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "The School of Forestry, Environmental and Geographical Sciences",
+          "code": "FEGS",
+          "departments": [
+            {
+              "name": "Department of Forestry, Bio-Diversity and Tourism",
+              "code": "FBT"
+            },
+            {
+              "name": "Department of Environmental Management",
+              "code": "EM"
+            },
+            {
+              "name": "Department of Geography, Geo Informatics and Climatic Sciences",
+              "code": "GGCS"
+            }
+          ]
+        },
+        {
+          "name": "The School of Food Technology, Nutrition and Bio-engineering",
+          "code": "FTNB",
+          "departments": [
+            {
+              "name": "Department of Agricultural & Bio systems Engineering",
+              "code": "ABE"
+            },
+            {
+              "name": "Department of Food Technology and Human Nutrition",
+              "code": "FTHN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "College of Business and Management Sciences",
+      "code": "COBAMS",
+      "schools": [
+        {
+          "name": "The School of Economics",
+          "code": "ECON",
+          "departments": [
+            {
+              "name": "Department of Economic Theory and Analysis",
+              "code": "ETA",
+              "courses": [
+                {
+                  "code": "BSC-ECON",
+                  "name": "Bachelor of Science in Economics",
+                  "years": 3,
+                  "description": "This program provides a strong foundation in economic theory, quantitative methods, and applied economics for analyzing economic issues and policy.",
+                  "course_units": [
+                    {
+                      "code": "ETA1101",
+                      "title": "Principles of Microeconomics",
+                      "description": "Introduction to basic microeconomic concepts and principles.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ETA1102",
+                      "title": "Mathematics for Economists I",
+                      "description": "Mathematical tools and techniques used in economic analysis.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ETA1103",
+                      "title": "Introduction to Economic Statistics",
+                      "description": "Basic statistical concepts and methods for economic data analysis.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ETA1201",
+                      "title": "Principles of Macroeconomics",
+                      "description": "Introduction to basic macroeconomic concepts and principles.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ETA1202",
+                      "title": "Mathematics for Economists II",
+                      "description": "Advanced mathematical tools for economic analysis.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ETA1203",
+                      "title": "Economic History",
+                      "description": "Historical development of economic systems and thought.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ETA2101",
+                      "title": "Intermediate Microeconomics",
+                      "description": "Advanced analysis of consumer and producer behavior.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ETA2102",
+                      "title": "Econometrics I",
+                      "description": "Introduction to econometric methods and applications.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ETA2103",
+                      "title": "Public Economics",
+                      "description": "Economic analysis of government policies and public sector.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ETA2201",
+                      "title": "Intermediate Macroeconomics",
+                      "description": "Advanced analysis of aggregate economic activity.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ETA2202",
+                      "title": "Econometrics II",
+                      "description": "Advanced econometric techniques and applications.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ETA2203",
+                      "title": "Monetary Economics",
+                      "description": "Theory and practice of monetary policy and financial systems.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ETA3101",
+                      "title": "International Economics",
+                      "description": "Theory and policy of international trade and finance.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ETA3102",
+                      "title": "Economic Growth and Development",
+                      "description": "Theories and empirical evidence on economic development.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ETA3103",
+                      "title": "Research Methods in Economics",
+                      "description": "Research methodologies and empirical analysis in economics.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ETA3201",
+                      "title": "Economics Capstone Project",
+                      "description": "Independent research project in economics.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ETA3202",
+                      "title": "Labor Economics",
+                      "description": "Economic analysis of labor markets and employment.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ETA3203",
+                      "title": "Game Theory and Strategic Behavior",
+                      "description": "Analysis of strategic interaction and decision-making.",
+                      "year_taken": 3,
+                      "semester": 2
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Department of Policy and Development Economics",
+              "code": "PDE",
+              "courses": [
+                {
+                  "code": "BSC-DEVECO",
+                  "name": "Bachelor of Science in Development Economics",
+                  "years": 3,
+                  "description": "This program focuses on economic issues in developing countries, poverty reduction strategies, and sustainable development.",
+                  "course_units": [
+                    {
+                      "code": "PDE1101",
+                      "title": "Introduction to Development Economics",
+                      "description": "Overview of economic development challenges and approaches.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "PDE1102",
+                      "title": "Microeconomic Principles",
+                      "description": "Basic microeconomic concepts with development applications.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "PDE1103",
+                      "title": "Development Statistics",
+                      "description": "Statistical methods for development research and analysis.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "PDE1201",
+                      "title": "Macroeconomic Principles",
+                      "description": "Basic macroeconomic concepts with development applications.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "PDE1202",
+                      "title": "Political Economy of Development",
+                      "description": "Interaction of political and economic factors in development.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "PDE1203",
+                      "title": "Introduction to Policy Analysis",
+                      "description": "Basic concepts and tools for analyzing economic policies.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "PDE2101",
+                      "title": "Development Microeconomics",
+                      "description": "Microeconomic theory applied to development issues.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "PDE2102",
+                      "title": "Development Planning",
+                      "description": "Planning methods and strategies for economic development.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "PDE2103",
+                      "title": "Environmental Economics",
+                      "description": "Economic analysis of environmental issues in development.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "PDE2201",
+                      "title": "Development Macroeconomics",
+                      "description": "Macroeconomic theory applied to development issues.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "PDE2202",
+                      "title": "Applied Econometrics for Development",
+                      "description": "Econometric methods for development research.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "PDE2203",
+                      "title": "Poverty Analysis and Measurement",
+                      "description": "Concepts, measurement, and analysis of poverty.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "PDE3101",
+                      "title": "Agricultural Development Economics",
+                      "description": "Economic analysis of agricultural development issues.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "PDE3102",
+                      "title": "Health Economics in Developing Countries",
+                      "description": "Economic analysis of health systems and policies.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "PDE3103",
+                      "title": "Research Methods in Development Economics",
+                      "description": "Research methodologies for development economics.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "PDE3201",
+                      "title": "Development Economics Capstone Project",
+                      "description": "Independent research project in development economics.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "PDE3202",
+                      "title": "International Development Cooperation",
+                      "description": "Analysis of international aid, trade, and cooperation.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "PDE3203",
+                      "title": "Project Evaluation in Developing Countries",
+                      "description": "Methods and practices for evaluating development projects.",
+                      "year_taken": 3,
+                      "semester": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "School of Business",
+          "code": "BUSINESS",
+          "departments": [
+            {
+              "name": "Department of Marketing & Management",
+              "code": "MM"
+            },
+            {
+              "name": "Department of Accounting and Finance",
+              "code": "AF"
+            }
+          ]
+        },
+        {
+          "name": "School of Statistics and Planning",
+          "code": "STATPLAN",
+          "departments": [
+            {
+              "name": "Department of Planning and Applied Statistics",
+              "code": "PAS"
+            },
+            {
+              "name": "Department of Population Studies",
+              "code": "PS"
+            },
+            {
+              "name": "Department of Statistics and Actuarial Science",
+              "code": "SAS"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "College of Computing and Information Sciences",
+      "code": "COCIS",
+      "schools": [
+        {
+          "name": "School of Computing and Informatics Technology (CIT)",
+          "code": "CIT",
+          "departments": [
+            {
+              "name": "Department of Computer Science",
+              "code": "CS",
+              "courses": [
+                {
+                  "code": "BSC-CS",
+                  "name": "Bachelor of Science in Computer Science",
+                  "years": 3,
+                  "description": "This program produces graduates with strong foundations in computer science, including algorithms, data structures, software design, and computational theory.",
+                  "course_units": [
+                    {
+                      "code": "CSC1101",
+                      "title": "Introduction to Computer Science",
+                      "description": "Fundamentals of computer systems, algorithms, and programming logic.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "CSC1102",
+                      "title": "Programming Fundamentals",
+                      "description": "Introduction to structured programming using high-level languages.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "CSC1103",
+                      "title": "Discrete Mathematics for Computer Science",
+                      "description": "Mathematical foundations for computer science including logic, sets, relations, and functions.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "CSC1201",
+                      "title": "Data Structures and Algorithms",
+                      "description": "Implementation and analysis of fundamental data structures and algorithms.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "CSC1202",
+                      "title": "Object-Oriented Programming",
+                      "description": "Principles and practice of object-oriented design and programming.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "CSC1203",
+                      "title": "Computer Organization and Architecture",
+                      "description": "Introduction to computer hardware, memory systems, and low-level operations.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "CSC2101",
+                      "title": "Database Systems",
+                      "description": "Concepts, design, and implementation of database management systems.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "CSC2102",
+                      "title": "Operating Systems",
+                      "description": "Principles of operating systems design and implementation.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "CSC2103",
+                      "title": "Software Engineering",
+                      "description": "Software development processes, requirements, design, and testing methodologies.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "CSC2201",
+                      "title": "Computer Networks",
+                      "description": "Fundamentals of computer network architectures, protocols, and applications.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "CSC2202",
+                      "title": "Web Programming",
+                      "description": "Technologies and practices for developing web applications.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "CSC2203",
+                      "title": "Theory of Computation",
+                      "description": "Formal languages, automata theory, and computational complexity.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "CSC3101",
+                      "title": "Artificial Intelligence",
+                      "description": "Principles and applications of artificial intelligence.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "CSC3102",
+                      "title": "Computer Graphics",
+                      "description": "Principles and practice of interactive computer graphics.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "CSC3103",
+                      "title": "Research Methods",
+                      "description": "Research methodologies and academic writing in computer science.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "CSC3201",
+                      "title": "Final Year Project",
+                      "description": "Capstone project demonstrating comprehensive computer science skills.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "CSC3202",
+                      "title": "Machine Learning",
+                      "description": "Theory and application of machine learning algorithms.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "CSC3203",
+                      "title": "Information Security",
+                      "description": "Principles and practices of information security and cryptography.",
+                      "year_taken": 3,
+                      "semester": 2
+                    }
+                  ]
+                },
+                {
+                  "code": "MSC-CS",
+                  "name": "Master of Science in Computer Science",
+                  "years": 2,
+                  "description": "Advanced study in theoretical and applied computer science for specialized research and professional development.",
+                  "course_units": [
+                    {
+                      "code": "MCS5101",
+                      "title": "Advanced Algorithms",
+                      "description": "Advanced algorithm design, analysis, and optimization techniques.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "MCS5102",
+                      "title": "Advanced Database Systems",
+                      "description": "Advanced concepts in database management and distributed systems.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "MCS5103",
+                      "title": "Research Methods in Computing",
+                      "description": "Advanced research methodologies and statistical analysis for computer science.",
+                      "year_taken": 1,
+                      "semester": 1
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Department of Information Technology",
+              "code": "IT",
+              "courses": [
+                {
+                  "code": "BSC-IT",
+                  "name": "Bachelor of Science in Information Technology",
+                  "years": 3,
+                  "description": "This program focuses on developing professionals skilled in the application of technology to solve business and organizational problems.",
+                  "course_units": [
+                    {
+                      "code": "ITE1101",
+                      "title": "Introduction to Information Technology",
+                      "description": "Overview of IT concepts, systems, and applications in organizations.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ITE1102",
+                      "title": "Programming for IT",
+                      "description": "Basic programming concepts and skills for IT applications.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ITE1103",
+                      "title": "IT Mathematics",
+                      "description": "Mathematical concepts relevant to information technology.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ITE1201",
+                      "title": "Web Technologies",
+                      "description": "Technologies, standards, and practices for web development.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ITE1202",
+                      "title": "Database Systems for IT",
+                      "description": "Database design, implementation, and management for IT applications.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ITE1203",
+                      "title": "Computer Architecture and Systems",
+                      "description": "Understanding computer hardware, operating systems, and system software.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ITE2101",
+                      "title": "Systems Analysis and Design",
+                      "description": "Methods and practices for analyzing and designing IT systems.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ITE2102",
+                      "title": "Networking Fundamentals",
+                      "description": "Introduction to computer networking concepts and technologies.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ITE2103",
+                      "title": "IT Project Management",
+                      "description": "Principles and practices of managing IT projects.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ITE2201",
+                      "title": "Network Administration",
+                      "description": "Installation, configuration, and management of network systems.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ITE2202",
+                      "title": "Mobile Application Development",
+                      "description": "Design and development of applications for mobile platforms.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ITE2203",
+                      "title": "IT Security Fundamentals",
+                      "description": "Introduction to information security concepts and practices.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ITE3101",
+                      "title": "Cloud Computing",
+                      "description": "Principles, technologies, and applications of cloud computing.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ITE3102",
+                      "title": "Enterprise Systems",
+                      "description": "Integration of enterprise-level applications and systems.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ITE3103",
+                      "title": "IT Research Methods",
+                      "description": "Research techniques and methodologies in IT.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "ITE3201",
+                      "title": "IT Capstone Project",
+                      "description": "Comprehensive project demonstrating integrated IT skills.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ITE3202",
+                      "title": "IT Service Management",
+                      "description": "Frameworks and practices for managing IT services.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "ITE3203",
+                      "title": "IoT and Emerging Technologies",
+                      "description": "Introduction to Internet of Things and emerging IT trends.",
+                      "year_taken": 3,
+                      "semester": 2
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Department of Information Systems",
+              "code": "IS",
+              "courses": [
+                {
+                  "code": "BSC-IS",
+                  "name": "Bachelor of Science in Information Systems",
+                  "years": 3,
+                  "description": "This program bridges business and technology, focusing on how information systems support organizational operations and decision-making.",
+                  "course_units": [
+                    {
+                      "code": "INS1101",
+                      "title": "Introduction to Information Systems",
+                      "description": "Foundations of information systems in organizations.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "INS1102",
+                      "title": "Business Fundamentals for IS",
+                      "description": "Basic business concepts and practices for information systems professionals.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "INS1103",
+                      "title": "Programming for Business Applications",
+                      "description": "Introduction to programming with business applications focus.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "INS1201",
+                      "title": "Database Management Systems",
+                      "description": "Design and implementation of databases for business information systems.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "INS1202",
+                      "title": "Systems Analysis and Design",
+                      "description": "Methodologies for analyzing business needs and designing information systems.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "INS1203",
+                      "title": "Business Data Communications",
+                      "description": "Fundamentals of data communications in business environments.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "INS2101",
+                      "title": "Enterprise Systems",
+                      "description": "Integration and management of enterprise-wide information systems.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "INS2102",
+                      "title": "Business Process Management",
+                      "description": "Analysis, design, and improvement of business processes.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "INS2103",
+                      "title": "IS Project Management",
+                      "description": "Managing information systems projects in organizational contexts.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "INS2201",
+                      "title": "Decision Support Systems",
+                      "description": "Information systems for supporting decision-making processes.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "INS2202",
+                      "title": "Information Security and Governance",
+                      "description": "Security, privacy, and governance of information systems.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "INS2203",
+                      "title": "E-Business and E-Commerce",
+                      "description": "Electronic business models, strategies, and technologies.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "INS3101",
+                      "title": "Business Intelligence",
+                      "description": "Technologies and processes for business analytics and intelligence.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "INS3102",
+                      "title": "IS Strategy and Management",
+                      "description": "Strategic planning and management of information systems.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "INS3103",
+                      "title": "IS Research Methods",
+                      "description": "Research methodologies for information systems.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "INS3201",
+                      "title": "IS Capstone Project",
+                      "description": "Comprehensive project applying information systems concepts.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "INS3202",
+                      "title": "Enterprise Architecture",
+                      "description": "Frameworks and practices for enterprise architecture.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "INS3203",
+                      "title": "Digital Innovation and Transformation",
+                      "description": "Digital technologies for organizational innovation and transformation.",
+                      "year_taken": 3,
+                      "semester": 2
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Department of Networks",
+              "code": "NET",
+              "courses": [
+                {
+                  "code": "BSC-NET",
+                  "name": "Bachelor of Science in Computer Networks",
+                  "years": 3,
+                  "description": "This program focuses on the design, implementation, and management of computer networks and telecommunications systems.",
+                  "course_units": [
+                    {
+                      "code": "NET1101",
+                      "title": "Introduction to Networking",
+                      "description": "Fundamentals of computer networks and telecommunications.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "NET1102",
+                      "title": "Network Programming",
+                      "description": "Programming concepts and techniques for network applications.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "NET1103",
+                      "title": "Computer Systems Architecture",
+                      "description": "Hardware and software architecture of computer systems.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "NET1201",
+                      "title": "Data Communications",
+                      "description": "Principles and practices of data communications.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "NET1202",
+                      "title": "Operating Systems for Networks",
+                      "description": "Operating system concepts relevant to networking.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "NET1203",
+                      "title": "Network Mathematics",
+                      "description": "Mathematical foundations for network design and analysis.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "NET2101",
+                      "title": "Network Protocols and Standards",
+                      "description": "Study of key networking protocols and industry standards.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "NET2102",
+                      "title": "Network Security",
+                      "description": "Security concepts and practices for computer networks.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "NET2103",
+                      "title": "Wireless Networks",
+                      "description": "Design and implementation of wireless networking technologies.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "NET2201",
+                      "title": "Network Administration",
+                      "description": "Management and administration of network systems.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "NET2202",
+                      "title": "Routing and Switching",
+                      "description": "Advanced routing and switching concepts and implementations.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "NET2203",
+                      "title": "Cloud Infrastructure",
+                      "description": "Cloud computing infrastructure and networking.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "NET3101",
+                      "title": "Network Design and Implementation",
+                      "description": "Comprehensive network planning, design, and deployment.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "NET3102",
+                      "title": "Network Performance and Optimization",
+                      "description": "Techniques for analyzing and optimizing network performance.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "NET3103",
+                      "title": "Network Research Methods",
+                      "description": "Research methodologies for networking technologies.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "NET3201",
+                      "title": "Network Capstone Project",
+                      "description": "Comprehensive project demonstrating integrated networking skills.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "NET3202",
+                      "title": "Software-Defined Networking",
+                      "description": "Principles and practices of software-defined networking.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "NET3203",
+                      "title": "Network Virtualization",
+                      "description": "Virtualization technologies for network systems.",
+                      "year_taken": 3,
+                      "semester": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "East African School of Library and Information Science (EASLIS)",
+          "code": "EASLIS",
+          "departments": [
+            {
+              "name": "Department of Library and Information Sciences",
+              "code": "LIS",
+              "courses": [
+                {
+                  "code": "BLIS",
+                  "name": "Bachelor of Library and Information Science",
+                  "years": 3,
+                  "description": "This program prepares students for careers in library services, information management, and knowledge organization.",
+                  "course_units": [
+                    {
+                      "code": "LIS1101",
+                      "title": "Introduction to Library and Information Science",
+                      "description": "Foundations and principles of library and information science.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "LIS1102",
+                      "title": "Information Sources and Services",
+                      "description": "Overview of information resources and reference services.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "LIS1103",
+                      "title": "Information Organization",
+                      "description": "Principles of organizing and representing information.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "LIS1201",
+                      "title": "Information Technology Applications",
+                      "description": "Application of technology in library and information services.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "LIS1202",
+                      "title": "Collection Development",
+                      "description": "Principles and practices of building and managing library collections.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "LIS1203",
+                      "title": "Information Literacy",
+                      "description": "Teaching information skills and promoting information literacy.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "LIS2101",
+                      "title": "Information Retrieval Systems",
+                      "description": "Design and evaluation of information retrieval systems.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "LIS2102",
+                      "title": "Digital Libraries",
+                      "description": "Development and management of digital library collections.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "LIS2103",
+                      "title": "Information Management",
+                      "description": "Managing information resources in organizations.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "LIS2201",
+                      "title": "Information Ethics and Policy",
+                      "description": "Ethical issues and policy frameworks in information provision.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "LIS2202",
+                      "title": "User Studies",
+                      "description": "Understanding users' information needs and behaviors.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "LIS2203",
+                      "title": "Library and Information Center Management",
+                      "description": "Principles and practices of managing information institutions.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "LIS3101",
+                      "title": "Knowledge Management",
+                      "description": "Theories and practices of knowledge management in organizations.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "LIS3102",
+                      "title": "Information Architecture",
+                      "description": "Designing information spaces for usability and findability.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "LIS3103",
+                      "title": "Research Methods in LIS",
+                      "description": "Research methodologies for library and information science.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "LIS3201",
+                      "title": "LIS Capstone Project",
+                      "description": "Comprehensive project applying library and information science concepts.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "LIS3202",
+                      "title": "Trends in Library and Information Science",
+                      "description": "Emerging trends and developments in the field.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "LIS3203",
+                      "title": "Practical Fieldwork",
+                      "description": "Supervised practical experience in information institutions.",
+                      "year_taken": 3,
+                      "semester": 2
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Department of Records and Archives Management",
+              "code": "RAM",
+              "courses": [
+                {
+                  "code": "BRAM",
+                  "name": "Bachelor of Records and Archives Management",
+                  "years": 3,
+                  "description": "This program focuses on managing organizational records and archives, preserving historical documents, and implementing records management systems.",
+                  "course_units": [
+                    {
+                      "code": "RAM1101",
+                      "title": "Introduction to Records and Archives Management",
+                      "description": "Foundational principles of records and archives management.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "RAM1102",
+                      "title": "Records Creation and Capture",
+                      "description": "Processes and systems for creating and capturing records.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "RAM1103",
+                      "title": "Information Technology Basics",
+                      "description": "Introduction to information technology for records managers.",
+                      "year_taken": 1,
+                      "semester": 1
+                    },
+                    {
+                      "code": "RAM1201",
+                      "title": "Records Classification and Indexing",
+                      "description": "Systems and methods for classifying and indexing records.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "RAM1202",
+                      "title": "Legal and Regulatory Environment",
+                      "description": "Legal framework governing records and archives management.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "RAM1203",
+                      "title": "Document and Forms Management",
+                      "description": "Design and management of organizational documents and forms.",
+                      "year_taken": 1,
+                      "semester": 2
+                    },
+                    {
+                      "code": "RAM2101",
+                      "title": "Electronic Records Management",
+                      "description": "Management of digital records and electronic documents.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "RAM2102",
+                      "title": "Archives Administration",
+                      "description": "Principles and practices of managing archival collections.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "RAM2103",
+                      "title": "Records Management Systems",
+                      "description": "Design and implementation of records management systems.",
+                      "year_taken": 2,
+                      "semester": 1
+                    },
+                    {
+                      "code": "RAM2201",
+                      "title": "Preservation and Conservation",
+                      "description": "Techniques for preserving and conserving records and archives.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "RAM2202",
+                      "title": "Disaster Planning and Recovery",
+                      "description": "Strategies for protecting records during disasters.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "RAM2203",
+                      "title": "Records Center Operations",
+                      "description": "Management of records centers and storage facilities.",
+                      "year_taken": 2,
+                      "semester": 2
+                    },
+                    {
+                      "code": "RAM3101",
+                      "title": "Digital Preservation",
+                      "description": "Strategies and technologies for preserving digital information.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "RAM3102",
+                      "title": "Records Management Consulting",
+                      "description": "Principles and practices of records management consulting.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "RAM3103",
+                      "title": "Research Methods in RAM",
+                      "description": "Research methodologies for records and archives management.",
+                      "year_taken": 3,
+                      "semester": 1
+                    },
+                    {
+                      "code": "RAM3201",
+                      "title": "RAM Capstone Project",
+                      "description": "Comprehensive project applying records and archives management concepts.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "RAM3202",
+                      "title": "Information Governance",
+                      "description": "Frameworks for governing information across organizations.",
+                      "year_taken": 3,
+                      "semester": 2
+                    },
+                    {
+                      "code": "RAM3203",
+                      "title": "Professional Practicum",
+                      "description": "Supervised practical experience in records and archives settings.",
+                      "year_taken": 3,
+                      "semester": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "College of Education and External Studies",
+      "code": "CEES",
+      "schools": [
+        {
+          "name": "The School of Education (SoE)",
+          "code": "SOE",
+          "departments": [
+            {
+              "name": "Department of Social Sciences & Arts Education",
+              "code": "SSAE"
+            },
+            {
+              "name": "Department of Science, Technology & Vocational Education (DSTVE)",
+              "code": "DSTVE"
+            },
+            {
+              "name": "Department of Foundations & Curriculum Studies (DFCS)",
+              "code": "DFCS"
+            }
+          ]
+        },
+        {
+          "name": "The School of Distance and Lifelong Learning (SoDLL)",
+          "code": "SODLL",
+          "departments": [
+            {
+              "name": "Department of Adult & Community Education (DACE)",
+              "code": "DACE"
+            },
+            {
+              "name": "Institute of Open Distance and eLearning",
+              "code": "IODE"
+            }
+          ]
+        },
+        {
+          "name": "The East African School of Higher Education Studies and Development (EASHESD)",
+          "code": "EASHESD",
+          "departments": []
+        }
+      ]
+    },
+    {
+      "name": "College of Engineering, Design, Art and Technology",
+      "code": "CEDAT",
+      "schools": [
+        {
+          "name": "School of Engineering",
+          "code": "ENGINEERING",
+          "departments": [
+            {
+              "name": "Department of Civil and Environmental Engineering",
+              "code": "CEE"
+            },
+            {
+              "name": "Department of Electrical and Computer Engineering",
+              "code": "ECE"
+            },
+            {
+              "name": "Department of Mechanical Engineering",
+              "code": "ME"
+            }
+          ]
+        },
+        {
+          "name": "School of the Built Environment",
+          "code": "BUILTENV",
+          "departments": [
+            {
+              "name": "Department of Architecture and Physical Planning",
+              "code": "APP"
+            },
+            {
+              "name": "Department of Construction Economics and Management",
+              "code": "CEM"
+            },
+            {
+              "name": "Department of Geomatics and Land Management",
+              "code": "GLM"
+            }
+          ]
+        },
+        {
+          "name": "The Margaret Trowell School of Industrial and Fine Art",
+          "code": "MTSIFA",
+          "departments": [
+            {
+              "name": "Department of Fine Art",
+              "code": "FA"
+            },
+            {
+              "name": "Department of Visual Communication Design and Multi-media",
+              "code": "VCDMM"
+            },
+            {
+              "name": "Department of Industrial Art and Applied Design",
+              "code": "IAAD"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "College of Health Sciences",
+      "code": "CHS",
+      "schools": [
+        {
+          "name": "The School of Medicine",
+          "code": "MEDICINE",
+          "departments": [
+            {
+              "name": "Department of Internal Medicine",
+              "code": "IM"
+            },
+            {
+              "name": "Department of Surgery",
+              "code": "SURGERY"
+            },
+            {
+              "name": "Department Obstetrics & Gynaecology",
+              "code": "OBGYN"
+            },
+            {
+              "name": "Department of Psychiatry",
+              "code": "PSYCH"
+            },
+            {
+              "name": "Department of Family Medicine",
+              "code": "FAMILYM"
+            },
+            {
+              "name": "Department of Anaesthesia",
+              "code": "ANAESTHESIA"
+            },
+            {
+              "name": "Department of Ear Nose Throat",
+              "code": "ENT"
+            },
+            {
+              "name": "Department of Ophthalmology",
+              "code": "OPHTHO"
+            },
+            {
+              "name": "Department of Orthopaedics",
+              "code": "ORTHO"
+            },
+            {
+              "name": "Department of Radiology & Radio Therapy",
+              "code": "RADIOLOGY"
+            },
+            {
+              "name": "Medical Research Centre",
+              "code": "MRC"
+            },
+            {
+              "name": "Reproductive Health Unit",
+              "code": "RHU"
+            },
+            {
+              "name": "Department of Paediatrics & Child Health",
+              "code": "PCH"
+            }
+          ]
+        },
+        {
+          "name": "The School of Public Health",
+          "code": "PUBLICHEALTH",
+          "departments": [
+            {
+              "name": "Department of Health Policy & Management",
+              "code": "HPM"
+            },
+            {
+              "name": "Department of Epidemic & Biostatistics",
+              "code": "EB"
+            },
+            {
+              "name": "Department of Community Health & Behavioral Sciences",
+              "code": "CHBS"
+            },
+            {
+              "name": "Department of Disease Control & Environmental Health",
+              "code": "DCEH"
+            }
+          ]
+        },
+        {
+          "name": "The School of Biomedical Sciences",
+          "code": "BIOMEDSCI",
+          "departments": [
+            {
+              "name": "Department of Human Anatomy",
+              "code": "ANATOMY"
+            },
+            {
+              "name": "Department of Biochemistry",
+              "code": "BIOCHEM"
+            },
+            {
+              "name": "Department of Microbiology",
+              "code": "MICROBIO"
+            },
+            {
+              "name": "Department of Pathology",
+              "code": "PATH"
+            },
+            {
+              "name": "Department of Physiology",
+              "code": "PHYSIO"
+            },
+            {
+              "name": "Department of Pharmacology & Therapeutics",
+              "code": "PHARM"
+            },
+            {
+              "name": "Department of Anatomy",
+              "code": "ANATOMY2"
+            },
+            {
+              "name": "Department of Medical Illustration",
+              "code": "MEDILLUS"
+            }
+          ]
+        },
+        {
+          "name": "The School of Health Sciences",
+          "code": "HEALTHSCI",
+          "departments": [
+            {
+              "name": "Department of Pharmacy",
+              "code": "PHARMACY"
+            },
+            {
+              "name": "Department of Dentistry",
+              "code": "DENTISTRY"
+            },
+            {
+              "name": "Department of Nursing",
+              "code": "NURSING"
+            },
+            {
+              "name": "Department of Allied Health Sciences",
+              "code": "ALLIEDHEALTH"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "College of Humanities and Social Sciences",
+      "code": "CHUSS",
+      "schools": [
+        {
+          "name": "The School of Liberal and Performing Arts",
+          "code": "LPA",
+          "departments": [
+            {
+              "name": "Department of Philosophy",
+              "code": "PHILOSOPHY"
+            },
+            {
+              "name": "Department of Development Studies",
+              "code": "DEVSTUDIES"
+            },
+            {
+              "name": "Department of Religion and Peace Studies",
+              "code": "RPS"
+            },
+            {
+              "name": "Department of Performing Arts & Film",
+              "code": "PAF"
+            },
+            {
+              "name": "Department of History, Archaeology & Organizational Studies",
+              "code": "HAOS"
+            }
+          ]
+        },
+        {
+          "name": "The School of Women and Gender Studies",
+          "code": "SWGS",
+          "departments": []
+        },
+        {
+          "name": "The School of Languages, Literature and Communication",
+          "code": "LLC",
+          "departments": [
+            {
+              "name": "Department of Literature",
+              "code": "LITERATURE"
+            },
+            {
+              "name": "Department of Linguistics, English Language Studies & Communication Skills",
+              "code": "LELCS"
+            },
+            {
+              "name": "Department of European and Oriental Languages",
+              "code": "EOL"
+            },
+            {
+              "name": "Department of African Languages",
+              "code": "AFRICANLANG"
+            },
+            {
+              "name": "Department of Journalism and Communication",
+              "code": "JC"
+            },
+            {
+              "name": "Department of Journalism and Communication - Student Projects",
+              "code": "JCSP"
+            },
+            {
+              "name": "Centre for Language and Communication Services",
+              "code": "CLCS"
+            },
+            {
+              "name": "Confucius Institute",
+              "code": "CI"
+            }
+          ]
+        },
+        {
+          "name": "School of Psychology",
+          "code": "PSYCHOLOGY",
+          "departments": [
+            {
+              "name": "Department of Mental Health and Community Psychology",
+              "code": "MCP"
+            },
+            {
+              "name": "Department of Educational, Organizational and Social Psychology",
+              "code": "EOSP"
+            }
+          ]
+        },
+        {
+          "name": "The School of Social Sciences",
+          "code": "SOCIALSCI",
+          "departments": [
+            {
+              "name": "Department of Sociology & Anthropology",
+              "code": "SA"
+            },
+            {
+              "name": "Department of Social Work and Social Administration",
+              "code": "SWSA"
+            },
+            {
+              "name": "Child Trafficking Project",
+              "code": "CTP"
+            },
+            {
+              "name": "Department of Political Science and Public Administration",
+              "code": "PSPA"
+            }
+          ]
+        },
+        {
+          "name": "Makerere Institute of Social Research (MISR)",
+          "code": "MISR",
+          "departments": []
+        }
+      ]
+    },
+    {
+      "name": "College of Natural Sciences",
+      "code": "CONAS",
+      "schools": [
+        {
+          "name": "The School of Physical Sciences",
+          "code": "PHYSCI",
+          "departments": [
+            {
+              "name": "Department of Physics",
+              "code": "PHYSICS"
+            },
+            {
+              "name": "Department of Chemistry",
+              "code": "CHEMISTRY"
+            },
+            {
+              "name": "Department of Geology and Petroleum Studies",
+              "code": "GEOPETRO"
+            },
+            {
+              "name": "Department of Mathematics",
+              "code": "MATH"
+            }
+          ]
+        },
+        {
+          "name": "The School of Biosciences",
+          "code": "BIOSCI",
+          "departments": [
+            {
+              "name": "Department of Plant Sciences, Microbiology and Biotechnology",
+              "code": "PMB"
+            },
+            {
+              "name": "Department of Biochemistry and Sports Science",
+              "code": "BSS"
+            },
+            {
+              "name": "Department of Zoology, Entomology and Fisheries Sciences",
+              "code": "ZEF"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "College of Veterinary Medicine, Animal Resources & BIO-SECURITY",
+      "code": "COVAB",
+      "schools": [
+        {
+          "name": "The School of Bio-security, Biotechnical and Laboratory Sciences",
+          "code": "BIOSEC",
+          "departments": []
+        },
+        {
+          "name": "The School of Veterinary and Animal Resources",
+          "code": "VETAR",
+          "departments": []
+        }
+      ]
+    },
+    {
+      "name": "The School of Law",
+      "code": "LAW",
+      "schools": [
+        {
+          "name": "The School of Law",
+          "code": "LAW",
+          "departments": [
+            {
+              "name": "Department of Law and Jurisprudence",
+              "code": "LJ"
+            },
+            {
+              "name": "Department of Public Law",
+              "code": "PL"
+            },
+            {
+              "name": "Department of Commercial Law",
+              "code": "CL"
+            },
+            {
+              "name": "Department of Environmental Law",
+              "code": "EL"
+            },
+            {
+              "name": "Department of Human Rights and Peace Centre",
+              "code": "HRPC"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

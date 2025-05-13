@@ -1,0 +1,142 @@
+{
+    "department_code": "LIS",
+    "department_name": "Department of Library and Information Sciences",
+    "school_code": "EASLIS",
+    "college_code": "COCIS",
+    "courses": [
+        {
+            "code": "BLIS",
+            "name": "Bachelor of Library and Information Science",
+            "years": 3,
+            "description": "This program prepares students for careers in library services, information management, and knowledge organization.",
+            "course_units": [
+                {
+                    "code": "LIS1101",
+                    "title": "Introduction to Library and Information Science",
+                    "description": "Foundations and principles of library and information science.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "LIS1102",
+                    "title": "Information Sources and Services",
+                    "description": "Overview of information resources and reference services.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "LIS1103",
+                    "title": "Information Organization",
+                    "description": "Principles of organizing and representing information.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "LIS1201",
+                    "title": "Information Technology Applications",
+                    "description": "Application of technology in library and information services.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "LIS1202",
+                    "title": "Collection Development",
+                    "description": "Principles and practices of building and managing library collections.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "LIS1203",
+                    "title": "Information Literacy",
+                    "description": "Teaching information skills and promoting information literacy.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "LIS2101",
+                    "title": "Information Retrieval Systems",
+                    "description": "Design and evaluation of information retrieval systems.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "LIS2102",
+                    "title": "Cataloging and Classification",
+                    "description": "Organizing information resources using standard cataloging and classification systems.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "LIS2103",
+                    "title": "Library Management",
+                    "description": "Principles and practices of managing libraries and information centers.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "LIS2201",
+                    "title": "Digital Libraries",
+                    "description": "Development and management of digital libraries and repositories.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "LIS2202",
+                    "title": "Knowledge Management",
+                    "description": "Principles and practices of knowledge management in organizations.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "LIS2203",
+                    "title": "Information Ethics and Policy",
+                    "description": "Ethical issues and policies related to information access and use.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "LIS3101",
+                    "title": "Advanced Information Organization",
+                    "description": "Advanced topics in metadata, taxonomies, and ontologies.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "LIS3102",
+                    "title": "Information Services for Diverse Users",
+                    "description": "Providing information services to diverse user populations.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "LIS3103",
+                    "title": "Research Methods in LIS",
+                    "description": "Research methodologies in library and information science.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "LIS3201",
+                    "title": "LIS Capstone Project",
+                    "description": "Comprehensive project demonstrating integrated LIS skills.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "LIS3202",
+                    "title": "Information Architecture",
+                    "description": "Designing information spaces for usability and findability.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "LIS3203",
+                    "title": "Emerging Technologies in Libraries",
+                    "description": "Exploring and implementing new technologies in library settings.",
+                    "year_taken": 3,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

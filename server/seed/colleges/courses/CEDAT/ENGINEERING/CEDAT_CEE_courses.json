@@ -1,0 +1,184 @@
+{
+    "department_code": "CEE",
+    "department_name": "Department of Civil and Environmental Engineering",
+    "school_code": "ENGINEERING",
+    "college_code": "CEDAT",
+    "courses": [
+        {
+            "code": "BSC-CIVIL",
+            "name": "Bachelor of Science in Civil Engineering",
+            "years": 4,
+            "description": "This program prepares students to design, construct, and maintain the built environment including buildings, roads, bridges, water systems and other infrastructure.",
+            "course_units": [
+                {
+                    "code": "CEE1101",
+                    "title": "Introduction to Civil Engineering",
+                    "description": "Overview of civil engineering disciplines and practice.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CEE1102",
+                    "title": "Engineering Mathematics I",
+                    "description": "Mathematical tools and methods for engineering applications.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CEE1103",
+                    "title": "Engineering Mechanics",
+                    "description": "Fundamental principles of statics and dynamics.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "CEE1201",
+                    "title": "Engineering Drawing and CAD",
+                    "description": "Principles of technical drawing and computer-aided design.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CEE1202",
+                    "title": "Materials Science",
+                    "description": "Properties and behavior of engineering materials.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CEE1203",
+                    "title": "Engineering Mathematics II",
+                    "description": "Advanced mathematical methods for engineering applications.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "CEE2101",
+                    "title": "Structural Mechanics",
+                    "description": "Analysis of structural systems and components.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CEE2102",
+                    "title": "Fluid Mechanics",
+                    "description": "Behavior of fluids at rest and in motion.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CEE2103",
+                    "title": "Soil Mechanics",
+                    "description": "Engineering properties and behavior of soils.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "CEE2201",
+                    "title": "Structural Analysis",
+                    "description": "Methods for analyzing structural systems.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CEE2202",
+                    "title": "Hydraulics Engineering",
+                    "description": "Application of fluid mechanics to water systems.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CEE2203",
+                    "title": "Surveying",
+                    "description": "Principles and methods of land surveying.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "CEE3101",
+                    "title": "Reinforced Concrete Design",
+                    "description": "Design of reinforced concrete structures.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CEE3102",
+                    "title": "Highway Engineering",
+                    "description": "Design, construction, and maintenance of highways.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CEE3103",
+                    "title": "Environmental Engineering",
+                    "description": "Environmental considerations in civil engineering.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "CEE3201",
+                    "title": "Steel Structure Design",
+                    "description": "Design of steel structures and components.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "CEE3202",
+                    "title": "Geotechnical Engineering",
+                    "description": "Engineering applications of soil mechanics.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "CEE3203",
+                    "title": "Water Resources Engineering",
+                    "description": "Management and development of water resources.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "CEE4101",
+                    "title": "Advanced Structural Design",
+                    "description": "Advanced topics in structural engineering.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "CEE4102",
+                    "title": "Construction Management",
+                    "description": "Management of construction projects and resources.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "CEE4103",
+                    "title": "Engineering Research Methods",
+                    "description": "Research methodologies in civil engineering.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "CEE4201",
+                    "title": "Final Year Project",
+                    "description": "Comprehensive engineering project.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "CEE4202",
+                    "title": "Professional Practice and Ethics",
+                    "description": "Ethical and professional aspects of engineering practice.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "CEE4203",
+                    "title": "Sustainable Infrastructure",
+                    "description": "Sustainable approaches to infrastructure development.",
+                    "year_taken": 4,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,360 @@
+{
+    "department_code": "FTHN",
+    "department_name": "Department of Food Technology and Human Nutrition",
+    "school_code": "FTNB",
+    "college_code": "CAES",
+    "courses": [
+        {
+            "code": "BSC-FOODSCI",
+            "name": "Bachelor of Science in Food Science and Technology",
+            "years": 4,
+            "description": "This program focuses on the scientific and technological aspects of food production, processing, preservation, and safety.",
+            "course_units": [
+                {
+                    "code": "FST1101",
+                    "title": "Introduction to Food Science",
+                    "description": "Overview of food science principles and applications.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "FST1102",
+                    "title": "Chemistry for Food Scientists",
+                    "description": "Chemical principles relevant to food science.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "FST1103",
+                    "title": "Biology for Food Scientists",
+                    "description": "Biological principles relevant to food science.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "FST1201",
+                    "title": "Food Microbiology I",
+                    "description": "Basic microbiology concepts relevant to food systems.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "FST1202",
+                    "title": "Food Chemistry I",
+                    "description": "Chemical composition and properties of food components.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "FST1203",
+                    "title": "Food Mathematics and Statistics",
+                    "description": "Mathematical and statistical methods for food science applications.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "FST2101",
+                    "title": "Food Microbiology II",
+                    "description": "Advanced concepts in food microbiology.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "FST2102",
+                    "title": "Food Chemistry II",
+                    "description": "Advanced food chemistry concepts and applications.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "FST2103",
+                    "title": "Food Processing I",
+                    "description": "Basic principles and techniques of food processing.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "FST2201",
+                    "title": "Food Analysis",
+                    "description": "Methods for analyzing food composition and quality.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "FST2202",
+                    "title": "Food Processing II",
+                    "description": "Advanced food processing technologies and applications.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "FST2203",
+                    "title": "Food Engineering",
+                    "description": "Engineering principles applied to food processing operations.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "FST3101",
+                    "title": "Food Product Development",
+                    "description": "Principles and processes of developing new food products.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "FST3102",
+                    "title": "Food Safety and Quality Management",
+                    "description": "Systems and practices for ensuring food safety and quality.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "FST3103",
+                    "title": "Food Packaging",
+                    "description": "Materials, technologies, and systems for food packaging.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "FST3201",
+                    "title": "Food Biotechnology",
+                    "description": "Applications of biotechnology in food production and processing.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "FST3202",
+                    "title": "Sensory Evaluation of Foods",
+                    "description": "Methods for evaluating sensory attributes of foods.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "FST3203",
+                    "title": "Functional Foods",
+                    "description": "Foods and ingredients with potential health benefits.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "FST4101",
+                    "title": "Research Methods in Food Science",
+                    "description": "Research methodologies for food science and technology.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "FST4102",
+                    "title": "Food Laws and Regulations",
+                    "description": "Legal and regulatory frameworks for food production and marketing.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "FST4103",
+                    "title": "Food Industry Management",
+                    "description": "Management principles and practices in the food industry.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "FST4201",
+                    "title": "Food Science Capstone Project",
+                    "description": "Independent research project in food science and technology.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "FST4202",
+                    "title": "Emerging Technologies in Food Science",
+                    "description": "New and emerging technologies in food science and processing.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "FST4203",
+                    "title": "Professional Practice in Food Science",
+                    "description": "Professional and ethical aspects of food science practice.",
+                    "year_taken": 4,
+                    "semester": 2
+                }
+            ]
+        },
+        {
+            "code": "BSC-NUTRITION",
+            "name": "Bachelor of Science in Human Nutrition and Dietetics",
+            "years": 4,
+            "description": "This program focuses on the nutritional needs of humans, the relationship between diet and health, and the management of nutritional services.",
+            "course_units": [
+                {
+                    "code": "NUT1101",
+                    "title": "Introduction to Human Nutrition",
+                    "description": "Fundamentals of human nutrition and dietary requirements.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "NUT1102",
+                    "title": "Human Anatomy and Physiology I",
+                    "description": "Basic structure and function of human body systems.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "NUT1103",
+                    "title": "Chemistry for Nutritionists",
+                    "description": "Chemical principles relevant to nutrition science.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "NUT1201",
+                    "title": "Human Anatomy and Physiology II",
+                    "description": "Advanced concepts in human anatomy and physiology.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "NUT1202",
+                    "title": "Biochemistry for Nutritionists",
+                    "description": "Biochemical principles and processes relevant to nutrition.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "NUT1203",
+                    "title": "Food Science for Nutritionists",
+                    "description": "Basic food science concepts for nutrition professionals.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "NUT2101",
+                    "title": "Nutritional Biochemistry",
+                    "description": "Biochemical aspects of nutrient metabolism.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "NUT2102",
+                    "title": "Nutritional Assessment",
+                    "description": "Methods for assessing nutritional status.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "NUT2103",
+                    "title": "Nutrition Through the Life Cycle",
+                    "description": "Nutritional needs at different stages of the life cycle.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "NUT2201",
+                    "title": "Community Nutrition",
+                    "description": "Nutrition issues and interventions at the community level.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "NUT2202",
+                    "title": "Food Service Management",
+                    "description": "Management of food service operations in various settings.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "NUT2203",
+                    "title": "Food Microbiology and Safety",
+                    "description": "Microbiological aspects of food safety for nutritionists.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "NUT3101",
+                    "title": "Medical Nutrition Therapy I",
+                    "description": "Nutritional management of common diseases and conditions.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "NUT3102",
+                    "title": "Nutrition Education and Counseling",
+                    "description": "Principles and techniques of nutrition education and counseling.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "NUT3103",
+                    "title": "Sports Nutrition",
+                    "description": "Nutritional needs and strategies for athletic performance.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "NUT3201",
+                    "title": "Medical Nutrition Therapy II",
+                    "description": "Advanced clinical nutrition and therapeutic diets.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "NUT3202",
+                    "title": "Public Health Nutrition",
+                    "description": "Nutrition issues and interventions at the population level.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "NUT3203",
+                    "title": "Nutrition Policy",
+                    "description": "Policy frameworks and interventions for nutrition improvement.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "NUT4101",
+                    "title": "Research Methods in Nutrition",
+                    "description": "Research methodologies for nutrition science.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "NUT4102",
+                    "title": "Functional Foods and Nutraceuticals",
+                    "description": "Foods and compounds with potential health benefits.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "NUT4103",
+                    "title": "Nutrition in Disease Prevention",
+                    "description": "Role of nutrition in preventing chronic diseases.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "NUT4201",
+                    "title": "Nutrition Capstone Project",
+                    "description": "Independent research project in nutrition science.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "NUT4202",
+                    "title": "Clinical Nutrition Practicum",
+                    "description": "Supervised practice in clinical nutrition settings.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "NUT4203",
+                    "title": "Professional Practice in Nutrition",
+                    "description": "Professional and ethical aspects of nutrition practice.",
+                    "year_taken": 4,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,142 @@
+{
+    "department_code": "RAM",
+    "department_name": "Department of Records and Archives Management",
+    "school_code": "EASLIS",
+    "college_code": "COCIS",
+    "courses": [
+        {
+            "code": "BRAM",
+            "name": "Bachelor of Records and Archives Management",
+            "years": 3,
+            "description": "This program focuses on managing organizational records and archives, preserving historical documents, and implementing records management systems.",
+            "course_units": [
+                {
+                    "code": "RAM1101",
+                    "title": "Introduction to Records and Archives Management",
+                    "description": "Foundations of records and archives management.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "RAM1102",
+                    "title": "Principles of Records Creation and Maintenance",
+                    "description": "Basic principles of creating and maintaining records.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "RAM1103",
+                    "title": "Information Technology for Records Management",
+                    "description": "Application of technology in records management.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "RAM1201",
+                    "title": "Records Classification Systems",
+                    "description": "Principles and practices of records classification.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "RAM1202",
+                    "title": "Legal and Regulatory Environment",
+                    "description": "Legal framework for records and archives management.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "RAM1203",
+                    "title": "Records Storage and Preservation",
+                    "description": "Techniques for storing and preserving records and archives.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "RAM2101",
+                    "title": "Electronic Records Management",
+                    "description": "Management of digital records and electronic documents.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "RAM2102",
+                    "title": "Archival Description and Access",
+                    "description": "Standards and practices for describing and providing access to archives.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "RAM2103",
+                    "title": "Records Management Systems",
+                    "description": "Design and implementation of records management systems.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "RAM2201",
+                    "title": "Digital Preservation",
+                    "description": "Long-term preservation of digital information.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "RAM2202",
+                    "title": "Records Appraisal and Disposition",
+                    "description": "Principles and practices of appraising and disposing of records.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "RAM2203",
+                    "title": "Archives Administration",
+                    "description": "Management and administration of archival institutions.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "RAM3101",
+                    "title": "Special Collections Management",
+                    "description": "Management of special collections and rare materials.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "RAM3102",
+                    "title": "Records Risk Management",
+                    "description": "Identifying and mitigating risks in records management.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "RAM3103",
+                    "title": "Research Methods in RAM",
+                    "description": "Research methodologies in records and archives management.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "RAM3201",
+                    "title": "RAM Capstone Project",
+                    "description": "Comprehensive project demonstrating integrated RAM skills.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "RAM3202",
+                    "title": "Information Governance",
+                    "description": "Frameworks for governing information across organizations.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "RAM3203",
+                    "title": "Cultural Heritage Preservation",
+                    "description": "Preservation of cultural heritage through archives and records.",
+                    "year_taken": 3,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

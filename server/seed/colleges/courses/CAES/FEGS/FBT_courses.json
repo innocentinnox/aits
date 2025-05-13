@@ -1,0 +1,318 @@
+{
+    "department_code": "FBT",
+    "department_name": "Department of Forestry, Bio-Diversity and Tourism",
+    "school_code": "FEGS",
+    "college_code": "CAES",
+    "courses": [
+        {
+            "code": "BSC-FORESTRY",
+            "name": "Bachelor of Science in Forestry",
+            "years": 4,
+            "description": "This program focuses on sustainable forest management, conservation of biodiversity, and utilization of forest resources.",
+            "course_units": [
+                {
+                    "code": "FBT1101",
+                    "title": "Introduction to Forestry",
+                    "description": "Overview of forest ecosystems and forestry practices.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "FBT1102",
+                    "title": "Forest Botany",
+                    "description": "Botanical characteristics of forest trees and plants.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "FBT1103",
+                    "title": "Principles of Ecology",
+                    "description": "Fundamental ecological concepts relevant to forest ecosystems.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "FBT1201",
+                    "title": "Forest Soils",
+                    "description": "Properties and management of soils in forest ecosystems.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "FBT1202",
+                    "title": "Dendrology",
+                    "description": "Identification and classification of trees and woody plants.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "FBT1203",
+                    "title": "Forestry Mathematics",
+                    "description": "Mathematical methods applied to forestry.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "FBT2101",
+                    "title": "Silviculture",
+                    "description": "Principles and practices of growing and managing forests.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "FBT2102",
+                    "title": "Forest Mensuration",
+                    "description": "Techniques for measuring forest resources.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "FBT2103",
+                    "title": "Forest Economics",
+                    "description": "Economic principles applied to forest resources.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "FBT2201",
+                    "title": "Forest Protection",
+                    "description": "Protection of forests from pests, diseases, and fire.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "FBT2202",
+                    "title": "Biodiversity Conservation",
+                    "description": "Principles and practices of biodiversity conservation.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "FBT2203",
+                    "title": "Forest Products",
+                    "description": "Utilization and processing of forest products.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "FBT3101",
+                    "title": "Forest Management",
+                    "description": "Planning and management of forest resources.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "FBT3102",
+                    "title": "Remote Sensing for Forestry",
+                    "description": "Application of remote sensing techniques in forestry.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "FBT3103",
+                    "title": "Agroforestry",
+                    "description": "Integration of trees with agricultural crops and livestock.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "FBT3201",
+                    "title": "Forest Policy and Governance",
+                    "description": "Policies and regulatory frameworks for forest management.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "FBT3202",
+                    "title": "Urban Forestry",
+                    "description": "Management of trees and forests in urban settings.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "FBT3203",
+                    "title": "Forest Certification",
+                    "description": "Standards and certification processes for sustainable forestry.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "FBT4101",
+                    "title": "Climate Change and Forestry",
+                    "description": "Role of forests in climate change mitigation and adaptation.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "FBT4102",
+                    "title": "Forest Resource Assessment",
+                    "description": "Methods for assessing and monitoring forest resources.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "FBT4103",
+                    "title": "Research Methods in Forestry",
+                    "description": "Research methodologies for forestry and related fields.",
+                    "year_taken": 4,
+                    "semester": 1
+                },
+                {
+                    "code": "FBT4201",
+                    "title": "Forestry Capstone Project",
+                    "description": "Independent research project in forestry.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "FBT4202",
+                    "title": "Forest Restoration",
+                    "description": "Principles and practices of forest ecosystem restoration.",
+                    "year_taken": 4,
+                    "semester": 2
+                },
+                {
+                    "code": "FBT4203",
+                    "title": "Professional Practice in Forestry",
+                    "description": "Professional and ethical aspects of forestry practice.",
+                    "year_taken": 4,
+                    "semester": 2
+                }
+            ]
+        },
+        {
+            "code": "BSC-TOURISM",
+            "name": "Bachelor of Science in Tourism",
+            "years": 3,
+            "description": "This program equips students with knowledge and skills for careers in tourism planning, management, and sustainable development.",
+            "course_units": [
+                {
+                    "code": "TRM1101",
+                    "title": "Introduction to Tourism",
+                    "description": "Overview of the tourism industry and its components.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "TRM1102",
+                    "title": "Tourism Geography",
+                    "description": "Geographical aspects of tourism destinations and attractions.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "TRM1103",
+                    "title": "Principles of Conservation",
+                    "description": "Basic concepts and practices of conservation for tourism.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "TRM1201",
+                    "title": "Tourism Economics",
+                    "description": "Economic principles and impacts of tourism.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "TRM1202",
+                    "title": "Customer Service in Tourism",
+                    "description": "Principles and practices of customer service in tourism settings.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "TRM1203",
+                    "title": "Tourism Communication",
+                    "description": "Communication skills for tourism professionals.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "TRM2101",
+                    "title": "Sustainable Tourism",
+                    "description": "Principles and practices of sustainable tourism development.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "TRM2102",
+                    "title": "Tourism Marketing",
+                    "description": "Marketing concepts and strategies for tourism destinations and businesses.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "TRM2103",
+                    "title": "Tourism Policy and Planning",
+                    "description": "Policy frameworks and planning approaches for tourism development.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "TRM2201",
+                    "title": "Ecotourism",
+                    "description": "Principles and practices of ecological tourism.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "TRM2202",
+                    "title": "Tourism Business Management",
+                    "description": "Management of tourism businesses and enterprises.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "TRM2203",
+                    "title": "Heritage Tourism",
+                    "description": "Management and interpretation of cultural and heritage tourism sites.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "TRM3101",
+                    "title": "Tourism Impact Assessment",
+                    "description": "Methods for assessing the impacts of tourism development.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "TRM3102",
+                    "title": "Tourism Information Systems",
+                    "description": "Information technology applications in tourism.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "TRM3103",
+                    "title": "Research Methods in Tourism",
+                    "description": "Research methodologies for tourism studies.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "TRM3201",
+                    "title": "Tourism Capstone Project",
+                    "description": "Independent research project in tourism.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "TRM3202",
+                    "title": "Tourism Entrepreneurship",
+                    "description": "Entrepreneurial approaches to tourism business development.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "TRM3203",
+                    "title": "Tourism Internship",
+                    "description": "Practical experience in the tourism industry.",
+                    "year_taken": 3,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,142 @@
+{
+    "department_code": "IT",
+    "department_name": "Department of Information Technology",
+    "school_code": "CIT",
+    "college_code": "COCIS",
+    "courses": [
+        {
+            "code": "BSC-IT",
+            "name": "Bachelor of Science in Information Technology",
+            "years": 3,
+            "description": "This program focuses on developing professionals skilled in the application of technology to solve business and organizational problems.",
+            "course_units": [
+                {
+                    "code": "ITE1101",
+                    "title": "Introduction to Information Technology",
+                    "description": "Overview of IT concepts, systems, and applications in organizations.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ITE1102",
+                    "title": "Programming for IT",
+                    "description": "Basic programming concepts and skills for IT applications.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ITE1103",
+                    "title": "IT Mathematics",
+                    "description": "Mathematical concepts relevant to information technology.",
+                    "year_taken": 1,
+                    "semester": 1
+                },
+                {
+                    "code": "ITE1201",
+                    "title": "Web Technologies",
+                    "description": "Technologies, standards, and practices for web development.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ITE1202",
+                    "title": "Database Systems for IT",
+                    "description": "Database design, implementation, and management for IT applications.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ITE1203",
+                    "title": "Computer Architecture and Systems",
+                    "description": "Understanding computer hardware, operating systems, and system software.",
+                    "year_taken": 1,
+                    "semester": 2
+                },
+                {
+                    "code": "ITE2101",
+                    "title": "Systems Analysis and Design",
+                    "description": "Methods and practices for analyzing and designing IT systems.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ITE2102",
+                    "title": "Networking Fundamentals",
+                    "description": "Introduction to computer networking concepts and technologies.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ITE2103",
+                    "title": "IT Project Management",
+                    "description": "Principles and practices of managing IT projects.",
+                    "year_taken": 2,
+                    "semester": 1
+                },
+                {
+                    "code": "ITE2201",
+                    "title": "Network Administration",
+                    "description": "Installation, configuration, and management of network systems.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ITE2202",
+                    "title": "Mobile Application Development",
+                    "description": "Design and development of applications for mobile platforms.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ITE2203",
+                    "title": "IT Security Fundamentals",
+                    "description": "Introduction to information security concepts and practices.",
+                    "year_taken": 2,
+                    "semester": 2
+                },
+                {
+                    "code": "ITE3101",
+                    "title": "Cloud Computing",
+                    "description": "Principles, technologies, and applications of cloud computing.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ITE3102",
+                    "title": "Enterprise Systems",
+                    "description": "Integration of enterprise-level applications and systems.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ITE3103",
+                    "title": "IT Research Methods",
+                    "description": "Research techniques and methodologies in IT.",
+                    "year_taken": 3,
+                    "semester": 1
+                },
+                {
+                    "code": "ITE3201",
+                    "title": "IT Capstone Project",
+                    "description": "Comprehensive project demonstrating integrated IT skills.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "ITE3202",
+                    "title": "IT Service Management",
+                    "description": "Frameworks and practices for managing IT services.",
+                    "year_taken": 3,
+                    "semester": 2
+                },
+                {
+                    "code": "ITE3203",
+                    "title": "IoT and Emerging Technologies",
+                    "description": "Introduction to Internet of Things and emerging IT trends.",
+                    "year_taken": 3,
+                    "semester": 2
+                }
+            ]
+        }
+    ]
+}
