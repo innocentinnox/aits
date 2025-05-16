@@ -121,4 +121,11 @@ class AITSTestCase(APILiveServerTestCase):
         self.user.refresh_from_db()
         self.assertEqual(self.user.email, 'updated@example.com')
 
+    def test_notification_list_view(self):
+        # Test 14: NotificationListView returns notifications
+        response = self.client.get('/api/notifications/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['message'], 'Test notification')
+
 
