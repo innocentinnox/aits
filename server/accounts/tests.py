@@ -85,5 +85,7 @@ class AITSTestCase(APILiveServerTestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(User.objects.filter(username='newuser').exists())
 
+    
+
 
 
