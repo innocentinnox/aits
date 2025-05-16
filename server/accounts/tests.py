@@ -106,5 +106,12 @@ class AITSTestCase(APILiveServerTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertFalse(Token.objects.filter(user=self.user).exists())
 
+    def test_login_view(self):
+        # Test 12: LoginView logs in a user
+        data = {'username': 'testuser', 'password': 'testpass'}
+        response = self.client.post('/api/login/', data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('token', response.data)
+
 
 
