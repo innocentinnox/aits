@@ -92,6 +92,13 @@ class AITSTestCase(APILiveServerTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['user_id'], self.user.id)
 
+    def test_password_reset_request_api(self):
+        # Test 10: PasswordResetRequestAPIView sends a password reset email
+        data = {'email': 'test@example.com'}
+        response = self.client.post('/api/password-reset-request/', data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].to, ['test@example.com'])
     
 
 
