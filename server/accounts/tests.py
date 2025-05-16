@@ -35,4 +35,11 @@ class AITSTestCase(APILiveServerTestCase):
         college = serializer.save()
         self.assertEqual(college.name, 'Arts')
 
+    def test_college_list_api(self):
+        # Test 2: CollegeListAPIView returns colleges
+        response = self.client.get('/api/colleges/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['name'], 'Engineering')
+
 
