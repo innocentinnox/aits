@@ -113,5 +113,12 @@ class AITSTestCase(APILiveServerTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('token', response.data)
 
+    def test_profile_update_view(self):
+        # Test 13: ProfileUpdateView updates a user's profile
+        data = {'email': 'updated@example.com'}
+        response = self.client.patch('/api/profile/', data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.email, 'updated@example.com')
 
 
