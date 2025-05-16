@@ -136,3 +136,8 @@ class AITSTestCase(APILiveServerTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('access_token', response.data)
 
+    def test_status_view(self):
+        # Test 16: status_view returns a status
+        response = self.client.get('/api/status/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['status'], 'OK')
