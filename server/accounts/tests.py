@@ -78,6 +78,12 @@ class AITSTestCase(APILiveServerTestCase):
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Test')
 
+    def test_signup_api(self):
+        # Test 8: SignupAPIView creates a new user
+        data = {'username': 'newuser', 'password': 'newpass', 'email': 'new@example.com'}
+        response = self.client.post('/api/signup/', data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(User.objects.filter(username='newuser').exists())
 
 
 
