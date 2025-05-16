@@ -85,6 +85,13 @@ class AITSTestCase(APILiveServerTestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(User.objects.filter(username='newuser').exists())
 
+    def test_verify_token_api(self):
+        # Test 9: VerifyTokenAPIView verifies a token
+        token = jwt.encode({'user_id': self.user.id}, settings.SECRET_KEY, algorithm='HS256')
+        response = self.client.post('/api/verify-token/', {'token': token})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['user_id'], self.user.id)
+
     
 
 
