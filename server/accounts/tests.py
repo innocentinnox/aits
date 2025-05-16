@@ -30,5 +30,9 @@ class AITSTestCase(APILiveServerTestCase):
         serializer = CollegeSerializer(college)
         self.assertEqual(serializer.data['name'], 'Science')
         data = {'name': 'Arts'}
+        serializer = CollegeSerializer(data=data)
+        self.assertTrue(serializer.is_valid())
+        college = serializer.save()
+        self.assertEqual(college.name, 'Arts')
 
 
