@@ -70,6 +70,14 @@ class AITSTestCase(APILiveServerTestCase):
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['name'], 'Web Development')
 
+    def test_send_email_api(self):
+        # Test 7: SendEmailAPIView sends an email
+        data = {'to': 'test@example.com', 'subject': 'Test', 'body': 'Hello'}
+        response = self.client.post('/api/send-email/', data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].subject, 'Test')
+
 
 
 
