@@ -128,4 +128,11 @@ class AITSTestCase(APILiveServerTestCase):
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['message'], 'Test notification')
 
+    def test_token_refresh_cookie_view(self):
+        # Test 15: TokenRefreshCookieView refreshes a token
+        refresh_token = jwt.encode({'user_id': self.user.id}, settings.SECRET_KEY, algorithm='HS256')
+        self.client.cookies['refresh_token'] = refresh_token
+        response = self.client.post('/api/token-refresh/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('access_token', response.data)
 
