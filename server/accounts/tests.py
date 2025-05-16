@@ -49,5 +49,12 @@ class AITSTestCase(APILiveServerTestCase):
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['name'], 'Computer Science')
 
+    def test_department_list_api(self):
+        # Test 4: DepartmentListAPIView returns departments
+        response = self.client.get('/api/departments/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['name'], 'Software Engineering')
+
 
 
