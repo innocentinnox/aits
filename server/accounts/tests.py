@@ -22,3 +22,13 @@ class AITSTestCase(APILiveServerTestCase):
         self.course = Course.objects.create(name='BSc Software Engineering', department=self.department)
         self.course_unit = CourseUnit.objects.create(name='Web Development', course=self.course)
         self.notification = Notification.objects.create(user=self.user, message='Test notification')
+
+
+    def test_college_serializer(self):
+        # Test 1: CollegeSerializer serialization/deserialization
+        college = College.objects.create(name='Science')
+        serializer = CollegeSerializer(college)
+        self.assertEqual(serializer.data['name'], 'Science')
+        data = {'name': 'Arts'}
+
+
