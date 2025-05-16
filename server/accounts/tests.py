@@ -100,6 +100,11 @@ class AITSTestCase(APILiveServerTestCase):
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].to, ['test@example.com'])
     
+    def test_logout_view(self):
+        # Test 11: LogoutView logs out a user
+        response = self.client.post('/api/logout/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertFalse(Token.objects.filter(user=self.user).exists())
 
 
 
