@@ -21,6 +21,7 @@ import OnboardingPage from "./page/auth/onboarding";
 import AdminLayout from "./admin/AdminLayout";
 import Statistics from "./admin/stat/Statistics";
 import DashboardAdmin from "./admin/dashboard/DashboardAdmin";
+import DashboardLecturer from "./lecturer/dashboard/DashboardLecturer";
 import StudentLayout from "./student/StudentLayout";
 import LecturerLayout from "./lecturer/LecturerLayout";
 import RoleNavigator from "./admin/AdminLayout";
@@ -54,8 +55,7 @@ const router = createBrowserRouter([
                 element: <DetailsForm />,
               },
             ],
-          },
-          {
+          }, {
             path: "/lecturer",
             element: <LecturerLayout />,
             children: [
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "dashboard",
-                element: <DashboardAdmin />,
+                element: <DashboardLecturer />,
               },
               {
                 path: "",
