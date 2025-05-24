@@ -1,4 +1,4 @@
-import { ADMIN_NAV_ITEMS, STUDENT_NAV_ITEMS } from "../icons/Svg";
+import { ADMIN_NAV_ITEMS, LECTURER_NAV_ITEMS, STUDENT_NAV_ITEMS } from "../icons/Svg";
 import { PopMenuProvider } from "@/context/usePopMenu";
 import MenuItem from "./MenuItem";
 import { useAuth } from "@/auth";
@@ -15,6 +15,21 @@ export default function Menu({
     return (
       <ul className="mt-5 flex-col flex  ">
         {ADMIN_NAV_ITEMS.map(({ path, name, icon }, index) => (
+          <MenuItem
+            name={name}
+            icon={icon}
+            path={path}
+            key={name}
+            setIsMenuOpen={setIsMenuOpen}
+          />
+        ))}
+      </ul>
+    );
+
+  if (user?.role === "lecturer")
+    return (
+      <ul className="mt-5 flex-col flex  ">
+        {LECTURER_NAV_ITEMS.map(({ path, name, icon }, index) => (
           <MenuItem
             name={name}
             icon={icon}
