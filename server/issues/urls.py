@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import (
     IssueCreateView, IssueDetailView, IssueUpdateView, 
-    IssueListView, IssueCategoryView, RegistrarIssuesListView
+    IssueListView, IssueCategoryView, RegistrarIssuesListView,
+    LecturerIssuesListView
 )
 
 urlpatterns = [
@@ -11,4 +12,5 @@ urlpatterns = [
     path('detail/<str:token>/', IssueDetailView.as_view(), name='issue-detail'),
     path('update/<str:token>/', IssueUpdateView.as_view(), name='issue-update'),
     path('registrar-view/', RegistrarIssuesListView.as_view(), name='registrar-issues'),
+    path('lecturer-view/', LecturerIssuesListView.as_view(), name='lecturer-issues'),
 ]
