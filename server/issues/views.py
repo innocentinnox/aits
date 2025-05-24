@@ -193,6 +193,129 @@ class RegistrarIssuesListView(generics.ListAPIView):
             "issues": serializer.data
         }, status=status.HTTP_200_OK)
         
+# New Lecturer Issues List View
+class LecturerIssuesListView(generics.ListAPIView):
+    """
+    Returns a paginated list of issues forwarded to the current lecturer.
+    Only shows issues that have been forwarded to this lecturer.
+    
+    Supports filtering via query parameters:
+      - search: text to search in title, description, or resolution_details.
+      - priority: filter by priority (1, 2, or 3).
+      - category: filter by IssueCategory id.
+      - status: filter by status (e.g., 'forwarded', 'resolved').
+      - course: filter by Course id.
+      - course_unit: filter by CourseUnit id.
+      - year: filter by year_of_study.
+      - semester: filter by semester.
+      - created_after: filter by creation date (YYYY-MM-DD).
+      - created_before: filter by creation date (YYYY-MM-DD).
+      - ordering: sort the results (e.g., 'priority', '-created_at').
+      - take: number of records per page (default: 10).
+      - skip: offset (default: 0).
+    """
+    serializer_class = IssueSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        # Only allow lecturers to access this endpoint
+        if user.role != 'lecturer':
+            raise PermissionDenied("Only lecturers can view this list.")
+        
+        # Get issues forwarded to this lecturer
+        qs = Issue.objects.filter(forwarded_to=user)
+        
+        # Apply filters
+        
+        # Search filter (title, description, resolution_details, token)
+        search = self.request.query_params.get("search")
+        if search:
+            qs = qs.filter(
+                Q(title__icontains=search) |
+                Q(description__icontains=search) |
+                Q(resolution_details__icontains=search) |
+                Q(token__icontains=search)
+            )
+
+        # Filter by priority
+        priority = self.request.query_params.get("priority")
+        if priority:
+            qs = qs.filter(priority=priority)
+
+        # Filter by category id
+        category = self.request.query_params.get("category")
+        if category:
+            qs = qs.filter(category__id=category)
+
+        # Filter by course id
+        course = self.request.query_params.get("course")
+        if course:
+            qs = qs.filter(course__id=course)
+
+        # Filter by course_unit id
+        course_unit = self.request.query_params.get("course_unit")
+        if course_unit:
+            qs = qs.filter(course_unit__id=course_unit)
+
+        # Filter by status with comma-separated values
+        status_param = self.request.query_params.get("statuses")
+        if status_param:
+            statuses = [s.strip() for s in status_param.split(",") if s.strip()]
+            qs = qs.filter(status__in=statuses)
+
+        # Filter by year_of_study
+        year = self.request.query_params.get("year")
+        if year:
+            qs = qs.filter(year_of_study=year)
+            
+        # Filter by semester
+        semester = self.request.query_params.get("semester")
+        if semester:
+            qs = qs.filter(semester=semester)
+            
+        # Filter by created_after date
+        created_after = self.request.query_params.get("created_after")
+        if created_after:
+            qs = qs.filter(created_at__gte=created_after)
+            
+        # Filter by created_before date
+        created_before = self.request.query_params.get("created_before")
+        if created_before:
+            qs = qs.filter(created_at__lte=created_before)
+
+        # Sorting: ordering parameter (e.g., "priority", "-created_at")
+        ordering = self.request.query_params.get("ordering", "-created_at")  # Default to newest first
+        qs = qs.order_by(ordering)
+
+        return qs
+
+    def list(self, request, *args, **kwargs):
+        qs = self.get_queryset()
+        total = qs.count()
+        try:
+            take = int(request.query_params.get("take", 10))
+        except ValueError:
+            take = 10
+        try:
+            skip = int(request.query_params.get("skip", 0))
+        except ValueError:
+            skip = 0
+
+        # Apply pagination manually.
+        qs_paginated = qs[skip:skip + take]
+        serializer = self.get_serializer(qs_paginated, many=True)
+        
+        # Log the action
+        log_audit(request.user, "View Issues List", f"Lecturer viewed list of {total} forwarded issues")
+        
+        return Response({
+            "total": total,
+            "take": take,
+            "skip": skip,
+            "issues": serializer.data
+        }, status=status.HTTP_200_OK)
+        
 # Retrieve issue by token (for tracking)
 class IssueDetailView(generics.RetrieveAPIView):
     serializer_class = IssueSerializer
@@ -271,12 +394,16 @@ class IssueUpdateView(generics.UpdateAPIView):
                 # Store the old status before updating
                 old_status = issue.status
                 
+                # Create a copy of the data to avoid modifying the original
+                data = request.data.copy()
+                data['status'] = 'forwarded'
+                data['forwarded_to'] = lecturer_id
+                
                 # Update the issue directly instead of through serializer for specific fields
                 issue.status = 'forwarded'
                 issue.forwarded_to = lecturer
                 issue.modified_by = user  # Track who modified the issue
                 issue.save(update_fields=['status', 'forwarded_to', 'modified_by', 'updated_at'])
-    
 
                 # Update the database with complete data
                 serializer = self.get_serializer(issue, data=data, partial=True)
