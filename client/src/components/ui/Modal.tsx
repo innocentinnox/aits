@@ -115,11 +115,10 @@ function Window({
 }) {
   const context = useContext(ModalContext);
   if (!context) throw new Error("Window must be used within a Modal");
-  const { openName, close } = context;
-  // Create a custom ref that doesn't use the outside click hook by default
+  const { openName, close } = context;  // Create a custom ref that doesn't use the outside click hook by default
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Use a modified outside click detection
+  // Enhanced outside click detection with better Radix UI integration
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       const target = e.target as Element;
@@ -129,32 +128,157 @@ function Window({
         return;
       }
 
-      // Don't close if there's any open select dropdown
-      const hasOpenSelect = document.querySelector('[data-state="open"][data-radix-select-trigger]') ||
-        document.querySelector('[data-radix-select-content]');
+      // Don't close if clicking on form elements (additional protection)
+      if (
+        target.closest('input') ||
+        target.closest('textarea') ||
+        target.closest('select') ||
+        target.closest('button') ||
+        target.closest('.form-field') ||
+        target.closest('.select-content') ||
+        target.closest('.dropdown-content')
+      ) {
+        return;
+      }      // Check for any active Radix UI components that should prevent modal closing
+      const hasActiveRadixComponents = () => {
+        try {
+          // Check for open select dropdowns
+          const openSelects = document.querySelectorAll('[data-state="open"][data-radix-select-trigger]');
+          if (openSelects.length > 0) return true;
 
-      if (hasOpenSelect) {
+          // Check for any visible select content
+          const selectContent = document.querySelectorAll('[data-radix-select-content]');
+          if (selectContent.length > 0) return true;
+
+          // Check for open dropdown menus
+          const openDropdowns = document.querySelectorAll('[data-state="open"][data-radix-dropdown-menu-trigger]');
+          if (openDropdowns.length > 0) return true;
+
+          // Check for any visible dropdown content
+          const dropdownContent = document.querySelectorAll('[data-radix-dropdown-menu-content]');
+          if (dropdownContent.length > 0) return true;
+
+          // Check for any Radix poppers (for Select, DropdownMenu, etc.)
+          const poppers = document.querySelectorAll('[data-radix-popper]');
+          if (poppers.length > 0) return true;
+
+          // Check for any Radix portals
+          const portals = document.querySelectorAll('[data-radix-portal]');
+          if (portals.length > 0) return true;
+
+          return false;
+        } catch (error) {
+          console.warn("Error checking for Radix components:", error);
+          return false;
+        }
+      };
+
+      // Don't close if any Radix components are active
+      if (hasActiveRadixComponents()) {
         return;
       }
 
-      // Don't close if clicking on select-related elements
-      const isSelectElement = target.closest('[data-radix-select-content]') ||
-        target.closest('[data-radix-select-viewport]') ||
-        target.closest('[data-radix-select-item]') ||
-        target.closest('[data-radix-select-trigger]') ||
-        target.closest('[data-radix-popper-content]') ||
-        target.closest('[data-radix-portal]') ||
-        target.closest('[data-state="open"]');
+      // Comprehensive list of elements that should not trigger modal close
+      const protectedSelectors = [
+        // Radix Select components (all variations)
+        '[data-radix-select-content]',
+        '[data-radix-select-viewport]',
+        '[data-radix-select-item]',
+        '[data-radix-select-trigger]',
+        '[data-radix-select-value]',
+        '[data-radix-select-icon]',
+        '[data-radix-select-scroll-up-button]',
+        '[data-radix-select-scroll-down-button]',
+        '[role="option"]',
+        '[role="listbox"]',
 
-      if (!isSelectElement) {
-        close();
+        // Radix Dropdown Menu components (all variations)
+        '[data-radix-dropdown-menu-content]',
+        '[data-radix-dropdown-menu-item]',
+        '[data-radix-dropdown-menu-trigger]',
+        '[data-radix-dropdown-menu-portal]',
+        '[data-radix-dropdown-menu-viewport]',
+        '[data-radix-dropdown-menu-label]',
+        '[data-radix-dropdown-menu-separator]',
+
+        // Radix Popper and Portal components
+        '[data-radix-popper-content]',
+        '[data-radix-portal]',
+        '[data-radix-focus-scope]',
+        '[data-radix-dismissable-layer]',
+
+        // General Radix state selectors
+        '[data-state="open"]',
+        '[data-state="checked"]',
+        '[data-highlighted]',
+
+        // Form elements that should not close modal
+        'textarea',
+        'input[type="text"]',
+        'input[type="email"]',
+        'input[type="password"]',
+        'input[type="number"]',
+        'select',
+        'button[type="submit"]',
+        'button[type="button"]',
+        'button[role="option"]',
+
+        // ARIA and role-based selectors
+        '[role="dialog"]',
+        '[role="menu"]',
+        '[role="menuitem"]',
+        '[role="button"]',
+        '[aria-expanded="true"]',
+
+        // Custom classes for modal content protection
+        '.modal-content',
+        '.select-content',
+        '.dropdown-content',
+        '.modal-form',
+        '.form-field'
+      ];
+
+      // Check if click target or any parent matches protected selectors
+      const isProtectedElement = protectedSelectors.some(selector => {
+        try {
+          // Check if target itself matches
+          if (target.matches && target.matches(selector)) return true;
+          // Check if any parent matches
+          return target.closest(selector) !== null;
+        } catch (error) {
+          // Handle invalid selectors gracefully
+          console.warn(`Invalid selector: ${selector}`, error);
+          return false;
+        }
+      });
+
+      // Don't close modal if clicking on protected elements
+      if (isProtectedElement) {
+        return;
+      }      // Additional check: if the target has any data-radix attributes, protect it
+      if (target instanceof Element && (
+        Array.from(target.attributes).some(attr => attr.name.startsWith('data-radix')) ||
+        target.closest('[data-radix-select-content]') ||
+        target.closest('[data-radix-dropdown-menu-content]')
+      )) {
+        return;
       }
+
+      // Close modal only if clicking outside all protected areas
+      close();
     }
 
     if (name === openName) {
-      // Use capture phase to catch events before they reach other handlers
-      document.addEventListener('mousedown', handleClick, true);
-      return () => document.removeEventListener('mousedown', handleClick, true);
+      // Longer delay to ensure all Radix UI interactions are properly handled
+      const timeoutId = setTimeout(() => {
+        // Use capture phase to intercept events before they reach Radix handlers
+        document.addEventListener('mousedown', handleClick, { capture: true, passive: false });
+      }, 200);
+
+      return () => {
+        clearTimeout(timeoutId);
+        document.removeEventListener('mousedown', handleClick, true);
+      };
     }
   }, [name, openName, close]);
   if (name !== openName) return null;
