@@ -96,9 +96,12 @@ const IssueResolveForm: React.FC<IssueResolveFormProps> = ({
       },
       {
         onSuccess: () => {
-          toast.success("Issue resolved successfullyzzzz");
+          toast.success("Issue resolved successfully");
           queryClient.invalidateQueries({
             queryKey: ["admin-issues"],
+          });
+          queryClient.invalidateQueries({
+            queryKey: ["lecturer-issues"],
           });
           onCloseModal();
         },
@@ -107,8 +110,8 @@ const IssueResolveForm: React.FC<IssueResolveFormProps> = ({
   };
 
   return (
-    <ScrollArea className="h-dvh w-full">
-      <Card className="max-w-[400px] mx-auto p-6 my-4">
+    <ScrollArea className="h-dvh w-full" onClick={(e) => e.stopPropagation()}>
+      <Card className="max-w-[400px] mx-auto p-6 my-4" onClick={(e) => e.stopPropagation()}>
         <div className="space-y-2">
           {/* Header Section with issue details */}
           <div className="border-b pb-2">
