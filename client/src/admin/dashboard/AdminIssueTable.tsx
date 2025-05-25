@@ -183,10 +183,6 @@ export default function AdminIssueTable() {
 
   return (
     <div className="w-full space-y-4">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Issues Dashboard</h1>
-      </div>
 
       {/* Search and filters */}
       <div className="flex flex-col sm:flex-row gap-4">
