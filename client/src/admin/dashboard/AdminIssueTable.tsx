@@ -267,9 +267,7 @@ export default function AdminIssueTable() {
         currentStatuses={params.statuses || []}
         onStatusChange={(statuses) => updateParams({ statuses })}
         openCount={totalCount}
-      />
-
-      {/* Issues table */}
+      />      {/* Issues table */}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -283,19 +281,20 @@ export default function AdminIssueTable() {
               <TableHead className="w-[100px] text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>            {isLoadingIssues ? (
-            <TableSkeleton rowCount={params.take} />
-          ) : issuesData.length > 0 ? (
-            issuesData.map((issue: any, index: any) => (
-              <RegistrarIssueRow key={issue.id || index} issue={issue} />
-            ))
-          ) : (
-            <TableRow>
-              <TableHead colSpan={7} className="h-24 text-center">
-                No issues found matching your criteria.
-              </TableHead>
-            </TableRow>
-          )}
+          <TableBody>
+            {isLoadingIssues ? (
+              <TableSkeleton rowCount={params.take} />
+            ) : issuesData.length > 0 ? (
+              issuesData.map((issue: any, index: any) => (
+                <RegistrarIssueRow key={issue.id || index} issue={issue} />
+              ))
+            ) : (
+              <TableRow>
+                <TableHead colSpan={7} className="h-24 text-center">
+                  No issues found matching your criteria.
+                </TableHead>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </div>

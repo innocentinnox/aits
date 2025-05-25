@@ -111,8 +111,8 @@ const IssueResolveForm: React.FC<IssueResolveFormProps> = ({
 
   return (
     <ScrollArea className="h-dvh w-full" onClick={(e) => e.stopPropagation()}>
-      <Card className="max-w-[400px] mx-auto p-6 my-4" onClick={(e) => e.stopPropagation()}>
-        <div className="space-y-2">
+      <Card className="max-w-[400px] mx-auto p-6 my-4 modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="space-y-2 modal-form">
           {/* Header Section with issue details */}
           <div className="border-b pb-2">
             <div className="flex flex-wrap items-center justify-between gap-4">
@@ -169,7 +169,7 @@ const IssueResolveForm: React.FC<IssueResolveFormProps> = ({
                       <FormControl>
                         <Textarea
                           placeholder="Provide remarks about the issue..."
-                          className="min-h-[150px] placeholder:text-[12px]"
+                          className="min-h-[150px] placeholder:text-[12px] form-field"
                           {...field}
                         />
                       </FormControl>

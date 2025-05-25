@@ -190,115 +190,72 @@ export default function RegistrarIssueRow({ issue }: RegistrarIssueRowProps) {
                         </Modal.Window>
                     </Modal>
 
-                    {/* Actions Dropdown - Only for registrars with unresolved issues */}
-                    {user?.role === "registrar" && issue.status !== "resolved" && (
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    className="flex items-center gap-2 hover:bg-gray-50 transition-colors"
-                                >
-                                    <Settings className="h-4 w-4" />
-                                    Actions
-                                    <ChevronDown className="h-3 w-3 opacity-50" />
+                    {/* Forward Modal - Only for pending issues */}
+                    {issue.status === "pending" && (
+                        <Modal>
+                            <Modal.Open opens={`forward-issue-${issue.id}`}>
+                                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                                    <Forward className="h-4 w-4" />
+                                    Forward
                                 </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-56">
-                                <DropdownMenuLabel className="text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Issue Actions
-                                </DropdownMenuLabel>
-                                <DropdownMenuSeparator />
+                            </Modal.Open>
+                            <Modal.Window name={`forward-issue-${issue.id}`}>
+                                <IssueForwardForm issue={{
+                                    ...issue,
+                                    category: issue.category?.id || 0,
+                                    college: issue.college || 0,
+                                    course: issue.course || 0,
+                                    course_unit: issue.course_unit || 0,
+                                    semester: issue.semester || 0,
+                                    year_of_study: issue.year_of_study || 0,
+                                    assigned_to: issue.assigned_to || {
+                                        id: 0,
+                                        username: 'unassigned',
+                                        email: '',
+                                        first_name: 'Unassigned',
+                                        last_name: ''
+                                    },
+                                    modified_by: issue.modified_by || null,
+                                    closed_by: issue.closed_by || null,
+                                    forwarded_to: issue.forwarded_to || null,
+                                    attachments: issue.attachments || []
+                                }} onCloseModal={() => { }} />
+                            </Modal.Window>
+                        </Modal>
+                    )}
 
-                                {/* Forward Action - Only for pending issues */}
-                                {issue.status === "pending" && (
-                                    <Modal>
-                                        <Modal.Open opens={`forward-issue-${issue.id}`}>
-                                            <DropdownMenuItem
-                                                onSelect={(e) => {
-                                                    e.preventDefault();
-                                                    e.stopPropagation(); // Stop event propagation
-                                                }}
-                                                className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-blue-50 focus:bg-blue-50 transition-colors"
-                                            >
-                                                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100">
-                                                    <Forward className="h-4 w-4 text-blue-600" />
-                                                </div>
-                                                <div className="flex flex-col">
-                                                    <span className="font-medium text-gray-900">Forward Issue</span>
-                                                    <span className="text-xs text-gray-500">Send to appropriate department</span>
-                                                </div>
-                                            </DropdownMenuItem>
-                                        </Modal.Open>
-                                        <Modal.Window name={`forward-issue-${issue.id}`}>
-                                            <IssueForwardForm issue={{
-                                                ...issue,
-                                                category: issue.category?.id || 0,
-                                                college: issue.college || 0,
-                                                course: issue.course || 0,
-                                                course_unit: issue.course_unit || 0,
-                                                semester: issue.semester || 0,
-                                                year_of_study: issue.year_of_study || 0,
-                                                assigned_to: issue.assigned_to || {
-                                                    id: 0,
-                                                    username: 'unassigned',
-                                                    email: '',
-                                                    first_name: 'Unassigned',
-                                                    last_name: ''
-                                                },
-                                                modified_by: issue.modified_by || null,
-                                                closed_by: issue.closed_by || null,
-                                                forwarded_to: issue.forwarded_to || null,
-                                                attachments: issue.attachments || []
-                                            }} onCloseModal={() => { }} />
-                                        </Modal.Window>
-                                    </Modal>
-                                )}
-
-                                {/* Resolve Action - Always available for unresolved issues */}
-                                <Modal>
-                                    <Modal.Open opens={`resolve-issue-${issue.id}`}>
-                                        <DropdownMenuItem
-                                            onSelect={(e) => {
-                                                e.preventDefault();
-                                                e.stopPropagation(); // Stop event propagation
-                                            }}
-                                            className="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-green-50 focus:bg-green-50 transition-colors"
-                                        >
-                                            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-green-100">
-                                                <Check className="h-4 w-4 text-green-600" />
-                                            </div>
-                                            <div className="flex flex-col">
-                                                <span className="font-medium text-gray-900">Resolve Issue</span>
-                                                <span className="text-xs text-gray-500">Mark as resolved with comments</span>
-                                            </div>
-                                        </DropdownMenuItem>
-                                    </Modal.Open>
-                                    <Modal.Window name={`resolve-issue-${issue.id}`}>
-                                        <IssueResolveForm issue={{
-                                            ...issue,
-                                            category: issue.category?.id || 0,
-                                            college: issue.college || 0,
-                                            course: issue.course || 0,
-                                            course_unit: issue.course_unit || 0,
-                                            semester: issue.semester || 0,
-                                            year_of_study: issue.year_of_study || 0,
-                                            assigned_to: issue.assigned_to || {
-                                                id: 0,
-                                                username: 'unassigned',
-                                                email: '',
-                                                first_name: 'Unassigned',
-                                                last_name: ''
-                                            },
-                                            modified_by: issue.modified_by || null,
-                                            closed_by: issue.closed_by || null,
-                                            forwarded_to: issue.forwarded_to || null,
-                                            attachments: issue.attachments || []
-                                        }} onCloseModal={() => { }} />
-                                    </Modal.Window>
-                                </Modal>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                    {/* Resolve Modal - Always available for unresolved issues */}
+                    {user?.role === "registrar" && issue.status !== "resolved" && (
+                        <Modal>
+                            <Modal.Open opens={`resolve-issue-${issue.id}`}>
+                                <Button size="sm" className="flex items-center gap-2">
+                                    <Check className="h-4 w-4" />
+                                    Resolve
+                                </Button>
+                            </Modal.Open>
+                            <Modal.Window name={`resolve-issue-${issue.id}`}>
+                                <IssueResolveForm issue={{
+                                    ...issue,
+                                    category: issue.category?.id || 0,
+                                    college: issue.college || 0,
+                                    course: issue.course || 0,
+                                    course_unit: issue.course_unit || 0,
+                                    semester: issue.semester || 0,
+                                    year_of_study: issue.year_of_study || 0,
+                                    assigned_to: issue.assigned_to || {
+                                        id: 0,
+                                        username: 'unassigned',
+                                        email: '',
+                                        first_name: 'Unassigned',
+                                        last_name: ''
+                                    },
+                                    modified_by: issue.modified_by || null,
+                                    closed_by: issue.closed_by || null,
+                                    forwarded_to: issue.forwarded_to || null,
+                                    attachments: issue.attachments || []
+                                }} onCloseModal={() => { }} />
+                            </Modal.Window>
+                        </Modal>
                     )}
                 </div>
             </TableCell>
