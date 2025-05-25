@@ -47,33 +47,18 @@ jobs:
         run: |
           set -e # Explicitly stop on errors
           
-          # Define target directory
           TARGET_DIR="/home/aits/htdocs/aits.ocunex.com"
-          
-          # Create backup directory with timestamp
-          BACKUP_DIR="/home/aits/backups/aits.ocunex.com_$(date +%Y%m%d_%H%M%S)"
-          mkdir -p /home/aits/backups
           
           # Create target directory if it doesn't exist
           mkdir -p "$TARGET_DIR"
           
-          # List and remove files/directories one by one (avoiding .well-known)
-          cd "$TARGET_DIR"
-          for item in *; do
-            if [ "$item" != "*" ] && [ "$item" != ".well-known" ] && [ -e "$item" ]; then
-              # Backup the item first
-              mkdir -p "$BACKUP_DIR"
-              cp -r "$item" "$BACKUP_DIR/" 2>/dev/null || true
-              # Remove the item
-              rm -rf "$item"
-            fi
-          done
+          # Remove specific common web files/directories (avoiding .well-known)
+          rm -rf "$TARGET_DIR/assets" "$TARGET_DIR/static" "$TARGET_DIR/js" "$TARGET_DIR/css" "$TARGET_DIR/images" "$TARGET_DIR/fonts" 2>/dev/null || true
+          rm -f "$TARGET_DIR"/*.html "$TARGET_DIR"/*.js "$TARGET_DIR"/*.css "$TARGET_DIR"/*.json "$TARGET_DIR"/*.txt "$TARGET_DIR"/*.ico 2>/dev/null || true
           
           # Copy new build files
-          cp -r /home/zodmin/apps/aits/_work/*/client/dist/* "$TARGET_DIR/"
+          cp -r ./dist/* "$TARGET_DIR/"
           
-          # Set proper permissions (excluding .well-known)
-          find "$TARGET_DIR" -not -path "*/.well-known*" -exec chmod 755 {} \; 2>/dev/null || true
-          
-          # Keep only last 5 backups
-          find /home/aits/backups -name "aits.ocunex.com_*" -type d -mtime +7 -exec rm -rf {} \; 2>/dev/null || true
+          # Set permissions on new files only
+          chmod 644 "$TARGET_DIR"/*.* 2>/dev/null || true
+          chmod 755 "$TARGET_DIR"/*/  2>/dev/null || true
