@@ -11,7 +11,7 @@ from django.db.utils import DataError
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 sys.path.insert(0, project_root)
 
-# Set the Django settings module
+# Set the Django settings module for seeding data.
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "main.settings")
 import django
 django.setup()
