@@ -57,9 +57,14 @@ const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleString();
 };
 
-const IssueDetailsForm: React.FC<{ issue: IssueDetails }> = ({ issue }) => {
+const IssueDetailsForm: React.FC<{ issue: IssueDetails | null }> = ({ issue }) => {
   const { user } = useAuth();
   const [isPrinting, setIsPrinting] = useState(false);
+
+  // Early return with a proper div if issue is not provided
+  if (!issue) {
+    return <div className="p-4 text-center">No issue selected</div>;
+  }
 
   // Handle print action
   const handlePrint = async () => {
@@ -99,10 +104,8 @@ const IssueDetailsForm: React.FC<{ issue: IssueDetails }> = ({ issue }) => {
                 >
                   <Printer className="h-3.5 w-3.5" />
                   <span>{isPrinting ? "Printing..." : "Print"}</span>
-                </Button>
-
-                {/* Show Forward button only for registrars */}
-                {user?.role !== "student" && <Button size="sm">Forward</Button>}
+                </Button>                {/* Show Forward button only for registrars */}
+                {user?.role === "registrar" && <Button size="sm">Forward</Button>}
               </div>
             </div>
           </div>
