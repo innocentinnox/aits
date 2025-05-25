@@ -12,9 +12,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
-import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { X } from "lucide-react";
-import { useAuth } from "@/auth";
 
 // Styled components
 const StyledModal = styled.div`
@@ -22,9 +20,8 @@ const StyledModal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: transparent;
   border-radius: 0.75rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   transition: all 0.5s;
   z-index: 1001;
 `;
@@ -35,8 +32,8 @@ const Overlay = styled.div<{ $customStyles?: CSSProperties }>`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--backdrop-color, rgba(0, 0, 0, 0.3));
-  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
   z-index: 1000;
   transition: all 0.5s;
   
@@ -119,10 +116,8 @@ function Window({
   const context = useContext(ModalContext);
   if (!context) throw new Error("Window must be used within a Modal");
   const { openName, close } = context;
-
   // Create a custom ref that doesn't use the outside click hook by default
   const modalRef = useRef<HTMLDivElement>(null);
-  const { user } = useAuth();
 
   // Use a modified outside click detection
   useEffect(() => {
@@ -162,19 +157,20 @@ function Window({
       return () => document.removeEventListener('mousedown', handleClick, true);
     }
   }, [name, openName, close]);
-
-  // Apply stronger blur for student dashboard
-  const studentBlurStyles: CSSProperties =
-    user?.role === "student"
-      ? { backdropFilter: "blur(8px)", backgroundColor: "rgba(0, 0, 0, 0.5)" }
-      : {};
-
-  // Combine custom styles with student-specific styles
-  const finalOverlayStyles = user?.role === "student"
-    ? { ...studentBlurStyles, ...overlayStyles }
-    : overlayStyles;
-
   if (name !== openName) return null;
+
+  // Apply professional blur and backdrop for all roles
+  const professionalOverlayStyles: CSSProperties = {
+    backdropFilter: "blur(8px)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    zIndex: 9999,
+  };
+
+  // Combine professional styles with any custom overlay styles
+  const finalOverlayStyles = {
+    ...professionalOverlayStyles,
+    ...overlayStyles,
+  };
 
   return createPortal(
     <Overlay $customStyles={finalOverlayStyles}>
