@@ -1,10 +1,10 @@
 name: Client Deployment
-
 on:
   push:
     branches: ["main"]
     paths:
-          - "client/**" # Only trigger for changes in that directory
+      - "client/**" # Only trigger for changes in that directory
+
 jobs:
   build:
     defaults:
@@ -12,7 +12,6 @@ jobs:
         working-directory: ./client
     runs-on: self-hosted
     
-
     steps:
       # Checkout the repository
       - name: Checkout repository
@@ -26,12 +25,12 @@ jobs:
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
-          path: node_modules
+          path: ./client/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('client/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # Create the .env file from SERVER_SECRETS
+      # Create the .env file from CLIENT_SECRETS
       - name: Create .env file
         run: echo "${{ secrets.CLIENT_SECRETS }}" > .env
 
@@ -43,8 +42,29 @@ jobs:
       - name: Build the application
         run: npm run build
 
+      # Deploy to production directory
       - name: Deploy to /home/aits/htdocs/aits.ocunex.com
         run: |
           set -e # Explicitly stop on errors
-          find /home/aits/htdocs/aits.ocunex.com -mindepth 1 -not -name ".well-known" -exec rm -rf {} +
+          
+          # Create backup directory with timestamp
+          BACKUP_DIR="/home/aits/backups/aits.ocunex.com_$(date +%Y%m%d_%H%M%S)"
+          mkdir -p /home/aits/backups
+          
+          # Backup current deployment (excluding .well-known)
+          if [ -d "/home/aits/htdocs/aits.ocunex.com" ]; then
+            mkdir -p "$BACKUP_DIR"
+            find /home/aits/htdocs/aits.ocunex.com -mindepth 1 -maxdepth 1 -not -name ".well-known" -exec cp -r {} "$BACKUP_DIR/" \; 2>/dev/null || true
+          fi
+          
+          # Remove old files (excluding .well-known and hidden files)
+          find /home/aits/htdocs/aits.ocunex.com -mindepth 1 -maxdepth 1 -not -name ".well-known" -not -name ".*" -exec rm -rf {} \; 2>/dev/null || true
+          
+          # Copy new build files
           cp -r ./dist/* /home/aits/htdocs/aits.ocunex.com/
+          
+          # Set proper permissions
+          chmod -R 755 /home/aits/htdocs/aits.ocunex.com
+          
+          # Keep only last 5 backups
+          find /home/aits/backups -name "aits.ocunex.com_*" -type d | sort -r | tail -n +6 | xargs rm -rf
