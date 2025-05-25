@@ -32,7 +32,7 @@ class IssueService {
           formData.append("attachments", file);
         });
       }      // Post the FormData to the endpoint.
-      const res = await axiosInstance.post("/api/issues/create/", formData, {
+      const res = await axiosInstance.post("/issues/create/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -46,10 +46,9 @@ class IssueService {
         error?.response?.data.message || "Failed to create issue"
       );
     }
-  }
-  async resolve(token: string) {
+  }  async resolve(token: string) {
     try {
-      const res = await axiosInstance.patch(`/api/issues/update/${token}/`, {
+      const res = await axiosInstance.patch(`/issues/update/${token}/`, {
         action: "resolve",
       });
 
@@ -61,7 +60,7 @@ class IssueService {
   }
   async resolveWithDetails(token: string, resolution_details: string) {
     try {
-      const res = await axiosInstance.patch(`/api/issues/update/${token}/`, {
+      const res = await axiosInstance.patch(`/issues/update/${token}/`, {
         action: "resolve",
         resolution_details
       });
@@ -74,7 +73,7 @@ class IssueService {
   }
   async forward(token: string, forwarded_to: number) {
     try {
-      const res = await axiosInstance.patch(`/api/issues/update/${token}/`, {
+      const res = await axiosInstance.patch(`/issues/update/${token}/`, {
         action: "forward",
         forwarded_to
       });
@@ -84,11 +83,12 @@ class IssueService {
       console.error("Error forwarding issue:", error);
       throw new Error(error?.response?.data?.message || "Failed to forward issue");
     }
-  }  async departments(schoolId?: number) {
-    try {      const params = schoolId ? { school_id: schoolId } : {};
+  }async departments(schoolId?: number) {
+    try {
+      const params = schoolId ? { school_id: schoolId } : {};
       console.log("issueService.departments - params:", params);
       console.log("issueService.departments - schoolId:", schoolId);
-      const res = await axiosInstance.get("/api/accounts/departments/", { params });
+      const res = await axiosInstance.get("/accounts/departments/", { params });
       console.log("issueService.departments - response:", res.data);
       return res.data as { id: number; name: string; code: string }[];
     } catch (error: any) {
@@ -129,11 +129,10 @@ class IssueService {
             }
           }
         });
-      }
-        const queryString = searchParams.toString();
+      }      const queryString = searchParams.toString();
       const url = queryString 
-        ? `/api/issues/lecturer-view/?${queryString}`
-        : "/api/issues/lecturer-view/";
+        ? `/issues/lecturer-view/?${queryString}`
+        : "/issues/lecturer-view/";
         
       const res = await axiosInstance.get(url);
       return res.data;
