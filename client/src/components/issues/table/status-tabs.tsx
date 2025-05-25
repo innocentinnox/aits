@@ -6,12 +6,13 @@ interface StatusTabsProps {
   currentStatuses: string[]
   onStatusChange: (status: string[]) => void
   openCount: number
+  closedCount?: number
 }
 
 const closedStatuses = ["closed", "rejected", "resolved"];
 const openStatuses = ["pending", "forwarded", "in_progress"];
 
-export default function StatusTabs({ currentStatuses, onStatusChange, openCount }: StatusTabsProps) {
+export default function StatusTabs({ currentStatuses, onStatusChange, openCount, closedCount }: StatusTabsProps) {
   return (
     <div className="flex border-b">
       <Button
@@ -31,11 +32,16 @@ export default function StatusTabs({ currentStatuses, onStatusChange, openCount 
         variant="ghost"
         className={cn(
           "rounded-none border-b-2 border-transparent px-4",
-            closedStatuses?.filter((status) => currentStatuses.includes(status)).length == closedStatuses.length  && "border-primary"
+          closedStatuses?.filter((status) => currentStatuses.includes(status)).length == closedStatuses.length && "border-primary"
         )}
         onClick={() => onStatusChange(closedStatuses)}
       >
         Closed
+        {closedCount !== undefined && (
+          <Badge variant="outline" className="ml-2">
+            {closedCount}
+          </Badge>
+        )}
       </Button>
     </div>
   )
