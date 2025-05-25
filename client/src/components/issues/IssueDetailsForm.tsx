@@ -93,8 +93,7 @@ const IssueDetailsForm: React.FC<{ issue: IssueDetails | null }> = ({ issue }) =
               <div className="mt-4 flex flex-wrap gap-3">
                 <Badge variant="secondary">{issue.status.toUpperCase()}</Badge>
               </div>
-              <div className="flex gap-2">
-                {/* Show Print button for all users */}
+              <div className="flex gap-2">                {/* Show Print button for all users */}
                 <Button
                   size="sm"
                   variant="outline"
@@ -104,8 +103,7 @@ const IssueDetailsForm: React.FC<{ issue: IssueDetails | null }> = ({ issue }) =
                 >
                   <Printer className="h-3.5 w-3.5" />
                   <span>{isPrinting ? "Printing..." : "Print"}</span>
-                </Button>                {/* Show Forward button only for registrars */}
-                {user?.role === "registrar" && <Button size="sm">Forward</Button>}
+                </Button>
               </div>
             </div>
           </div>
