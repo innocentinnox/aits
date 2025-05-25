@@ -206,9 +206,22 @@ class DepartmentListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         school_id = self.request.query_params.get('school_id')
+        college_id = self.request.query_params.get('college_id')
+        
+        # If school_id is provided, filter by school
         if school_id:
             return Department.objects.filter(school__id=school_id)
-        return Department.objects.none()
+        
+        # If college_id is provided, filter by college  
+        if college_id:
+            return Department.objects.filter(school__college__id=college_id)
+            
+        # For registrars, show all departments in their college
+        if hasattr(self.request.user, 'college') and self.request.user.college:
+            return Department.objects.filter(school__college=self.request.user.college)
+            
+        # Default: return all departments (for admin/superuser)
+        return Department.objects.all()
 
 class CourseListAPIView(generics.ListAPIView):
     serializer_class = CourseSerializer
@@ -242,6 +255,36 @@ class CourseUnitesListAPIView(generics.ListAPIView):
         if course_id:
             return CourseUnit.objects.filter(course__id=course_id, year_taken=year_taken)
         return Course.objects.none()
+
+class LecturersListAPIView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        college_id = self.request.query_params.get('college_id')
+        department_id = self.request.query_params.get('department_id')
+        
+        filters = {'role': 'lecturer'}
+        
+        if college_id:
+            filters['college__id'] = college_id
+        if department_id:
+            filters['department__id'] = department_id
+            
+        return User.objects.filter(**filters)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        lecturers_data = [
+            {
+                'id': lecturer.id,
+                'first_name': lecturer.first_name,
+                'last_name': lecturer.last_name,
+                'email': lecturer.email,
+                'full_name': f"{lecturer.first_name} {lecturer.last_name}".strip() or lecturer.username,
+            }
+            for lecturer in queryset
+        ]
+        return Response(lecturers_data)
 
 """
     This will be used for email verification and password reset

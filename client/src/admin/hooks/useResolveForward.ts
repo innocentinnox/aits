@@ -4,8 +4,7 @@ import { toast } from "sonner";
 
 export function useResolveForward() {
   const queryClient = useQueryClient();
-  
-  // This is the original resolve mutation that doesn't include resolution details
+    // This is the original resolve mutation that doesn't include resolution details
   // It's now deprecated and should not be used
   const { mutate: onResolve, isPending: isSubmittingIssue } = useMutation({
     mutationFn: (token: string) => issueService.resolve(token),
@@ -16,10 +15,12 @@ export function useResolveForward() {
       queryClient.invalidateQueries({
         queryKey: ["admin-issues"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["lecturer-issues"],
+      });
       toast.success(data.message || "Issue resolved successfully");
     },
   });
-
   // New mutation that includes resolution details
   const { mutate: resolveWithDetails, isPending: isResolvingWithDetails } = useMutation({
     mutationFn: ({ token, resolution_details }: { token: string; resolution_details: string }) => 
@@ -30,6 +31,9 @@ export function useResolveForward() {
     onSuccess: (data: any) => {
       queryClient.invalidateQueries({
         queryKey: ["admin-issues"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["lecturer-issues"],
       });
       toast.success(data.message || "Issue resolved successfully");
     },

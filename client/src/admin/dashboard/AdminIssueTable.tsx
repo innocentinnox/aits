@@ -17,8 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { fetchIssues } from "@/lib/issues";
-import type { Issue, IssueParams } from "@/types";
+import type { IssueParams } from "@/types";
 import { useNavigate } from "react-router-dom";
 import useUrlParams from "@/hooks/use-url-params";
 
@@ -26,27 +25,29 @@ import useUrlParams from "@/hooks/use-url-params";
 import FilterDropdown from "../../components/issues/table/filter-dropdown";
 import TablePagination from "../../components/issues/table/table-pagination";
 import TableSkeleton from "../../components/issues/table/table-skeleton";
-import IssueRow from "../../components/issues/table/issue-row";
+import RegistrarIssueRow from "../../components/issues/table/registrar-issue-row";
 import SearchBar from "../../components/issues/table/search-bar";
 import StatusTabs from "../../components/issues/table/status-tabs";
-import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "@/lib/axios-instance";
-import useCollegeIssues from "../hooks/useCollegeIssues";
+import useRegistrarIssues from "../hooks/useRegistrarIssues";
 
 export default function AdminIssueTable() {
   const navigate = useNavigate();
   const { searchParams } = useUrlParams();
-  const [isLoading, setIsLoading] = useState(false);
-  const [issues, setIssues] = useState<Issue[]>([]);
-  const [total, setTotal] = useState(0);
   const [params, setParams] = useState<IssueParams>({
     take: 10,
     skip: 0,
     search: "",
     priority: "",
+    category: "",
     statuses: [],
     assigned_to: "",
-    ordering: "",
+    year: "",
+    semester: "",
+    course: "",
+    course_unit: "",
+    created_after: "",
+    created_before: "",
+    ordering: "-created_at",
   });
 
   // Get current params from URL
@@ -56,52 +57,48 @@ export default function AdminIssueTable() {
       skip: Number(searchParams.get("skip")) || 0,
       search: searchParams.get("search") || "",
       priority: searchParams.get("priority") || "",
-      statuses: searchParams.get("statuses")?.split(",") || [],
+      category: searchParams.get("category") || "",
+      statuses: searchParams.get("statuses")?.split(",").filter(Boolean) || [],
       assigned_to: searchParams.get("assigned_to") || "",
-      ordering: searchParams.get("ordering") || "",
+      year: searchParams.get("year") || "",
+      semester: searchParams.get("semester") || "",
+      course: searchParams.get("course") || "",
+      course_unit: searchParams.get("course_unit") || "",
+      created_after: searchParams.get("created_after") || "",
+      created_before: searchParams.get("created_before") || "",
+      ordering: searchParams.get("ordering") || "-created_at",
     };
     setParams(currentParams);
   }, [searchParams]);
-  const { issuesData, isLoadingIssues } = useCollegeIssues();
-  //robertt
-  const TEMP_ISSUES = issuesData;
 
-  // Fetch issues when params change
-  useEffect(() => {
-    const loadIssues = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetchIssues(params);
-
-        setIssues(response.issues);
-        setTotal(response.total);
-      } catch (error) {
-        console.error("Failed to fetch issues:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadIssues();
-  }, [params]);
+  // Use the new registrar issues hook with pagination
+  const { issuesData, totalCount, isLoadingIssues } = useRegistrarIssues(params);
 
   // Update URL with new params
   const updateParams = ({ statuses, ...newParams }: Partial<IssueParams>) => {
     let updatedParams = {
       ...params,
       ...newParams,
-      statuses: statuses?.join(","),
     };
-    statuses &&
-      statuses?.length > 0 &&
-      (updatedParams.statuses = statuses.join(","));
 
-    // Reset skip to 0 when filters change
+    // Handle statuses array
+    if (statuses !== undefined) {
+      updatedParams.statuses = statuses;
+    }
+
+    // Reset skip to 0 when filters change (except for pagination)
     if (
       newParams.search !== undefined ||
       newParams.priority !== undefined ||
-      (statuses !== undefined && statuses.length > 0) ||
+      newParams.category !== undefined ||
+      (statuses !== undefined) ||
       newParams.assigned_to !== undefined ||
+      newParams.year !== undefined ||
+      newParams.semester !== undefined ||
+      newParams.course !== undefined ||
+      newParams.course_unit !== undefined ||
+      newParams.created_after !== undefined ||
+      newParams.created_before !== undefined ||
       newParams.ordering !== undefined
     ) {
       updatedParams.skip = 0;
@@ -111,7 +108,13 @@ export default function AdminIssueTable() {
 
     Object.entries(updatedParams).forEach(([key, value]) => {
       if (value !== "" && value !== null && value !== undefined) {
-        url.set(key, String(value));
+        if (key === "statuses" && Array.isArray(value)) {
+          if (value.length > 0) {
+            url.set(key, value.join(","));
+          }
+        } else {
+          url.set(key, String(value));
+        }
       }
     });
 
@@ -131,107 +134,140 @@ export default function AdminIssueTable() {
     updateParams({
       search: "",
       priority: "",
+      category: "",
       statuses: [],
       assigned_to: "",
+      year: "",
+      semester: "",
+      course: "",
+      course_unit: "",
+      created_after: "",
+      created_before: "",
       skip: 0,
     });
   };
 
   // Define filter options
   const priorityOptions = [
-    { value: "1", label: "High" },
+    { value: "1", label: "Low" },
     { value: "2", label: "Medium" },
-    { value: "3", label: "Low" },
+    { value: "3", label: "High" },
+    { value: "4", label: "Critical" },
   ];
 
   const statusOptions = [
-    { value: "open", label: "Open" },
+    { value: "pending", label: "Pending" },
+    { value: "forwarded", label: "Forwarded" },
     { value: "in_progress", label: "In Progress" },
     { value: "resolved", label: "Resolved" },
     { value: "closed", label: "Closed" },
   ];
 
-  const assigneeOptions = [
-    { value: "john.doe@example.com", label: "John Doe" },
-    { value: "jane.smith@example.com", label: "Jane Smith" },
-    { value: "alex.johnson@example.com", label: "Alex Johnson" },
+  const categoryOptions = [
+    { value: "1", label: "Academic" },
+    { value: "2", label: "Technical" },
+    { value: "3", label: "Administrative" },
+  ];
+
+  const yearOptions = [
+    { value: "1", label: "Year 1" },
+    { value: "2", label: "Year 2" },
+    { value: "3", label: "Year 3" },
+    { value: "4", label: "Year 4" },
+  ];
+
+  const semesterOptions = [
+    { value: "1", label: "Semester 1" },
+    { value: "2", label: "Semester 2" },
   ];
 
   return (
     <div className="w-full space-y-4">
+
       {/* Search and filters */}
       <div className="flex flex-col sm:flex-row gap-4">
         <SearchBar
-          value={params.search}
+          value={params.search || ""}
           onChange={(value) => updateParams({ search: value })}
           placeholder="Search issues..."
         />
 
         <div className="flex flex-wrap gap-2">
-          {/* <FilterDropdown
+          <FilterDropdown
             title="Priority"
             options={priorityOptions}
-            currentValue={params.priority}
+            currentValue={params.priority || ""}
             onChange={(value) => updateParams({ priority: value })}
-          /> */}
+          />
 
-          {/* <FilterDropdown
-            title="Status"
-            options={statusOptions}
-            currentValue={
-              params.statuses?.length == 1 ? params.statuses[0] : ""
-            }
-            onChange={(value) => updateParams({ statuses: [value] })}
-          /> */}
+          <FilterDropdown
+            title="Category"
+            options={categoryOptions}
+            currentValue={params.category || ""}
+            onChange={(value) => updateParams({ category: value })}
+          />
 
-          {/* <FilterDropdown
-            title="Assignee"
-            options={assigneeOptions}
-            currentValue={params.assigned_to}
-            onChange={(value) => updateParams({ assigned_to: value })}
-            groupOptions={true}
-            width="w-56"
-          /> */}
-          {/* 
+          <FilterDropdown
+            title="Year"
+            options={yearOptions}
+            currentValue={params.year || ""}
+            onChange={(value) => updateParams({ year: value })}
+          />
+
+          <FilterDropdown
+            title="Semester"
+            options={semesterOptions}
+            currentValue={params.semester || ""}
+            onChange={(value) => updateParams({ semester: value })}
+          />
+
           <Select
-            value={params.ordering}
+            value={params.ordering || "-created_at"}
             onValueChange={(value) => updateParams({ ordering: value })}
           >
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Sort by" />
+              <SelectValue placeholder="Sort by..." />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="-created_at">Newest First</SelectItem>
+              <SelectItem value="created_at">Oldest First</SelectItem>
+              <SelectItem value="-updated_at">Recently Updated</SelectItem>
               <SelectItem value="priority">Priority (Low to High)</SelectItem>
               <SelectItem value="-priority">Priority (High to Low)</SelectItem>
-              <SelectItem value="created_at">Date (Oldest first)</SelectItem>
-              <SelectItem value="-created_at">Date (Newest first)</SelectItem>
               <SelectItem value="title">Title (A-Z)</SelectItem>
               <SelectItem value="-title">Title (Z-A)</SelectItem>
             </SelectContent>
-          </Select> */}
+          </Select>
 
           {(params.search ||
             params.priority ||
+            params.category ||
             (params.statuses && params.statuses?.length > 0) ||
-            params.assigned_to) && (
-            <Button
-              variant="ghost"
-              onClick={clearFilters}
-              className="h-10 px-3"
-            >
-              <X className="h-4 w-4 mr-2" />
-              Clear filters
-            </Button>
-          )}
+            params.assigned_to ||
+            params.year ||
+            params.semester ||
+            params.course ||
+            params.course_unit ||
+            params.created_after ||
+            params.created_before) && (
+              <Button
+                variant="ghost"
+                onClick={clearFilters}
+                className="h-10 px-3"
+              >
+                <X className="h-4 w-4 mr-2" />
+                Clear filters
+              </Button>
+            )}
         </div>
       </div>
 
       {/* Status tabs */}
-      {/* <StatusTabs
+      <StatusTabs
         currentStatuses={params.statuses || []}
         onStatusChange={(statuses) => updateParams({ statuses })}
-        openCount={total}
-      /> */}
+        openCount={totalCount}
+      />
 
       {/* Issues table */}
       <div className="rounded-md border">
@@ -241,32 +277,33 @@ export default function AdminIssueTable() {
               <TableHead className="w-[50px]"></TableHead>
               <TableHead>Issue</TableHead>
               <TableHead className="w-[100px]">Status</TableHead>
-              <TableHead className="w-[150px]"></TableHead>
-              <TableHead className="w-[100px] text-right"></TableHead>
+              <TableHead className="w-[100px]">Priority</TableHead>
+              <TableHead className="w-[150px]">Created By</TableHead>
+              <TableHead className="w-[100px]">Created Date</TableHead>
+              <TableHead className="w-[100px] text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            {isLoadingIssues ? (
-              <TableSkeleton rowCount={params.take} />
-            ) : TEMP_ISSUES.length > 0 ? (
-              TEMP_ISSUES.map((issue: any, index: any) => (
-                <IssueRow key={index} issue={issue} />
-              ))
-            ) : (
-              <TableRow>
-                <TableHead colSpan={5} className="h-24 text-center">
-                  No issues found.
-                </TableHead>
-              </TableRow>
-            )}
+          <TableBody>            {isLoadingIssues ? (
+            <TableSkeleton rowCount={params.take} />
+          ) : issuesData.length > 0 ? (
+            issuesData.map((issue: any, index: any) => (
+              <RegistrarIssueRow key={issue.id || index} issue={issue} />
+            ))
+          ) : (
+            <TableRow>
+              <TableHead colSpan={7} className="h-24 text-center">
+                No issues found matching your criteria.
+              </TableHead>
+            </TableRow>
+          )}
           </TableBody>
         </Table>
       </div>
 
       {/* Pagination */}
-      {!isLoading && total > 0 && (
+      {totalCount > 0 && (
         <TablePagination
-          total={total}
+          total={totalCount}
           currentPage={currentPage}
           pageSize={params.take}
           skip={params.skip}

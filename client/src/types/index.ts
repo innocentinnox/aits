@@ -25,9 +25,13 @@ export interface Issue {
     category?: string
     assigned_to?: string
     college?: string
+    course?: string
     course_unit?: string
     statuses?: string[]
     year?: string
+    semester?: string
+    created_after?: string
+    created_before?: string
     ordering?: string
   }
   

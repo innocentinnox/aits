@@ -10,6 +10,7 @@ import { useAuth } from "@/auth";
 import Modal from "@/components/ui/Modal";
 import IssueDetailsForm from "../IssueDetailsForm";
 import IssueResolveForm from "../IssueResolveForm";
+import IssueForwardForm from "../IssueForwardForm";
 import { useResolveForward } from "@/admin/hooks/useResolveForward";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -85,12 +86,11 @@ export default function IssueRow({ issue }: IssueRowProps) {
       </TableCell>
       <TableCell>
         <div className="flex gap-2">
-          <Modal>
-            <Modal.Open opens="issue-details">
-              <Button variant="outline" size="sm">
-                View
-              </Button>
-            </Modal.Open>
+          <Modal>            <Modal.Open opens="issue-details">
+            <Button variant="outline" size="sm">
+              View
+            </Button>
+          </Modal.Open>
             <Modal.Window name="issue-details">
               <IssueDetailsForm issue={issue} />
             </Modal.Window>
@@ -100,8 +100,23 @@ export default function IssueRow({ issue }: IssueRowProps) {
       {/* For Admin */}
       {!(user?.role === "student") && !(issue.status === "resolved") && (
         <TableCell className="text-right">
-          <div className="flex items-center justify-end"></div>
           <div className="flex gap-2 cursor-pointer">
+            {user?.role === "registrar" && issue.status === "pending" && (
+              <Modal>
+                <Modal.Open opens="forward-issue">
+                  <Button variant="outline" size="sm">
+                    <Forward className="h-4 w-4 mr-1" />
+                    Forward
+                  </Button>
+                </Modal.Open>
+                <Modal.Window name="forward-issue">
+                  <IssueForwardForm
+                    issue={issue}
+                    onCloseModal={handleCloseModal}
+                  />
+                </Modal.Window>
+              </Modal>
+            )}
             <Modal>
               <Modal.Open opens="resolve-issue">
                 <Button size="sm" disabled={isSubmittingIssue}>

@@ -5,6 +5,7 @@ from .views import (LoginView, CollegeView, ProfileUpdateView, NotificationListV
     DepartmentListAPIView,
     CourseListAPIView,
     CourseUnitesListAPIView,
+    LecturersListAPIView,
     SendEmailAPIView,
     SignupAPIView, 
     VerifyTokenAPIView,
@@ -31,6 +32,7 @@ urlpatterns = [
     path('departments/', DepartmentListAPIView.as_view(), name='departments-list'),
     path('courses/', CourseListAPIView.as_view(), name='courses-list'),
     path('course-units/', CourseUnitesListAPIView.as_view(), name='course-units-list'),
+    path('lecturers/', LecturersListAPIView.as_view(), name='lecturers-list'),
     
     path('send-email/', SendEmailAPIView.as_view(), name='send-email'),
     

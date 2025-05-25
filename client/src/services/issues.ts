@@ -31,9 +31,7 @@ class IssueService {
         values.attachments.forEach((file: File) => {
           formData.append("attachments", file);
         });
-      }
-
-      // Post the FormData to the endpoint.
+      }      // Post the FormData to the endpoint.
       const res = await axiosInstance.post("/issues/create/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -48,9 +46,7 @@ class IssueService {
         error?.response?.data.message || "Failed to create issue"
       );
     }
-  }
-
-  async resolve(token: string) {
+  }  async resolve(token: string) {
     try {
       const res = await axiosInstance.patch(`/issues/update/${token}/`, {
         action: "resolve",
@@ -62,7 +58,6 @@ class IssueService {
       throw new Error(error?.response?.data?.message || "Failed to resolve issue");
     }
   }
-
   async resolveWithDetails(token: string, resolution_details: string) {
     try {
       const res = await axiosInstance.patch(`/issues/update/${token}/`, {
@@ -74,6 +69,76 @@ class IssueService {
     } catch (error: any) {
       console.error("Error resolving issue:", error);
       throw new Error(error?.response?.data?.message || "Failed to resolve issue");
+    }
+  }
+  async forward(token: string, forwarded_to: number) {
+    try {
+      const res = await axiosInstance.patch(`/issues/update/${token}/`, {
+        action: "forward",
+        forwarded_to
+      });
+
+      return res.data;
+    } catch (error: any) {
+      console.error("Error forwarding issue:", error);
+      throw new Error(error?.response?.data?.message || "Failed to forward issue");
+    }
+  }async departments(schoolId?: number) {
+    try {
+      const params = schoolId ? { school_id: schoolId } : {};
+      console.log("issueService.departments - params:", params);
+      console.log("issueService.departments - schoolId:", schoolId);
+      const res = await axiosInstance.get("/accounts/departments/", { params });
+      console.log("issueService.departments - response:", res.data);
+      return res.data as { id: number; name: string; code: string }[];
+    } catch (error: any) {
+      console.error("Error fetching departments:", error);
+      throw new Error(error?.response?.data?.message || "Failed to fetch departments");
+    }
+  }  async departmentsByParams(params: { school_id?: number; college_id?: number }) {
+    try {
+      const res = await axiosInstance.get("/accounts/departments/", { params });
+      return res.data as { id: number; name: string; code: string }[];
+    } catch (error: any) {
+      console.error("Error fetching departments by params:", error);
+      throw new Error(error?.response?.data?.message || "Failed to fetch departments");
+    }
+  }  async lecturers(collegeId?: number, departmentId?: number) {
+    try {
+      const params: any = {};
+      if (collegeId) params.college_id = collegeId;
+      if (departmentId) params.department_id = departmentId;
+      
+      const res = await axiosInstance.get("/accounts/lecturers/", { params });
+      return res.data as { id: number; first_name: string; last_name: string; email: string; full_name: string }[];
+    } catch (error: any) {
+      console.error("Error fetching lecturers:", error);
+      throw new Error(error?.response?.data?.message || "Failed to fetch lecturers");
+    }
+  }  async fetchLecturerIssues(params?: Record<string, any>) {
+    try {
+      const searchParams = new URLSearchParams();
+      if (params) {
+        Object.entries(params).forEach(([key, value]) => {
+          if (value !== undefined && value !== null && value !== "" && 
+              !(Array.isArray(value) && value.length === 0)) {
+            if (Array.isArray(value)) {
+              searchParams.append(key, value.join(","));
+            } else {
+              searchParams.append(key, value.toString());
+            }
+          }
+        });
+      }      const queryString = searchParams.toString();
+      const url = queryString 
+        ? `/issues/lecturer-view/?${queryString}`
+        : "/issues/lecturer-view/";
+        
+      const res = await axiosInstance.get(url);
+      return res.data;
+    } catch (error: any) {
+      console.error("Error fetching lecturer issues:", error);
+      throw new Error(error?.response?.data?.message || "Failed to fetch lecturer issues");
     }
   }
 }

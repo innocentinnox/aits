@@ -8,16 +8,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { UserRound } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
 
 export default function UserInfo() {
   const { logout, user } = useAuth();
 
-  const navigate = useNavigate();
-  function handleDetailsNavigation() {
-    navigate("details");
-  }
   return (
     <div className="flex items-center justify-between gap-4 ">
       <div className="user-info text-zinc-600">
@@ -36,13 +31,9 @@ export default function UserInfo() {
             <div className="w-[2.8rem] h-[2.8rem] bg-primary rounded-full flex items-center justify-center outline-none">
               <UserRound color="white" />
             </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          </DropdownMenuTrigger>          <DropdownMenuContent>
             <DropdownMenuLabel>My Profile</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleDetailsNavigation}>
-              Edit Profile
-            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => logout()}>
               <LogoutButton handler={() => logout()} name={undefined} />
             </DropdownMenuItem>
