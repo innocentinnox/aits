@@ -54,6 +54,11 @@ export default function IssueForwardForm({ issue, onCloseModal }: IssueForwardFo
     const { departments, isLoading: isLoadingDepartments } = useDepartments();
     const { lecturers, isLoading: isLoadingLecturers } = useLecturers(selectedDepartment ? parseInt(selectedDepartment) : undefined);
 
+    // Prevent clicks inside the form from closing the modal
+    const handleContainerClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -75,7 +80,7 @@ export default function IssueForwardForm({ issue, onCloseModal }: IssueForwardFo
     };
 
     return (
-        <div className="max-w-md mx-auto p-6 bg-white">
+        <div className="max-w-md mx-auto p-6 bg-white" onClick={handleContainerClick}>
             <div className="mb-6">
                 <h2 className="text-xl font-semibold text-gray-900">Forward Issue</h2>
                 <p className="text-sm text-gray-600 mt-1">
@@ -112,8 +117,8 @@ export default function IssueForwardForm({ issue, onCloseModal }: IssueForwardFo
                 </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
+            <form onSubmit={(e) => { e.preventDefault(); e.stopPropagation(); handleSubmit(e); }} className="space-y-4">
+                <div onClick={(e) => e.stopPropagation()}>
                     <Label htmlFor="department" className="text-sm font-medium text-gray-700">
                         Select Department *
                     </Label>
@@ -124,7 +129,18 @@ export default function IssueForwardForm({ issue, onCloseModal }: IssueForwardFo
                             setSelectedLecturer(""); // Reset lecturer when department changes
                         }}
                         open={isDepartmentSelectOpen}
-                        onOpenChange={setIsDepartmentSelectOpen}
+                        onOpenChange={(open) => {
+                            setIsDepartmentSelectOpen(open);
+                            // Prevent modal from closing when dropdown opens/closes
+                            if (open) {
+                                setTimeout(() => {
+                                    const selectContent = document.querySelector('[data-radix-select-content]');
+                                    if (selectContent) {
+                                        selectContent.addEventListener('click', (e) => e.stopPropagation(), true);
+                                    }
+                                }, 10);
+                            }
+                        }}
                     >
                         <SelectTrigger className="mt-1">
                             <SelectValue placeholder={
@@ -147,7 +163,7 @@ export default function IssueForwardForm({ issue, onCloseModal }: IssueForwardFo
                     </Select>
                 </div>
 
-                <div>
+                <div onClick={(e) => e.stopPropagation()}>
                     <Label htmlFor="lecturer" className="text-sm font-medium text-gray-700">
                         Select Lecturer *
                     </Label>
@@ -156,7 +172,18 @@ export default function IssueForwardForm({ issue, onCloseModal }: IssueForwardFo
                         onValueChange={setSelectedLecturer}
                         disabled={!selectedDepartment}
                         open={isLecturerSelectOpen}
-                        onOpenChange={setIsLecturerSelectOpen}
+                        onOpenChange={(open) => {
+                            setIsLecturerSelectOpen(open);
+                            // Prevent modal from closing when dropdown opens/closes
+                            if (open) {
+                                setTimeout(() => {
+                                    const selectContent = document.querySelector('[data-radix-select-content]');
+                                    if (selectContent) {
+                                        selectContent.addEventListener('click', (e) => e.stopPropagation(), true);
+                                    }
+                                }, 10);
+                            }
+                        }}
                     >
                         <SelectTrigger className="mt-1">
                             <SelectValue placeholder={
@@ -181,11 +208,14 @@ export default function IssueForwardForm({ issue, onCloseModal }: IssueForwardFo
                     </Select>
                 </div>
 
-                <div className="flex gap-3 pt-4">
+                <div className="flex gap-3 pt-4" onClick={(e) => e.stopPropagation()}>
                     <Button
                         type="button"
                         variant="outline"
-                        onClick={onCloseModal}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onCloseModal?.();
+                        }}
                         className="flex-1"
                         disabled={isForwarding}
                     >
@@ -193,6 +223,7 @@ export default function IssueForwardForm({ issue, onCloseModal }: IssueForwardFo
                     </Button>
                     <Button
                         type="submit"
+                        onClick={(e) => e.stopPropagation()}
                         disabled={!selectedDepartment || !selectedLecturer || isForwarding || isLoadingLecturers || isLoadingDepartments}
                         className="flex-1"
                     >
