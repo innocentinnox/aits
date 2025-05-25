@@ -47,24 +47,33 @@ jobs:
         run: |
           set -e # Explicitly stop on errors
           
+          # Define target directory
+          TARGET_DIR="/home/aits/htdocs/aits.ocunex.com"
+          
           # Create backup directory with timestamp
           BACKUP_DIR="/home/aits/backups/aits.ocunex.com_$(date +%Y%m%d_%H%M%S)"
           mkdir -p /home/aits/backups
           
-          # Backup current deployment (excluding .well-known)
-          if [ -d "/home/aits/htdocs/aits.ocunex.com" ]; then
-            mkdir -p "$BACKUP_DIR"
-            find /home/aits/htdocs/aits.ocunex.com -mindepth 1 -maxdepth 1 -not -name ".well-known" -exec cp -r {} "$BACKUP_DIR/" \; 2>/dev/null || true
-          fi
+          # Create target directory if it doesn't exist
+          mkdir -p "$TARGET_DIR"
           
-          # Remove old files (excluding .well-known and hidden files)
-          find /home/aits/htdocs/aits.ocunex.com -mindepth 1 -maxdepth 1 -not -name ".well-known" -not -name ".*" -exec rm -rf {} \; 2>/dev/null || true
+          # List and remove files/directories one by one (avoiding .well-known)
+          cd "$TARGET_DIR"
+          for item in *; do
+            if [ "$item" != "*" ] && [ "$item" != ".well-known" ] && [ -e "$item" ]; then
+              # Backup the item first
+              mkdir -p "$BACKUP_DIR"
+              cp -r "$item" "$BACKUP_DIR/" 2>/dev/null || true
+              # Remove the item
+              rm -rf "$item"
+            fi
+          done
           
           # Copy new build files
-          cp -r ./dist/* /home/aits/htdocs/aits.ocunex.com/
+          cp -r /home/zodmin/apps/aits/_work/*/client/dist/* "$TARGET_DIR/"
           
-          # Set proper permissions
-          chmod -R 755 /home/aits/htdocs/aits.ocunex.com
+          # Set proper permissions (excluding .well-known)
+          find "$TARGET_DIR" -not -path "*/.well-known*" -exec chmod 755 {} \; 2>/dev/null || true
           
           # Keep only last 5 backups
-          find /home/aits/backups -name "aits.ocunex.com_*" -type d | sort -r | tail -n +6 | xargs rm -rf
+          find /home/aits/backups -name "aits.ocunex.com_*" -type d -mtime +7 -exec rm -rf {} \; 2>/dev/null || true
